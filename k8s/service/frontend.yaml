@@ -1,0 +1,14 @@
+kind: Service
+frontendVersion: v1
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend-container
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+  - name: management
+    port: 9090
+  type: ClusterIP

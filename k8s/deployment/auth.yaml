@@ -1,0 +1,88 @@
+authVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+  namespace: openstad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openstad-auth
+  template:
+    metadata:
+      labels:
+        app: openstad-auth
+    spec:
+      containers:
+      - name: auth
+        image: openstad/auth:test
+        ports:
+            - name: http
+              containerPort: 3000
+        env:
+          - name: DB_VENDOR
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: type
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: password
+          - name: DB_ADDR
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: hostname
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: hostport
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: database 
+          - name: KUBERNETES_NAMESPACE
+            valueFrom:
+              fieldRef:
+                authVersion: v1
+                fieldPath: metadata.namespace
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+          requests:
+            cpu: "250m"
+            memory: "500M"
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
+      initContainers:
+      - name: init-db-ready
+        image: openstad/auth:test
+        env:
+        - name: DB_ADDR
+          valueFrom:
+            secretKeyRef:
+              name: openstad-db-credentials
+              key: hostname
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: openstad-db-credentials
+              key: hostport 
+        command: ["/bin/sh","-c"]         
+        args: ['TODO whatever is needed here to run database init']   

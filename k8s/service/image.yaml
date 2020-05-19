@@ -1,0 +1,14 @@
+kind: Service
+imageVersion: v1
+metadata:
+  name: image-service
+spec:
+  selector:
+    app: image-container
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+  - name: management
+    port: 9090
+  type: ClusterIP

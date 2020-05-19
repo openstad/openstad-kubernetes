@@ -1,0 +1,14 @@
+kind: Service
+authVersion: v1
+metadata:
+  name: auth-service
+spec:
+  selector:
+    app: auth-container
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+  - name: management
+    port: 9090
+  type: ClusterIP
