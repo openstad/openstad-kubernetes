@@ -14,12 +14,15 @@ spec:
         app: openstad-api
     spec:
       containers:
-      - name: api
+      - name: api_container
         image: openstad/api:test
         ports:
             - name: http
-              containerPort: 3000
+              containerPort: 8111
         env:
+
+
+
           - name: DB_VENDOR
             valueFrom:
               secretKeyRef:
@@ -48,8 +51,11 @@ spec:
           - name: DB_DATABASE
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
-                key: database 
+                name: openstad-api-db
+                key: database
+
+
+
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
@@ -59,6 +65,8 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
+
+
         resources:
           limits:
             cpu: "1"
@@ -70,6 +78,8 @@ spec:
           httpGet:
             path: /healthz
             port: 3000
+
+            
       initContainers:
       - name: init-db-ready
         image: openstad/api:test
@@ -85,4 +95,4 @@ spec:
               name: openstad-db-credentials
               key: hostport 
         command: ["/bin/sh","-c"]         
-        args: ['TODO whatever is needed here to run database init']   
+        args: ['node reset.js && node server.js']
