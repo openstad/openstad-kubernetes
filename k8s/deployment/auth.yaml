@@ -54,7 +54,7 @@ spec:
                 name: openstad-db-credentials
                 key: username
 
-          - name: DB_PWD
+          - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: openstad-db-credentials
