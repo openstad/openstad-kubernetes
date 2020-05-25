@@ -5,15 +5,19 @@ FROM node:10.16.0-alpine
 LABEL nl.openstad.container="auth" nl.openstad.version="0.0.1-beta" nl.openstad.release-date="2020-05-07"
 
 
-# Environment variables
+# Host variable
 ENV APP_URL=""
+
+# Frontend URL variable
 ENV ADMIN_REDIRECT_URL=""
 
+# MySQL database variables
 ENV DB_HOST=""
 ENV DB_USER=""
 ENV DB_PASSWORD=""
 ENV DB_NAME=""
 
+# Mail variables
 ENV MAIL_SERVER_URL=""
 ENV MAIL_SERVER_PORT=""
 ENV MAIL_SERVER_SECURE=""
