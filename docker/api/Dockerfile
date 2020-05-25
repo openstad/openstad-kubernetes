@@ -5,24 +5,28 @@ FROM node:8.0.0-alpine
 LABEL nl.openstad.container="api_container" nl.openstad.version="0.0.1-beta" nl.openstad.release-date="2020-05-07"
 
 
-# Environment variables
+# App variables
 ENV APP_HOST=""
-ENV APP_PORT=""
+ENV APP_PORT="8111"
 
+# Database variables
 ENV DB_HOST=""
 ENV DB_USER=""
 ENV DB_PWD=""
 ENV DB_DATABASE=""
 
+# Mail variables
 ENV MAIL_HOST=""
 ENV MAIL_PORT=""
 ENV MAIL_USER=""
 ENV MAIL_PWD=""
 ENV MAIL_FROM=""
 
+# Cookie variables
 ENV COOKIE_SECRET=""
 ENV JWT_SECRET=""
 
+# Auth variables
 ENV AUTH_HOST=""
 ENV AUTH_PORT=""
 ENV AUTH_CLIENT_ID=""
