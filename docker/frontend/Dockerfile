@@ -1,0 +1,49 @@
+# Nodejs 8.0.0 alpine 3.6.0
+FROM node:8.0.0-alpine
+
+# Label for tracking
+LABEL nl.openstad.container="frontend" nl.openstad.version="0.0.1-beta" nl.openstad.release-date="2020-05-07"
+
+
+# Environment variables
+ENV DEFAULT_HOST=""
+ENV HOST_DOMAIN=""
+ENV APP_URL=""
+ENV PORT=""
+ENV SITE_API_KEY=""
+ENV API=""
+
+ENV MONGO_DB_HOST=""
+ENV DB_HOST=""
+ENV DEFAULT_DB=""
+
+
+# Install all base dependencies.
+RUN apk add --no-cache --update openssl g++ make python musl-dev
+
+# Set the working directory to the root of the container
+WORKDIR /home/app
+
+# Bundle app source
+COPY . /home/app
+
+# Install node modules
+RUN npm install
+
+# Remove unused packages only used for building.
+RUN apk del openssl g++ make python && rm -rf /var/cache/apk/*
+
+# Set node ownership to/home/app
+RUN chown -R node:node/home/app
+USER node
+
+# Mount persistent storage
+VOLUME /home/app/data
+VOLUME /home/app/public/uploads
+
+# Exposed ports for application
+EXPOSE 4444/tcp
+EXPOSE 4444/udp
+
+# Run the application
+CMD [ "npm", "start" ]
