@@ -5,7 +5,7 @@ FROM node:10.16.0-alpine
 LABEL nl.openstad.container="auth" nl.openstad.version="0.0.1-beta" nl.openstad.release-date="2020-05-07"
 
 
-# Host variable
+# full host url `http://example.com:port`
 ENV APP_URL=""
 
 # Frontend URL variable
