@@ -1,4 +1,4 @@
-authVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: auth
@@ -33,7 +33,7 @@ spec:
 
           # HOSTING
           - name: ADMIN_REDIRECT_URL
-           valueFrom:
+            valueFrom:
              secretKeyRef:
                name: openstad-hosts
                key: frontend
@@ -118,7 +118,7 @@ spec:
           - name: FROM_NAME
             value: "Openstad api"
   
-            - name: FROM_EMAIL
+          - name: FROM_EMAIL
             valueFrom:
               secretKeyRef:
                 name: openstad-auth-mail
@@ -131,7 +131,7 @@ spec:
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
-                authVersion: v1
+                apiVersion: v1
                 fieldPath: metadata.namespace
           - name: MY_POD_IP
             valueFrom:
