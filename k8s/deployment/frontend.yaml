@@ -88,10 +88,10 @@ spec:
                 fieldPath: status.podIP
         resources:
           limits:
-            cpu: "1"
+            cpu: "0.1"
             memory: 1Gi
           requests:
-            cpu: "250m"
+            cpu: "100m"
             memory: "500M"
         readinessProbe:
           httpGet:
