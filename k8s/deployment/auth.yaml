@@ -165,4 +165,4 @@ spec:
               name: openstad-db-credentials
               key: hostport 
         command: ["/bin/sh","-c"]         
-        args: ['TODO whatever is needed here to run database init']   
+        args: ['knex migrate:latest']   
