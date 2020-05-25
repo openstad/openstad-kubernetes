@@ -25,7 +25,7 @@ spec:
         env:
 
           # MySQL DATABASE
-          - name:
+          - name: DB_VENDOR
             valueFrom:
               secretKeyRef:
                 name: openstad-db-credentials
