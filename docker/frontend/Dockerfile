@@ -5,18 +5,26 @@ FROM node:8.0.0-alpine
 LABEL nl.openstad.container="frontend" nl.openstad.version="0.0.1-beta" nl.openstad.release-date="2020-05-07"
 
 
-# Environment variables
+# Frontend container name
 ENV DEFAULT_HOST=""
+
+# frontend url + port `example.com:port`
 ENV HOST_DOMAIN=""
+
+# full url `http://example.com:port`
 ENV APP_URL=""
-ENV PORT=""
+ENV PORT="4444"
+
+# `AUTH_FIXED_TOKEN` for auth container
 ENV SITE_API_KEY=""
+
+# Full api address `http://example.com:port`
 ENV API=""
 
+# MongoDB credentials
 ENV MONGO_DB_HOST=""
 ENV DB_HOST=""
 ENV DEFAULT_DB=""
-
 
 # Install all base dependencies.
 RUN apk add --no-cache --update openssl g++ make python musl-dev
