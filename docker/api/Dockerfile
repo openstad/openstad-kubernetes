@@ -10,7 +10,7 @@ ENV APP_HOST=""
 
 ENV APP_PORT="8111"
 
-# Database variables
+# MySQL variables
 ENV DB_HOST=""
 ENV DB_USER=""
 ENV DB_PWD=""
