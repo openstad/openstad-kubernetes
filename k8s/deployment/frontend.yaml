@@ -1,4 +1,4 @@
-frontendVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
@@ -80,7 +80,7 @@ spec:
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
-                frontendVersion: v1
+                apiVersion: v1
                 fieldPath: metadata.namespace
           - name: MY_POD_IP
             valueFrom:

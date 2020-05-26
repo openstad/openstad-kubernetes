@@ -1,5 +1,5 @@
 kind: Service
-frontendVersion: v1
+apiVersion: v1
 metadata:
   name: frontend-service
 spec:
