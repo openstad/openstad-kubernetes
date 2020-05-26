@@ -20,11 +20,8 @@ spec:
             - name: http
               containerPort: 3000
         env:
-          - name: DB_VENDOR
-            valueFrom:
-              secretKeyRef:
-                name: openstad-db-credentials
-                key: type
+          - name: DB_NAME
+            value: "openstad_image_server"
           - name: DB_USER
             valueFrom:
               secretKeyRef:
@@ -35,21 +32,8 @@ spec:
               secretKeyRef:
                 name: openstad-db-credentials
                 key: password
-          - name: DB_ADDR
-            valueFrom:
-              secretKeyRef:
-                name: openstad-db-credentials
-                key: hostname
-          - name: DB_PORT
-            valueFrom:
-              secretKeyRef:
-                name: openstad-db-credentials
-                key: hostport
-          - name: DB_DATABASE
-            valueFrom:
-              secretKeyRef:
-                name: openstad-db-credentials
-                key: database 
+          - name: APP_URL
+            value: "https://testdomain.marviq.net/"
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
@@ -68,21 +52,23 @@ spec:
             memory: "500M"
         readinessProbe:
           httpGet:
-            path: /healthz
+            path: /
             port: 3000
       initContainers:
-      - name: init-db-ready
+      - name: create-db-ready
         image: openstad/image:test
         env:
-        - name: DB_ADDR
+        - name: DB_NAME
+          value: "openstad_image_server"
+        - name: DB_USER
           valueFrom:
             secretKeyRef:
               name: openstad-db-credentials
-              key: hostname
-        - name: DB_PORT
+              key: username
+        - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: openstad-db-credentials
-              key: hostport 
+              key: password
         command: ["/bin/sh","-c"]         
-        args: ['TODO whatever is needed here to run database init']   
+        args: ['knex migrate:latest']    
