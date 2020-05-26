@@ -163,6 +163,23 @@ spec:
           valueFrom:
             secretKeyRef:
               name: openstad-db-credentials
-              key: hostport 
-        command: ["/bin/sh","-c"]         
+              key: hostport
+        - name: DB_HOST
+          valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: hostname
+        - name: DB_USER
+          valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: openstad-db-credentials
+              key: password
+        - name: DB_NAME
+          value: auth
+        command: ["/bin/sh","-c"]
         args: ['knex migrate:latest']   
