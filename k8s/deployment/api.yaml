@@ -18,8 +18,13 @@ spec:
         image: openstad/api:test
         ports:
             - name: http
-              containerPort: 3000
+              containerPort: 8111
+
+
+
         env:
+
+          # MySQL DATABASE
           - name: DB_VENDOR
             valueFrom:
               secretKeyRef:
@@ -30,12 +35,12 @@ spec:
               secretKeyRef:
                 name: openstad-db-credentials
                 key: username
-          - name: DB_PASSWORD
+          - name: DB_PWD
             valueFrom:
               secretKeyRef:
                 name: openstad-db-credentials
                 key: password
-          - name: DB_ADDR
+          - name: DB_HOST
             valueFrom:
               secretKeyRef:
                 name: openstad-db-credentials
@@ -48,8 +53,90 @@ spec:
           - name: DB_DATABASE
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
-                key: database 
+                name: openstad-api-db
+                key: database
+
+
+
+          # SMTP MAIL
+          - name: MAIL_HOST
+            valueFrom:
+              secretKeyRef:
+                name: openstad-api-mail
+                key: host
+
+          - name: MAIL_PORT
+            valueFrom:
+              secretKeyRef:
+                name: openstad-api-mail
+                key: port
+
+          - name: MAIL_USER
+            valueFrom:
+              secretKeyRef:
+                name: openstad-api-mail
+                key: user
+  
+          - name: MAIL_PWD
+            valueFrom:
+              secretKeyRef:
+                name: openstad-api-mail
+                key: password
+    
+          - name: MAIL_FROM
+            value: "Openstad api"
+    
+
+
+          # COOKIES
+          - name: COOKIE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: openstad-cookies
+                key: cookie_secret
+           
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: openstad-cookies
+                key: jwt_secret
+
+
+
+          # AUTH
+          - name: AUTH_HOST
+            value: "auth_container"
+
+          - name: AUTH_PORT
+            value: "4000"
+              
+          - name: AUTH_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: openstad-auth-credentials
+                key: client_id
+          
+          - name: AUTH_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: openstad-auth-credentials
+                key: client_secret
+    
+          - name: AUTH_FIXED_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: openstad-auth-credentials
+                key: fixed_user_id
+    
+          - name: AUTH_FIXED_USER_ID
+            valueFrom:
+              secretKeyRef:
+                name: openstad-auth-credentials
+                key: fixed_token
+        
+    
+
+          # KUBERNETES
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
@@ -59,17 +146,21 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
+
+
         resources:
           limits:
-            cpu: "1"
-            memory: 1Gi
+            cpu: "0.1"
+            memory: 0.5Gi
           requests:
-            cpu: "250m"
+            cpu: "100m"
             memory: "500M"
         readinessProbe:
           httpGet:
             path: /healthz
             port: 3000
+
+
       initContainers:
       - name: init-db-ready
         image: openstad/api:test
@@ -85,4 +176,4 @@ spec:
               name: openstad-db-credentials
               key: hostport 
         command: ["/bin/sh","-c"]         
-        args: ['TODO whatever is needed here to run database init']   
+        args: ['node reset.js && node server.js']

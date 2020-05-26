@@ -2,4 +2,4 @@
 
 ## preconditions
 
-Fill in all variables
+Fill in all docker env variables

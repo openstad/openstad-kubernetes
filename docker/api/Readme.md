@@ -2,7 +2,7 @@
 
 ## preconditions
 
-Fill in all variables
+Fill in all docker env variables
 
 ### Note:
 Could not find usage of the following variables:

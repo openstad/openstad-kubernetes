@@ -1,4 +1,4 @@
-frontendVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
@@ -19,41 +19,68 @@ spec:
         ports:
             - name: http
               containerPort: 3000
+
+
+
         env:
-          - name: DB_VENDOR
+
+          # HOST
+          - name: DEFAULT_HOST
+            value: frontend
+
+          - name: HOST_DOMAIN
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
-                key: type
-          - name: DB_USER
+                name: openstad-hosts
+                key: frontend
+       
+          - name: APP_URL
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
-                key: username
-          - name: DB_PASSWORD
+                name: openstad-hosts
+                key: frontend
+             
+          - name: PORT
+            value: "4444"
+
+          - name: SITE_API_KEY
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
-                key: password
-          - name: DB_ADDR
+                name: openstad-auth-credentials
+                key: fixed_token
+
+          - name: SITE_API_KEY
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
+                name: openstad-hosts
+                key: api
+
+
+          # MONGO
+          - name: MONGO_DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: openstad-mongo-credentials
                 key: hostname
-          - name: DB_PORT
+
+          - name: DB_HOST
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
-                key: hostport
-          - name: DB_DATABASE
+                name: openstad-mongo-credentials
+                key: hostname
+
+          - name: DEFAULT_DB
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
-                key: database 
+                name: openstad-mongo-credentials
+                key: database
+
+            
+          # KUBERNETES
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
-                frontendVersion: v1
+                apiVersion: v1
                 fieldPath: metadata.namespace
           - name: MY_POD_IP
             valueFrom:
@@ -61,10 +88,10 @@ spec:
                 fieldPath: status.podIP
         resources:
           limits:
-            cpu: "1"
+            cpu: "0.1"
             memory: 1Gi
           requests:
-            cpu: "250m"
+            cpu: "100m"
             memory: "500M"
         readinessProbe:
           httpGet:
