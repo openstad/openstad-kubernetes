@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 prod_secrets/**
+=======
+.idea/
+target/
+*.iml
+>>>>>>> 4849f441442d65abf36f53384ac56ad993c5636a
