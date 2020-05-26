@@ -176,4 +176,4 @@ spec:
               name: openstad-db-credentials
               key: hostport 
         command: ["/bin/sh","-c"]         
-        args: ['node reset.js && node server.js']
+        args: ['node reset.js']

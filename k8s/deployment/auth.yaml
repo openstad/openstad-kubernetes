@@ -146,10 +146,10 @@ spec:
           requests:
             cpu: "100m"
             memory: "500M"
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: 3000
+#        readinessProbe:
+#          httpGet:
+#            path: /healthz
+#            port: 3000
       initContainers:
       - name: init-db-ready
         image: openstad/auth:test
