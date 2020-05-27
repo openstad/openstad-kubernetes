@@ -4,9 +4,6 @@ FROM node:8.0.0-alpine
 # Label for tracking
 LABEL nl.openstad.container="api_container" nl.openstad.version="0.0.1-beta" nl.openstad.release-date="2020-05-07"
 
-# This should force node to load ./config/container.js
-ENV NODE_ENV="container"
-
 # App container name
 ENV APP_HOST=""
 ENV APP_PORT="8111"
