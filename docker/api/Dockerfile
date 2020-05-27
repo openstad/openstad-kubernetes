@@ -8,11 +8,8 @@ LABEL nl.openstad.container="api_container" nl.openstad.version="0.0.1-beta" nl.
 ENV NODE_ENV="container"
 
 # App container name
-ENV APP_URL=""
 ENV APP_HOST=""
 ENV APP_PORT="8111"
-# exporess port, what is this?
-ENV EXPRESS_PORT = ""
 
 # MySQL variables
 ENV DB_HOST=""
@@ -59,7 +56,7 @@ RUN npm install
 RUN apk del g++ make python && rm -rf /var/cache/apk/*
 
 # Set node ownership to /home/app
-RUN chown -R node:node/home/app
+RUN chown -R node:node /home/app
 USER node
 
 

@@ -16,6 +16,7 @@ spec:
       containers:
       - name: api
         image: openstad/api:test
+        imagePullPolicy: Always
         ports:
             - name: http
               containerPort: 8111
@@ -23,9 +24,12 @@ spec:
 
 
         env:
-
+          - name: APP_HOST
+            value: api
+          - name: APP_PORT
+            value: "8111"
           # MySQL DATABASE
-          - name: DB_VENDOR
+          - name: DB_TYPE
             valueFrom:
               secretKeyRef:
                 name: openstad-db-credentials
@@ -164,8 +168,11 @@ spec:
       initContainers:
       - name: init-db-ready
         image: openstad/api:test
+        imagePullPolicy: Always
         env:
-        - name: DB_ADDR
+        - name: DB_TYPE
+          value: mysql
+        - name: DB_HOST
           valueFrom:
             secretKeyRef:
               name: openstad-db-credentials
@@ -174,6 +181,22 @@ spec:
           valueFrom:
             secretKeyRef:
               name: openstad-db-credentials
-              key: hostport 
-        command: ["/bin/sh","-c"]         
-        args: ['node reset.js']
+              key: hostport
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: openstad-db-credentials
+              key: username
+        - name: DB_PWD
+          valueFrom:
+            secretKeyRef:
+              name: openstad-db-credentials
+              key: password
+        - name: DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: openstad-api-db
+              key: database
+
+        command: ["node"]
+        args: ["reset.js"]
