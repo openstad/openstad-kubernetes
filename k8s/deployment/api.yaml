@@ -16,6 +16,7 @@ spec:
       containers:
       - name: api
         image: openstad/api:test
+        imagePullPolicy: Always
         ports:
             - name: http
               containerPort: 8111
@@ -160,6 +161,7 @@ spec:
       initContainers:
       - name: init-db-ready
         image: openstad/api:test
+        imagePullPolicy: Always
         env:
         - name: DB_ADDR
           valueFrom:
