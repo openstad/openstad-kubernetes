@@ -7,29 +7,21 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: openstad-api
+      app: api-container
   template:
     metadata:
       labels:
-        app: openstad-api
+        app: api-container
     spec:
       containers:
       - name: api
         image: openstad/api:test
-        imagePullPolicy: Always
         ports:
             - name: http
               containerPort: 8111
-
-
-
         env:
-          - name: APP_HOST
-            value: api
-          - name: APP_PORT
-            value: "8111"
           # MySQL DATABASE
-          - name: DB_TYPE
+          - name: DB_VENDOR
             valueFrom:
               secretKeyRef:
                 name: openstad-db-credentials
@@ -159,20 +151,17 @@ spec:
           requests:
             cpu: "100m"
             memory: "500M"
-#        readinessProbe:
-#          httpGet:
-#            path: /healthz
-#            port: 3000
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
 
 
       initContainers:
       - name: init-db-ready
         image: openstad/api:test
-        imagePullPolicy: Always
         env:
-        - name: DB_TYPE
-          value: mysql
-        - name: DB_HOST
+        - name: DB_ADDR
           valueFrom:
             secretKeyRef:
               name: openstad-db-credentials
@@ -181,22 +170,6 @@ spec:
           valueFrom:
             secretKeyRef:
               name: openstad-db-credentials
-              key: hostport
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: openstad-db-credentials
-              key: username
-        - name: DB_PWD
-          valueFrom:
-            secretKeyRef:
-              name: openstad-db-credentials
-              key: password
-        - name: DB_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: openstad-api-db
-              key: database
-
-        command: ["node"]
-        args: ["reset.js"]
+              key: hostport 
+        command: ["/bin/sh","-c"]         
+        args: ['node reset.js']
