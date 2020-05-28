@@ -36,7 +36,7 @@ WORKDIR /home/app
 COPY . /home/app
 
 # Install node modules
-# RUN npm install
+RUN npm install
 
 # Remove unused packages only used for building.
 RUN apk del openssl g++ make python git && rm -rf /var/cache/apk/*
