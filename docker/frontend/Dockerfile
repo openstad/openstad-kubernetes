@@ -1,5 +1,5 @@
 # Nodejs 8.0.0 alpine 3.6.0
-FROM node:9.0.0-alpine
+FROM node:14.3.0-alpine
 
 # Label for tracking
 LABEL nl.openstad.container="frontend" nl.openstad.version="0.0.1-beta" nl.openstad.release-date="2020-05-07"
@@ -44,7 +44,7 @@ RUN npm install --loglevel verbose
 RUN apk del openssl g++ make python && rm -rf /var/cache/apk/*
 
 # Set node ownership to/home/app
-RUN chown -R node:node/home/app
+RUN chown -R node:node /home/app
 USER node
 
 # Mount persistent storage
