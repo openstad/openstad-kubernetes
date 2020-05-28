@@ -1,5 +1,5 @@
 # Nodejs 8.0.0 alpine 3.6.0
-FROM node:8.0.0-alpine
+FROM node:9.0.0-alpine
 
 # Label for tracking
 LABEL nl.openstad.container="frontend" nl.openstad.version="0.0.1-beta" nl.openstad.release-date="2020-05-07"
@@ -27,7 +27,7 @@ ENV DB_HOST=""
 ENV DEFAULT_DB=""
 
 # Install all base dependencies.
-RUN apk add --no-cache --update openssl g++ make python musl-dev
+RUN apk add --no-cache --update openssl g++ make python musl-dev git
 
 # Set the working directory to the root of the container
 WORKDIR /home/app
@@ -35,8 +35,10 @@ WORKDIR /home/app
 # Bundle app source
 COPY . /home/app
 
+RUN mkdir ~/.ssh ; echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
 # Install node modules
-RUN npm install
+RUN npm install --loglevel verbose
 
 # Remove unused packages only used for building.
 RUN apk del openssl g++ make python && rm -rf /var/cache/apk/*

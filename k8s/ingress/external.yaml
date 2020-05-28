@@ -8,6 +8,14 @@ spec:
     http:
       paths:
       - backend:
+          serviceName: auth-service
+          servicePort: 4000
+        path: /oauth
+      - backend:
           serviceName: frontend-service
           servicePort: 4444
         path: /
+  tls:
+  - hosts:
+    - www.openstad.softwaredepartment.net
+    secretName: openstad-tls

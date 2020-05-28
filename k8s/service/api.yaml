@@ -9,6 +9,4 @@ spec:
   - name: http
     protocol: TCP
     port: 8111
-  - name: management
-    port: 9090
   type: ClusterIP

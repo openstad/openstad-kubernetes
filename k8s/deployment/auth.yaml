@@ -7,23 +7,19 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: openstad-auth
+      app: auth-container
   template:
     metadata:
       labels:
-        app: openstad-auth
+        app: auth-container
     spec:
       containers:
-      - name: auth
+      - name: auth-container
         image: openstad/auth:test
         ports:
             - name: http
               containerPort: 4000
-
-
-
-        env:
-          
+        env:   
           # HOSTING
           - name: APP_URL
             valueFrom:
@@ -38,8 +34,8 @@ spec:
                name: openstad-hosts
                key: frontend
 
-
-                
+          - name: SESSION_SECRET
+            value: "1234567890123456"
 
           # MySQL DATABASE
           - name: DB_VENDOR
@@ -77,9 +73,6 @@ spec:
               secretKeyRef:
                 name: openstad-auth-db
                 key: database
-
-
-
 
           # SMTP MAIL
           - name: MAIL_SERVER_URL
@@ -124,9 +117,6 @@ spec:
                 name: openstad-auth-mail
                 key: user
 
-
-
-
           # KUBERNETES
           - name: KUBERNETES_NAMESPACE
             valueFrom:
@@ -137,7 +127,6 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
-
 
         resources:
           limits:

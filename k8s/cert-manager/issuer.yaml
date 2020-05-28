@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1alpha3
+kind: Issuer
+metadata:
+  name: letsencrypt-prod
+  namespace: openstad
+spec:
+  acme:
+    email: sysadmin@marviq.com
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
