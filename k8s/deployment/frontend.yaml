@@ -25,6 +25,13 @@ spec:
               value: www.openstad.softwaredepartment.net
             - name: API
               value: http://api-service:8111
+            - name: IMAGE_API_URL
+              value: http://image-service:3000
+            - name: IMAGE_API_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: fixed_token
+                  name: openstad-auth-credentials
             - name: HOST_DOMAIN
               valueFrom:
                 secretKeyRef:
