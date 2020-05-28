@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: openstad
 spec:
   replicas: 1
   selector:
@@ -14,58 +13,71 @@ spec:
         app: openstad-frontend
     spec:
       containers:
-      - name: frontend
-        image: openstad/frontend:test
-        imagePullPolicy: Always
-        ports:
+        - name: frontend
+          image: openstad/frontend:debug
+          imagePullPolicy: Always
+          ports:
             - name: http
               containerPort: 4444
-        env:
-          # HOST
-          - name: DEFAULT_HOST
-            value: "www.openstad.softwaredepartment.net"
-          - name: HOST_DOMAIN
-            valueFrom:
-              secretKeyRef:
-                name: openstad-hosts
-                key: frontend
-          - name: PORT
-            value: "4444"
-          - name: SITE_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: openstad-auth-credentials
-                key: fixed_token
-          # MONGO
-          - name: MONGO_DB_HOST
-            valueFrom:
-              secretKeyRef:
-                name: openstad-mongo-credentials
-                key: hostname
-          - name: DB_HOST
-            valueFrom:
-              secretKeyRef:
-                name: openstad-mongo-credentials
-                key: hostname
-          - name: DEFAULT_DB
-            valueFrom:
-              secretKeyRef:
-                name: openstad-mongo-credentials
-                key: database
-          # KUBERNETES
-          - name: KUBERNETES_NAMESPACE
-            valueFrom:
-              fieldRef:
-                apiVersion: v1
-                fieldPath: metadata.namespace
-          - name: MY_POD_IP
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
-        resources:
-          limits:
-            cpu: "0.1"
-            memory: 1Gi
-          requests:
-            cpu: "100m"
-            memory: "500M"
+              protocol: TCP
+          env:
+            - name: DEFAULT_HOST
+              value: www.openstad.softwaredepartment.net
+            - name: API
+              value: http://api-service:8111
+            - name: HOST_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  key: frontend
+                  name: openstad-hosts
+            - name: PORT
+              value: "4444"
+            - name: SITE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: fixed_token
+                  name: openstad-auth-credentials
+            - name: MONGO_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: hostname
+                  name: openstad-mongo-credentials
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: hostname
+                  name: openstad-mongo-credentials
+            - name: DEFAULT_DB
+              valueFrom:
+                secretKeyRef:
+                  key: database
+                  name: openstad-mongo-credentials
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 500M
+          volumeMounts:
+            - mountPath: /home/app/data
+              name: data-vol
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsUser: 1000
+      volumes:
+        - emptyDir: {}
+          name: data-vol

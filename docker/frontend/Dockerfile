@@ -27,7 +27,7 @@ ENV DB_HOST=""
 ENV DEFAULT_DB=""
 
 # Install all base dependencies.
-RUN apk add --no-cache --update openssl g++ make python musl-dev
+RUN apk add --no-cache --update openssl g++ make python musl-dev git
 
 # Set the working directory to the root of the container
 WORKDIR /home/app
@@ -36,13 +36,13 @@ WORKDIR /home/app
 COPY . /home/app
 
 # Install node modules
-RUN npm install
+# RUN npm install
 
 # Remove unused packages only used for building.
-RUN apk del openssl g++ make python && rm -rf /var/cache/apk/*
+RUN apk del openssl g++ make python git && rm -rf /var/cache/apk/*
 
 # Set node ownership to/home/app
-RUN chown -R node:node/home/app
+RUN chown -R node:node /home/app
 USER node
 
 # Mount persistent storage
