@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-express
+  namespace: openstad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-express-web
+  template:
+    metadata:
+      labels:
+        app: mongo-express-web
+    spec:
+      containers:
+      - name: mongo-express
+        image: mongo-express
+        ports:
+            - name: http
+              containerPort: 8081
+        env:
+          - name: ME_CONFIG_MONGODB_SERVER
+            valueFrom:
+              secretKeyRef:
+                name: openstad-mongo-credentials
+                key: hostname

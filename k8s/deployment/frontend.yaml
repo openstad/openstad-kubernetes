@@ -18,64 +18,44 @@ spec:
         image: openstad/frontend:test
         ports:
             - name: http
-              containerPort: 3000
-
-
-
+              containerPort: 4444
         env:
-
           # HOST
           - name: DEFAULT_HOST
-            value: frontend
-
+            value: "www.openstad.softwaredepartment.net"
           - name: HOST_DOMAIN
             valueFrom:
               secretKeyRef:
                 name: openstad-hosts
                 key: frontend
-       
-          - name: APP_URL
-            valueFrom:
-              secretKeyRef:
-                name: openstad-hosts
-                key: frontend
-             
           - name: PORT
             value: "4444"
-
           - name: SITE_API_KEY
             valueFrom:
               secretKeyRef:
                 name: openstad-auth-credentials
                 key: fixed_token
-
           - name: SITE_API_KEY
             valueFrom:
               secretKeyRef:
                 name: openstad-hosts
                 key: api
-
-
           # MONGO
           - name: MONGO_DB_HOST
             valueFrom:
               secretKeyRef:
                 name: openstad-mongo-credentials
                 key: hostname
-
           - name: DB_HOST
             valueFrom:
               secretKeyRef:
                 name: openstad-mongo-credentials
                 key: hostname
-
           - name: DEFAULT_DB
             valueFrom:
               secretKeyRef:
                 name: openstad-mongo-credentials
                 key: database
-
-            
           # KUBERNETES
           - name: KUBERNETES_NAMESPACE
             valueFrom:
@@ -93,23 +73,3 @@ spec:
           requests:
             cpu: "100m"
             memory: "500M"
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: 3000
-      initContainers:
-      - name: init-db-ready
-        image: openstad/frontend:test
-        env:
-        - name: DB_ADDR
-          valueFrom:
-            secretKeyRef:
-              name: openstad-db-credentials
-              key: hostname
-        - name: DB_PORT
-          valueFrom:
-            secretKeyRef:
-              name: openstad-db-credentials
-              key: hostport 
-        command: ["/bin/sh","-c"]         
-        args: ['TODO whatever is needed here to run database init']   
