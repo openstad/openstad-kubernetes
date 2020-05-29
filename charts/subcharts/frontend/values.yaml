@@ -1,4 +1,9 @@
+
 frontend:
     replicas: 1 # Forermly: 1
     name: frontend # Formerly: frontend
     namespace: openstad-test # Formerly: openstad
+
+tls:
+    host: www.openstad.softwaredepartment.net
+    secretName: openstad-tls

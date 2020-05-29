@@ -14,7 +14,7 @@ spec:
           serviceName: {{ .Values.frontend.name }}-service
           servicePort: 4444
         path: /
-  tls:
+  tls: 
   - hosts:
-    - www.openstad.softwaredepartment.net
-    secretName: openstad-tls
+    - {{ .Values.tls.host }}
+    secretName: {{ .Values.tls.secretName }}
