@@ -3,14 +3,15 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: openstad-ingress
+  name: openstad-{{ .Values.frontend.name }}-ingress
+  namespace: {{ .Values.frontend.namespace }}
 spec:
   rules:
   - host: www.openstad.softwaredepartment.net
     http:
       paths:
       - backend:
-          serviceName: frontend-service
+          serviceName: {{ .Values.frontend.name }}-service
           servicePort: 4444
         path: /
   tls:

@@ -3,7 +3,8 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: frontend-service
+  name: {{ .Values.frontend.name }}-service
+  namespace: {{ .Values.frontend.namespace }}
 spec:
   selector:
     app: frontend-container

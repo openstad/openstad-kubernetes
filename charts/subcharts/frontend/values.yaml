@@ -1,0 +1,4 @@
+frontend:
+    replicas: 1 # Forermly: 1
+    name: frontend # Formerly: frontend
+    namespace: openstad-test # Formerly: openstad

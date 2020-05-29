@@ -3,10 +3,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
-  namespace: openstad
+  name: {{ .Values.frontend.name }}
+  namespace: {{ .Values.frontend.namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.frontend.replicas }}
   selector:
     matchLabels:
       app: openstad-frontend
