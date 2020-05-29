@@ -1,0 +1,5 @@
+# Ignore packaged chart files
+*.tgz
+
+# Ignore debug files
+debug
