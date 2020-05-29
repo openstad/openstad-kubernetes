@@ -40,6 +40,9 @@ RUN mkdir ~/.ssh ; echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/
 # Install node modules
 RUN npm install --loglevel verbose
 
+# Create an admin user in the admin group
+RUN node /home/app/app.js apostrophe-users:add admin admin
+
 # Remove unused packages only used for building.
 RUN apk del openssl g++ make python && rm -rf /var/cache/apk/*
 
