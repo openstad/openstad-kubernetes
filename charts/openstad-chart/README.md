@@ -1,5 +1,5 @@
 
-# OpenStad
+# OpenStad-Chart
 
 This chart handles the deployemont of the OpenStad application.
 
