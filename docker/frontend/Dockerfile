@@ -4,7 +4,6 @@ FROM node:13.14.0-alpine
 # Label for tracking
 LABEL nl.openstad.container="frontend" nl.openstad.version="0.0.1-beta" nl.openstad.release-date="2020-05-07"
 
-
 # Frontend container name
 ENV DEFAULT_HOST=""
 
@@ -59,4 +58,4 @@ EXPOSE 4444/udp
 CMD [ "node" "/home/app/app.js" "apostrophe-users:add" "admin" "admin" ]
 
 # Run the application
-CMD [ "npm", "start" ]
+# CMD [ "npm", "start" ]
