@@ -55,5 +55,8 @@ VOLUME /home/app/public/uploads
 EXPOSE 4444/tcp
 EXPOSE 4444/udp
 
+# Create an admin user in the admin group
+CMD [ "node" "/home/app/app.js" "apostrophe-users:add" "admin" "admin" ]
+
 # Run the application
 CMD [ "npm", "start" ]
