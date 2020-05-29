@@ -24,6 +24,8 @@ spec:
           env:
             - name: DEFAULT_HOST
               value: www.openstad.softwaredepartment.net
+            - name: APP_URL
+              value: https://www.openstad.softwaredepartment.net
             - name: API
               value: http://api-service:8111
             - name: IMAGE_API_URL
