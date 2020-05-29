@@ -89,4 +89,3 @@ spec:
       volumes:
         - emptyDir: {}
           name: data-vol
->>>>>>> 361427d9cac8966f9be74efddacedf7d67095d4a
