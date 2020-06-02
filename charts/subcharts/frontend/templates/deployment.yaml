@@ -16,12 +16,12 @@ spec:
         app: openstad-frontend
     spec:
       containers:
-        - name: {{ .Values.frontend.deployment.name }}
-          image: {{ .Values.frontend.deployment.image }}
+        - name: {{ .Values.frontend.deploymentContainer.name }}
+          image: {{ .Values.frontend.deploymentContainer.image }}
           imagePullPolicy: Always
           ports:
             - name: http
-              containerPort: {{ .Values.frontend.deployment.containerPort }}
+              containerPort: {{ .Values.frontend.deploymentContainer.port }}
               protocol: TCP
           env:
             - name: DEFAULT_HOST
@@ -43,7 +43,7 @@ spec:
                   key: frontend
                   name: openstad-hosts
             - name: PORT
-              value: {{ .Values.frontend.deployment.containerPort | quote }}
+              value: {{ .Values.frontend.deploymentContainer.port | quote }}
             - name: SITE_API_KEY
               valueFrom:
                 secretKeyRef:

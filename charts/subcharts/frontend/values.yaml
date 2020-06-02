@@ -5,19 +5,23 @@ define:
 
 frontend:
     replicas: 1 # Originally: 1
-    name: frontend # Originally: frontend
     namespace: openstad-test # Originally: openstad
-
-    deployment:
+    name: frontend # Originally: frontend
+    
+    deploymentContainer:
         name: frontend # Originally: frontend
         image: openstad/frontend:debug # Originally: openstad/frontend:debug
-        containerPort: 4444 # Originally: 4444
+        port: 4444 # Originally: 4444
     
     host:
         www: *host-url
         http: *host-http
         https: *host-https
         path: /
+
+    service:
+        httpPort: 8080
+        managementPort: 9090
 
 tls:
     host: *host-url

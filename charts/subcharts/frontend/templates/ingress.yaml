@@ -12,7 +12,7 @@ spec:
       paths:
       - backend:
           serviceName: {{ .Values.frontend.name }}-service
-          servicePort: {{ .Values.frontend.deployment.containerPort }}
+          servicePort: {{ .Values.frontend.deploymentContainer.port }}
         path: {{ .Values.frontend.host.path }}
   tls: 
   - hosts:
