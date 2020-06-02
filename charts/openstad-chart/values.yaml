@@ -28,12 +28,12 @@ ingress:
 
 frontend:
     replicas: 1 # Originally: 1
-    namespace: openstad # Originally: openstad
+    namespace: *namespace # Originally: openstad
 
     deploymentContainer:
         name: frontend-container # Originally: frontend
         image: openstad/frontend:debug # Originally: openstad/frontend:debug
-        port: 4444 # Originally: 4444
+        port: *fesContainerPort # Originally: 4444
 
     host:
         www: *host-url
@@ -46,8 +46,22 @@ frontend:
 
     service:
         name: frontend-service # Originally: frontend-service
-        httpPort: 8080
+        httpPort: *fesContainerPort
         managementPort: 9090
+
+adminer:
+  namespace: *namespace
+  service:
+    name: adminer-service
+  deployment:
+    name: adminer-deploy
+  
+  label: adminer-web
+
+  deploymentContainer:
+    name: auth
+    image: adminer
+    port: 8080
 
 # TLS
 
