@@ -1,12 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: adminer-service
+  name: {{ .Values.adminer.service.name }}
+  namespace: {{ .Values.adminer.namespace }}
 spec:
   selector:
-    app: adminer-web
+    app: {{ .Values.adminer.label }}
   ports:
   - name: http
     protocol: TCP
-    port: 8080
+    port: {{ .Values.adminer.deploymentContainer.port }}
   type: ClusterIP

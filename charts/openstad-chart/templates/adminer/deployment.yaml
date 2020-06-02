@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: adminer
-  namespace: openstad
+  name: {{ .Values.adminer.deployment.name }}
+  namespace: {{ .Values.adminer.namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: adminer-web
+      app: {{ .Values.adminer.label }}
   template:
     metadata:
       labels:
-        app: adminer-web
+        app: {{ .Values.adminer.label }}
     spec:
       containers:
-      - name: auth
-        image: adminer
+      - name: {{ .Values.adminer.deploymentContainer.name }}
+        image: {{ .Values.adminer.deploymentContainer.image }}
         ports:
             - name: http
-              containerPort: 8080
+              containerPort: {{ .Values.adminer.deploymentContainer.port }}
         env:
           # DB Reference
           - name: ADMINER_DEFAULT_SERVER
