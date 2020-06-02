@@ -12,8 +12,8 @@ spec:
       paths:
       - backend:
           serviceName: {{ .Values.frontend.name }}-service
-          servicePort: 4444
-        path: /
+          servicePort: {{ .Values.frontend.deployment.containerPort }}
+        path: {{ .Values.frontend.host.path }}
   tls: 
   - hosts:
     - {{ .Values.tls.host }}

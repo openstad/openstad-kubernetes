@@ -17,6 +17,7 @@ frontend:
         www: *host-url
         http: *host-http
         https: *host-https
+        path: /
 
 tls:
     host: *host-url
