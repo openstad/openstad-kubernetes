@@ -1,3 +1,7 @@
+define:
+    host-url: &host-url www.openstad.softwaredepartment.net
+    host-http: &host-http http://www.openstad.softwaredepartment.net
+    host-https: &host-https https://www.openstad.softwaredepartment.net
 
 frontend:
     replicas: 1 # Originally: 1
@@ -7,7 +11,13 @@ frontend:
     deployment:
         name: frontend # Originally: frontend
         image: openstad/frontend:debug # Originally: openstad/frontend:debug
+        containerPort: 4444 # Originally: 4444
+    
+    host:
+        www: *host-url
+        http: *host-http
+        https: *host-https
 
 tls:
-    host: www.openstad.softwaredepartment.net
+    host: *host-url
     secretName: openstad-tls

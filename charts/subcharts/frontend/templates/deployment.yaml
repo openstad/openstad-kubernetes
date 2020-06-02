@@ -21,13 +21,13 @@ spec:
           imagePullPolicy: Always
           ports:
             - name: http
-              containerPort: 4444
+              containerPort: {{ .Values.frontend.deployment.containerPort }}
               protocol: TCP
           env:
             - name: DEFAULT_HOST
-              value: www.openstad.softwaredepartment.net
+              value: {{ .Values.frontend.host.www }}
             - name: APP_URL
-              value: https://www.openstad.softwaredepartment.net
+              value: {{ .Values.frontend.host.https }}
             - name: API
               value: http://api-service:8111
             - name: IMAGE_API_URL
@@ -43,7 +43,7 @@ spec:
                   key: frontend
                   name: openstad-hosts
             - name: PORT
-              value: "4444"
+              value: {{ .Values.frontend.deployment.containerPort | quote }}
             - name: SITE_API_KEY
               valueFrom:
                 secretKeyRef:
