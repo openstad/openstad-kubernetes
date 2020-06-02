@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.frontend.name }}
+  name: {{ .Values.frontend.deployment.name }}
   namespace: {{ .Values.frontend.namespace }}
 spec:
   replicas: {{ .Values.frontend.replicas }}

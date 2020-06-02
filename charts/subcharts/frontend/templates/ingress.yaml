@@ -3,7 +3,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: openstad-{{ .Values.frontend.name }}-ingress
+  name: {{ .Values.frontend.ingress.name }}
   namespace: {{ .Values.frontend.namespace }}
 spec:
   rules:
