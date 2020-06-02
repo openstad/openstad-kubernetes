@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.ingress.name }}
+  namespace: {{ .Values.ingress.namespace }}
+spec:
+  rules:
+  - host: www.openstad.softwaredepartment.net
+    http:
+      paths:
+      - backend:
+          serviceName: auth-service
+          servicePort: 4000
+        path: /oauth
+      - backend:
+          serviceName: {{ .Values.ingress.frontendService.name }}
+          servicePort: {{ .Values.ingress.frontendService.containerPort }}
+        path: {{ .Values.ingress.frontendService.path }}
+  tls: 
+  - hosts:
+    - {{ .Values.tls.host }}
+    secretName: {{ .Values.tls.secretName }}

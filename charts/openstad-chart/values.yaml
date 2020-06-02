@@ -1,0 +1,56 @@
+
+# Define anchors
+
+define:
+  namespace: &namespace openstad
+  frontendService:
+    name: &fesName "frontend-service"
+    path: &fesPath /
+    containerPort: &fesContainerPort 4444
+  host:
+    host-url: &host-url www.openstad.softwaredepartment.net
+    host-http: &host-http http://www.openstad.softwaredepartment.net
+    host-https: &host-https https://www.openstad.softwaredepartment.net
+
+
+# Ingress
+
+ingress:
+  namespace: *namespace
+  name: "openstad-ingress" # Originally: openstad-ingress 
+
+  frontendService:
+    name: *fesName
+    path: *fesPath
+    containerPort: *fesContainerPort
+
+# Frontend
+
+frontend:
+    replicas: 1 # Originally: 1
+    namespace: openstad # Originally: openstad
+
+    deploymentContainer:
+        name: frontend-container # Originally: frontend
+        image: openstad/frontend:debug # Originally: openstad/frontend:debug
+        port: 4444 # Originally: 4444
+
+    host:
+        www: *host-url
+        http: *host-http
+        https: *host-https
+        path: /
+
+    deployment:
+        name: "frontend-deploy" # Originally: frontend
+
+    service:
+        name: frontend-service # Originally: frontend-service
+        httpPort: 8080
+        managementPort: 9090
+
+# TLS
+
+tls:
+    host: *host-url
+    secretName: openstad-tls
