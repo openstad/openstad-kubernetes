@@ -16,8 +16,8 @@ spec:
         app: openstad-frontend
     spec:
       containers:
-        - name: frontend
-          image: openstad/frontend:debug
+        - name: {{ .Values.frontend.deployment.name }}
+          image: {{ .Values.frontend.deployment.image }}
           imagePullPolicy: Always
           ports:
             - name: http

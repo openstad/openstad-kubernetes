@@ -1,8 +1,12 @@
 
 frontend:
-    replicas: 1 # Forermly: 1
-    name: frontend # Formerly: frontend
-    namespace: openstad-test # Formerly: openstad
+    replicas: 1 # Originally: 1
+    name: frontend # Originally: frontend
+    namespace: openstad-test # Originally: openstad
+
+    deployment:
+        name: frontend # Originally: frontend
+        image: openstad/frontend:debug # Originally: openstad/frontend:debug
 
 tls:
     host: www.openstad.softwaredepartment.net
