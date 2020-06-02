@@ -5,7 +5,7 @@ define:
 
 frontend:
     replicas: 1 # Originally: 1
-    namespace: openstad-test # Originally: openstad
+    namespace: openstad # Originally: openstad
 
     deploymentContainer:
         name: frontend # Originally: frontend
