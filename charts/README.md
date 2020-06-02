@@ -18,4 +18,4 @@ sudo apt-get install build-essentials
 
 ### Commands
 
-`make update-charts` Update the subcharts for OpenStad
+`make get-subcharts` Update the subcharts for OpenStad
