@@ -1,6 +1,6 @@
 chart-name=openstad-chart
 
-debug: clean
+debug: clean install-dependencies
 	@echo "Creating a dry-run log..."
 	@mkdir -p debug
 	@helm install $(chart-name) . --dry-run --debug > debug/dry-run-debug-log.txt
@@ -9,7 +9,7 @@ debug: clean
 install-dependencies:
 	helm dependency update
 
-install: 
+install: install-dependencies
 	helm install $(chart-name) .
 
 upgrade: 
