@@ -70,6 +70,8 @@ frontend:
 # Adminer
 
 adminer:
+  replicas: 1 # Originally: 1
+
   namespace: *namespace
   service:
     name: adminer-service
@@ -86,6 +88,8 @@ adminer:
 # Auth
 
 auth:
+  replicas: 1 # Originally: 1
+
   namespace: *namespace
   service:
     name: auth-service
@@ -102,6 +106,8 @@ auth:
 # API
 
 api:
+  replicas: 1 # Originally: 1
+  
   namespace: *namespace
   service:
     name: api-service
