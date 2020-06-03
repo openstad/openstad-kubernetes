@@ -16,6 +16,7 @@ spec:
       containers:
       - name: {{ .Values.image.deploymentContainer.name }}
         image: {{ .Values.image.deploymentContainer.image }}
+        imagePullPolicy: Always
         ports:
             - name: http
               containerPort: {{ .Values.image.deploymentContainer.port }}
@@ -65,6 +66,7 @@ spec:
       initContainers:
       - name: create-db-ready
         image: {{ .Values.image.deploymentContainer.image }}
+        imagePullPolicy: Always
         env:
         - name: DB_NAME
           valueFrom:
@@ -87,4 +89,4 @@ spec:
               name: openstad-db-credentials
               key: password
         command: ["/bin/sh","-c"]         
-        args: ['knex migrate:latest']    
+        args: ['node --version','knex migrate:latest']    
