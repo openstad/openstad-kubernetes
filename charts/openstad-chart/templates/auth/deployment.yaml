@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.auth.deployment.name }}
   namespace: {{ .Values.auth.namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.auth.replicas }}
   selector:
     matchLabels:
       app: {{ .Values.auth.label }}

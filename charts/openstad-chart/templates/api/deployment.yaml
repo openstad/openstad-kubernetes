@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.api.deployment.name }}
   namespace: {{ .Values.api.namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.api.replicas }}
   revisionHistoryLimit: 10
   selector:
     matchLabels:
