@@ -34,10 +34,10 @@ COPY knex ./knex
 RUN mkdir -p images
 
 RUN apt-get update; \
-    apt-get install -y python make git g++; \
+    apt-get install -y python make cmake git g++; \
     npm install --ignore-optional; \
     npm install knex -g; \
-    apt-get remove -y make git g++; \
+    apt-get remove -y make cmake git g++; \
     apt autoremove -y
 
 COPY knex/migrations ./migrations
