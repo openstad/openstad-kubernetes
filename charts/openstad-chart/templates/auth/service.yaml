@@ -1,14 +1,15 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: auth-service
+  name: {{ .Values.auth.service.name }}
+  namespace: {{ .Values.auth.namespace }}
 spec:
   selector:
-    app: auth-container
+    app: {{ .Values.auth.label }}
   ports:
   - name: http
     protocol: TCP
-    port: 4000
+    port: {{ .Values.auth.deploymentContainer.port }}
   - name: management
     port: 9090
   type: ClusterIP

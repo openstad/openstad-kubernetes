@@ -88,7 +88,7 @@ auth:
   deploymentContainer:
     name: auth-container
     image: openstad/auth:test
-    port: 8080
+    port: 4000
 
 # TLS
 
