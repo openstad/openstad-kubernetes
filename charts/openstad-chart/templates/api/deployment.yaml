@@ -1,17 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api
+  name: {{ .Values.api.deployment.name }}
+  namespace: {{ .Values.api.namespace }}
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: openstad-api
+      app: {{ .Values.api.label }}
   template:
     metadata:
       labels:
-        app: openstad-api
+        app: {{ .Values.api.label }}
     spec:
       containers:
         - env:
@@ -115,11 +116,11 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: status.podIP
-          image: openstad/api:test
+          image: {{ .Values.api.deploymentContainer.image }}
           imagePullPolicy: Always
-          name: api
+          name: {{ .Values.api.deploymentContainer.name }}
           ports:
-            - containerPort: 8111
+            - containerPort: {{ .Values.api.deploymentContainer.port }}
               name: http
               protocol: TCP
           resources:
