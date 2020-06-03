@@ -7,6 +7,10 @@ define:
     name: &fesName "frontend-service"
     path: &fesPath /
     containerPort: &fesContainerPort 4444
+  authService:
+    name: &asName "auth-service"
+    path: &asPath /oauth
+    containerPort: &asContainerPort 4000
   host:
     host-url: &host-url www.openstad.softwaredepartment.net
     host-http: &host-http http://www.openstad.softwaredepartment.net
@@ -23,6 +27,11 @@ ingress:
     name: *fesName
     path: *fesPath
     containerPort: *fesContainerPort
+
+  authService:
+    name: *asName
+    path: *asPath
+    containerPort: *asContainerPort
 
 # Frontend
 
