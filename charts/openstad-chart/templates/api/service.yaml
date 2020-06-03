@@ -1,12 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: api-service
+  name: {{ .Values.api.service.name }}
+  namespace: {{ .Values.api.namespace }}
 spec:
   selector:
-    app: api-container
+    app: {{ .Values.api.label }}
   ports:
   - name: http
     protocol: TCP
-    port: 8111
+    port: {{ .Values.api.deploymentContainer.port }}
   type: ClusterIP
