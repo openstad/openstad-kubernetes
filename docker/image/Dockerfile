@@ -7,6 +7,7 @@ LABEL nl.openstad.container="image" nl.openstad.version="1.1.1" nl.openstad.rele
 ENV DB_NAME = ""
 ENV DB_USER = ""
 ENV DB_PASSWORD = "abc"
+ENV DB_HOST = ""
 ENV PORT_API = 4100
 ENV PORT_IMAGE_SERVER = 3000
 ENV IMAGES_DIR = /home/app/data
