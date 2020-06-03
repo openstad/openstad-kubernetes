@@ -21,11 +21,6 @@ spec:
             - name: http
               containerPort: {{ .Values.image.deploymentContainer.port }}
         env:
-          - name: DB_NAME
-            valueFrom:
-              secretKeyRef:
-                name: openstad-db-credentials
-                key: database
           - name: DB_HOST
             valueFrom:
               secretKeyRef:
@@ -71,7 +66,7 @@ spec:
         - name: DB_NAME
           valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
+                name: openstad-image-db
                 key: database
         - name: DB_HOST
           valueFrom:
@@ -89,4 +84,4 @@ spec:
               name: openstad-db-credentials
               key: password
         command: ["/bin/sh","-c"]         
-        args: ['node --version','knex migrate:latest']    
+        args: ['knex migrate:latest']    
