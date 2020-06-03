@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth
-  namespace: openstad
+  name: {{ .Values.auth.deployment.name }}
+  namespace: {{ .Values.auth.namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-container
+      app: {{ .Values.auth.label }}
   template:
     metadata:
       labels:
-        app: auth-container
+        app: {{ .Values.auth.label }}
     spec:
       containers:
-      - name: auth-container
-        image: openstad/auth:test
+      - name: {{ .Values.auth.deploymentContainer.name }}
+        image: {{ .Values.auth.deploymentContainer.image }}
         ports:
             - name: http
-              containerPort: 4000
+              containerPort: {{ .Values.auth.deploymentContainer.port }}
         env:   
           # HOSTING
           - name: APP_URL

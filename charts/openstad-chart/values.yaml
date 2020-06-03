@@ -74,6 +74,22 @@ adminer:
     image: adminer
     port: 8080
 
+# Auth
+
+auth:
+  namespace: *namespace
+  service:
+    name: auth-service
+  deployment:
+    name: auth-deploy
+  
+  label: auth-container
+
+  deploymentContainer:
+    name: auth-container
+    image: openstad/auth:test
+    port: 8080
+
 # TLS
 
 tls:
