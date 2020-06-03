@@ -9,9 +9,9 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: auth-service
-          servicePort: 4000
-        path: /oauth
+          serviceName: {{ .Values.ingress.authService.name }}
+          servicePort: {{ .Values.ingress.authService.containerPort }}
+        path: {{ .Values.ingress.authService.path }}
       - backend:
           serviceName: {{ .Values.ingress.frontendService.name }}
           servicePort: {{ .Values.ingress.frontendService.containerPort }}
