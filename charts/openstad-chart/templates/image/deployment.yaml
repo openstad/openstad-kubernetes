@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image
+  namespace: openstad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openstad-image
+  template:
+    metadata:
+      labels:
+        app: openstad-image
+    spec:
+      containers:
+      - name: image
+        image: openstad/image:test
+        ports:
+            - name: http
+              containerPort: 3000
+        env:
+          - name: DB_NAME
+            value: "openstad_image_server"
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: password
+          - name: APP_URL
+            value: "https://testdomain.marviq.net/"
+          - name: KUBERNETES_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+          requests:
+            cpu: "250m"
+            memory: "500M"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+      initContainers:
+      - name: create-db-ready
+        image: openstad/image:test
+        env:
+        - name: DB_NAME
+          value: "openstad_image_server"
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: openstad-db-credentials
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: openstad-db-credentials
+              key: password
+        command: ["/bin/sh","-c"]         
+        args: ['knex migrate:latest']    
