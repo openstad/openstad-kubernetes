@@ -90,6 +90,22 @@ auth:
     image: openstad/auth:test
     port: 4000
 
+# API
+api:
+  namespace: *namespace
+  service:
+    name: api-service
+  deployment:
+    name: api-deploy
+  
+  label: openstad-api
+
+  deploymentContainer:
+    name: api-container
+    image: openstad/api:test
+    port: 8111
+
+
 # TLS
 
 tls:
