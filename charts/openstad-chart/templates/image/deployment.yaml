@@ -33,7 +33,7 @@ spec:
                 name: openstad-db-credentials
                 key: password
           - name: APP_URL
-            value: "https://testdomain.marviq.net/"
+            value: {{ .Values.host.www }}
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
@@ -56,7 +56,7 @@ spec:
             port: {{ .Values.image.deploymentContainer.port }}
       initContainers:
       - name: create-db-ready
-        image: openstad/image:test
+        image: {{ .Values.image.deploymentContainer.image }}
         env:
         - name: DB_NAME
           value: "openstad_image_server"
