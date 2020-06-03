@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: image
-  namespace: openstad
+  name: {{ .Values.image.deployment.name }}
+  namespace: {{ .Values.image.namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: openstad-image
+      app: {{ .Values.image.label }}
   template:
     metadata:
       labels:
-        app: openstad-image
+        app: {{ .Values.image.label }}
     spec:
       containers:
-      - name: image
-        image: openstad/image:test
+      - name: {{ .Values.image.deploymentContainer.name }}
+        image: {{ .Values.image.deploymentContainer.image }}
         ports:
             - name: http
-              containerPort: 3000
+              containerPort: {{ .Values.image.deploymentContainer.port }}
         env:
           - name: DB_NAME
             value: "openstad_image_server"
@@ -52,8 +52,8 @@ spec:
             memory: "500M"
         readinessProbe:
           httpGet:
-            path: /
-            port: 3000
+            path: {{ .Values.image.host.path }}
+            port: {{ .Values.image.deploymentContainer.port }}
       initContainers:
       - name: create-db-ready
         image: openstad/image:test

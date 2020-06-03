@@ -1,12 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: image-service
+  name: {{ .Values.image.service.name }}
+  namespace: {{ .Values.image.namespace }}
 spec:
   selector:
-    app: image-container
+    app: {{ .Values.image.label }}
   ports:
   - name: http
     protocol: TCP
-    port: 3000
+    port: {{ .Values.image.deploymentContainer.port }}
   type: ClusterIP

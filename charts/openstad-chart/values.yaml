@@ -121,6 +121,26 @@ api:
     image: openstad/api:test
     port: 8111
 
+# Image
+
+image:
+  replicas: 1 # Originally: 1
+  
+  namespace: *namespace
+  service:
+    name: image-service
+  deployment:
+    name: image-deploy
+  
+  label: image-container
+
+  host:
+    path: /
+
+  deploymentContainer:
+    name: image
+    image: openstad/image:test
+    port: 3000
 
 # TLS
 
