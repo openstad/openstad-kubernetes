@@ -21,7 +21,15 @@ spec:
               containerPort: {{ .Values.image.deploymentContainer.port }}
         env:
           - name: DB_NAME
-            value: "openstad_image_server"
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: database
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: hostname
           - name: DB_USER
             valueFrom:
               secretKeyRef:
@@ -59,7 +67,15 @@ spec:
         image: {{ .Values.image.deploymentContainer.image }}
         env:
         - name: DB_NAME
-          value: "openstad_image_server"
+          valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: database
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: openstad-db-credentials
+              key: hostname
         - name: DB_USER
           valueFrom:
             secretKeyRef:
