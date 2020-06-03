@@ -1,7 +1,6 @@
 
 # TODO
 
-# Replicas
 # Tests to see whether everything works as it should
 # Check whether the given values can be changed without breaking anything
 # Add PVC (Persistent Volume Claims)
@@ -25,6 +24,12 @@ define:
     host-http: &host-http http://www.openstad.softwaredepartment.net
     host-https: &host-https https://www.openstad.softwaredepartment.net
 
+# Generic
+
+host:
+  www: *host-url
+  http: *host-http
+  https: *host-https
 
 # Ingress
 
@@ -54,10 +59,7 @@ frontend:
         port: *fesContainerPort # Originally: 4444
 
     host:
-        www: *host-url
-        http: *host-http
-        https: *host-https
-        path: /
+        path: *fesPath
 
     deployment:
         name: "frontend-deploy" # Originally: frontend
@@ -97,6 +99,9 @@ auth:
     name: auth-deploy
   
   label: auth-container
+
+  host:
+    path: *asPath
 
   deploymentContainer:
     name: auth-container

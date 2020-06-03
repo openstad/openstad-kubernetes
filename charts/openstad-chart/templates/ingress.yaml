@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.ingress.namespace }}
 spec:
   rules:
-  - host: {{ .Values.frontend.host.www }}
+  - host: {{ .Values.host.www }}
     http:
       paths:
       - backend:
