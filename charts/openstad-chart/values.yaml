@@ -58,6 +58,8 @@ frontend:
         httpPort: *fesContainerPort
         managementPort: 9090
 
+# Adminer
+
 adminer:
   namespace: *namespace
   service:
