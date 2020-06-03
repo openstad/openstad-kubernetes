@@ -26,6 +26,11 @@ spec:
               secretKeyRef:
                 name: openstad-db-credentials
                 key: hostname
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: openstad-image-db
+                key: database
           - name: DB_USER
             valueFrom:
               secretKeyRef:
