@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: openstad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openstad-frontend
+  template:
+    metadata:
+      labels:
+        app: openstad-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: openstad/frontend:debug
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 4444
+              protocol: TCP
+          env:
+            - name: DEFAULT_HOST
+              value: www.openstad.softwaredepartment.net
+            - name: APP_URL
+              value: https://www.openstad.softwaredepartment.net
+            - name: API
+              value: http://api-service:8111
+            - name: IMAGE_API_URL
+              value: http://image-service:3000
+            - name: IMAGE_API_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: fixed_token
+                  name: openstad-auth-credentials
+            - name: HOST_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  key: frontend
+                  name: openstad-hosts
+            - name: PORT
+              value: "4444"
+            - name: SITE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: fixed_token
+                  name: openstad-auth-credentials
+            - name: MONGO_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: hostname
+                  name: openstad-mongo-credentials
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: hostname
+                  name: openstad-mongo-credentials
+            - name: DEFAULT_DB
+              valueFrom:
+                secretKeyRef:
+                  key: database
+                  name: openstad-mongo-credentials
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 500M
+          volumeMounts:
+            - mountPath: /home/app/data
+              name: data-vol
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsUser: 1000
+      volumes:
+        - emptyDir: {}
+          name: data-vol

@@ -1,3 +1,6 @@
 #!/bin/bash
 
-kubectl -n openstad apply -f secret/ configmap/ deployment/ service/
+kubectl -n openstad apply -f secret/ 
+kubectl -n openstad apply -f configmap/ 
+kubectl -n openstad apply -f deployment/ 
+kubectl -n openstad apply -f service/

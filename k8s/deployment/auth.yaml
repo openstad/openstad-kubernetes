@@ -1,0 +1,159 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deploy
+  namespace: openstad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-container
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: auth-container
+    spec:
+      containers:
+      - env:
+        - name: APP_URL
+          valueFrom:
+            secretKeyRef:
+              key: auth
+              name: openstad-hosts
+        - name: ADMIN_REDIRECT_URL
+          valueFrom:
+            secretKeyRef:
+              key: frontend
+              name: openstad-hosts
+        - name: SESSION_SECRET
+          value: "1234567890123456"
+        - name: DB_VENDOR
+          valueFrom:
+            secretKeyRef:
+              key: type
+              name: openstad-db-credentials
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: openstad-db-credentials
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: openstad-db-credentials
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              key: hostname
+              name: openstad-db-credentials
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              key: hostport
+              name: openstad-db-credentials
+        - name: DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: database
+              name: openstad-auth-db
+        - name: MAIL_SERVER_URL
+          valueFrom:
+            secretKeyRef:
+              key: host
+              name: openstad-auth-mail
+        - name: MAIL_SERVER_PORT
+          valueFrom:
+            secretKeyRef:
+              key: port
+              name: openstad-auth-mail
+        - name: MAIL_SERVER_SECURE
+          value: "yes"
+        - name: MAIL_SERVER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: openstad-auth-mail
+        - name: MAIL_SERVER_USER_NAME
+          valueFrom:
+            secretKeyRef:
+              key: user
+              name: openstad-auth-mail
+        - name: EMAIL_ASSETS_URL
+          valueFrom:
+            secretKeyRef:
+              key: email_assets_url
+              name: openstad-auth-mail
+        - name: FROM_NAME
+          value: Openstad api
+        - name: FROM_EMAIL
+          valueFrom:
+            secretKeyRef:
+              key: user
+              name: openstad-auth-mail
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        image: openstad/auth:test
+        imagePullPolicy: Always
+        name: auth-container
+        ports:
+        - containerPort: 4000
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 500M
+      initContainers:
+      - args:
+        - knex migrate:latest
+        command:
+        - /bin/sh
+        - -c
+        env:
+        - name: DB_ADDR
+          valueFrom:
+            secretKeyRef:
+              key: hostname
+              name: openstad-db-credentials
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              key: hostport
+              name: openstad-db-credentials
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              key: hostname
+              name: openstad-db-credentials
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: openstad-db-credentials
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: openstad-db-credentials
+        - name: DB_NAME
+          value: auth
+        image: openstad/auth:test
+        imagePullPolicy: IfNotPresent
+        name: init-db-ready
