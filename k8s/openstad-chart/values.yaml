@@ -29,7 +29,7 @@ define:
 secrets:
   namespace: *namespace
 
-  database:
+  database: # SQL database
     image:
       secretName: openstad-image-db-test # Originally: openstad-image-db
       dbName: image
@@ -40,6 +40,12 @@ secrets:
     hostport: 3306
     password: LorrmEcZ5aZlYqmR5hAHpV2QhDCImQfW
     username: openstad
+
+  mongodb: # Mongo Database
+    secretName: openstad-mongo-credentials-test # Originally: openstad-mongo-credentials
+    hostname: openstad-mongodb.openstad.svc.cluster.local
+    hostport: 27017
+    database: openstad_mongodb
 
   cookies:
     secretName: openstad-cookies-test # Originally: openstad-cookies
@@ -52,6 +58,8 @@ secrets:
     auth: auth.openstad.svc.cluster.local
     frontend: frontend.openstad.svc.cluster.local
     image: image.openstad.svc.cluster.local
+
+  
 
 # Generic
 
