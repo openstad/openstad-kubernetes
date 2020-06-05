@@ -60,8 +60,7 @@ spec:
             cpu: "250m"
             memory: "500M"
         readinessProbe:
-          httpGet:
-            path: {{ .Values.image.host.path }}
+          tcpSocket:
             port: {{ .Values.image.deploymentContainer.port }}
       initContainers:
       - name: create-db-ready
