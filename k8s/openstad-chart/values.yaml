@@ -78,11 +78,19 @@ secrets:
 
   mail:
     api:
-      secretName: openstad-api-mail
+      secretName: openstad-api-mail-test # Originally: openstad-api-mail
       host: mail.example.com
       port: 587
       user: user@example.com
       password: pwd123
+
+    auth:
+      secretName: openstad-auth-mail-test # Originally: openstad-auth-mail
+      emailAssetsUrl: assets.example.com
+      host: mail.example.com
+      password: pwd123
+      port: 587
+      user: mail@example.com
   
 
 # Generic
