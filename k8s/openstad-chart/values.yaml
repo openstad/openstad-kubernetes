@@ -24,6 +24,22 @@ define:
     host-http: &host-http http://www.openstad.softwaredepartment.net
     host-https: &host-https https://www.openstad.softwaredepartment.net
 
+# Secrets
+
+secrets:
+  namespace: *namespace
+  database:
+    image:
+      secretName: openstad-image-db
+      dbName: image
+    secretName: openstad-db-credentials-test # Originally: openstad-db-credentials
+    dbName: mysql
+    type: mysql
+    hostname: openstad-mysql.openstad.svc.cluster.local
+    hostport: 3306
+    password: LorrmEcZ5aZlYqmR5hAHpV2QhDCImQfW
+    username: openstad
+
 # Generic
 
 host:
