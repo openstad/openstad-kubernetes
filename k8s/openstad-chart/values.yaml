@@ -38,6 +38,10 @@ secrets:
       secretName: openstad-api-db-test # Originally: openstad-api-db
       dbName: api
 
+    auth:
+      secretName: openstad-auth-db-test # Originally: openstad-auth-db
+      dbName: auth
+
     secretName: openstad-db-credentials-test # Originally: openstad-db-credentials
     dbName: mysql
     type: mysql
