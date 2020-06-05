@@ -135,6 +135,9 @@ spec:
           requests:
             cpu: "100m"
             memory: "500M"
+        readinessProbe:
+          tcpSocket:
+            port: {{ .Values.auth.deploymentContainer.port }}
       initContainers:
       - name: init-db-ready
         image: openstad/auth:test
