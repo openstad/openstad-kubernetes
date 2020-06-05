@@ -25,7 +25,8 @@ define:
     host-https: &host-https https://www.openstad.softwaredepartment.net
 
 # Dependencies
-global:
+
+dependencies:
   mongodb: 
     enabled: false
   mysql: 
