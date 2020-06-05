@@ -29,8 +29,6 @@ define:
     password: &dbPass examplePass2146
 
   mongodb:
-    username: &mgdbUser ( *dbUser )
-    password: &mgdbPass ( *dbPass )
     database: &mgdbDb openstad_mongodb
 
 # Dependencies
@@ -239,8 +237,8 @@ image:
 # MongoDB overwrite subchart
 
 mongodb:
-  mongodbUsername: *mgdbUser
-  mongodbPassword: *mgdbPass
+  mongodbUsername: *dbUser
+  mongodbPassword: *dbPass
   mongodbDatabase: *mgdbDb
 
 # TLS
