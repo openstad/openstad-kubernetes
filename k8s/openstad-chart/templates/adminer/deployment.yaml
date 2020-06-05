@@ -23,3 +23,12 @@ spec:
           # DB Reference
           - name: ADMINER_DEFAULT_SERVER
             value: "openstad-mysql"
+        readinessProbe:
+          tcpSocket:
+            port: {{ .Values.adminer.deploymentContainer.port }}
+        livenessProbe:
+          tcpSocket:
+            port: {{ .Values.adminer.deploymentContainer.port }}
+          initialDelaySeconds: {{ .Values.adminer.probe.liveness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.adminer.probe.liveness.periodSeconds }}
+

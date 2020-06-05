@@ -68,6 +68,11 @@ frontend:
         name: frontend-service # Originally: frontend-service
         httpPort: *fesContainerPort
         managementPort: 9090
+    
+    probe:
+      liveness:
+        initialDelaySeconds: 30
+        periodSeconds: 60
 
 # Adminer
 
@@ -86,6 +91,11 @@ adminer:
     name: auth
     image: adminer
     port: 8080
+
+  probe:
+    liveness:
+      initialDelaySeconds: 30
+      periodSeconds: 60
 
 # Auth
 
@@ -107,6 +117,11 @@ auth:
     name: auth-container
     image: openstad/auth:test
     port: 4000
+  
+  probe:
+    liveness:
+      initialDelaySeconds: 30
+      periodSeconds: 60
 
 # API
 
@@ -125,6 +140,11 @@ api:
     name: api-container
     image: openstad/api:test
     port: 8111
+
+  probe:
+    liveness:
+      initialDelaySeconds: 30
+      periodSeconds: 60
 
 # Image
 
@@ -145,7 +165,12 @@ image:
   deploymentContainer:
     name: image
     image: openstad/image:test
-    port: 3000
+    port: 4100
+
+  probe:
+    liveness:
+      initialDelaySeconds: 30
+      periodSeconds: 60
 
 # TLS
 
