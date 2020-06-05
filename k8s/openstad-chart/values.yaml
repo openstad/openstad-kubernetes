@@ -24,6 +24,12 @@ define:
     host-http: &host-http http://www.openstad.softwaredepartment.net
     host-https: &host-https https://www.openstad.softwaredepartment.net
 
+# Dependencies
+
+dependencies:
+  certManager:
+    enabled: true
+
 # Secrets
 
 secrets:
