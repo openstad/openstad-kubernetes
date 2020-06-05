@@ -27,6 +27,7 @@ define:
   mysql:
     username: &dbUser openstad
     password: &dbPass examplePass2146
+    database: &dbName image
 
   mongodb:
     database: &mgdbDb openstad_mongodb
@@ -37,7 +38,7 @@ dependencies:
   mongodb: 
     enabled: true
   mysql: 
-    enabled: false
+    enabled: true
   cert-manager: 
     enabled: false
 
@@ -240,6 +241,14 @@ mongodb:
   mongodbUsername: *dbUser
   mongodbPassword: *dbPass
   mongodbDatabase: *mgdbDb
+
+# MySQL overwrite subchart
+
+mysql:
+  db:
+    user: *dbUser
+    password: *dbPass
+    name: *dbName
 
 # TLS
 
