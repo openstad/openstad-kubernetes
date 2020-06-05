@@ -33,6 +33,11 @@ secrets:
     image:
       secretName: openstad-image-db-test # Originally: openstad-image-db
       dbName: image
+    
+    api:
+      secretName: openstad-api-db-test # Originally: openstad-api-db
+      dbName: api
+
     secretName: openstad-db-credentials-test # Originally: openstad-db-credentials
     dbName: mysql
     type: mysql
