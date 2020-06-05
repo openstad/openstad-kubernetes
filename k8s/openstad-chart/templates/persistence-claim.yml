@@ -4,7 +4,7 @@ metadata:
   name: persistence-claim
   namespace: openstad
 spec:
-  storageClassName: hcloud-volumes
+  storageClassName: {{ .Values.persistence.storageClassName }}
   accessModes:
     - ReadWriteOnce
   resources:
