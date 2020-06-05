@@ -28,9 +28,10 @@ define:
 
 secrets:
   namespace: *namespace
+
   database:
     image:
-      secretName: openstad-image-db
+      secretName: openstad-image-db-test # Originally: openstad-image-db
       dbName: image
     secretName: openstad-db-credentials-test # Originally: openstad-db-credentials
     dbName: mysql
@@ -39,6 +40,18 @@ secrets:
     hostport: 3306
     password: LorrmEcZ5aZlYqmR5hAHpV2QhDCImQfW
     username: openstad
+
+  cookies:
+    secretName: openstad-cookies-test # Originally: openstad-cookies
+    cookieSecret: IloveCookies
+    jwtSecret: SecretToken
+
+  hosts:
+    secretName: openstad-hosts-test # Originally: openstad-hosts-test
+    api: api.openstad.svc.cluster.local
+    auth: auth.openstad.svc.cluster.local
+    frontend: frontend.openstad.svc.cluster.local
+    image: image.openstad.svc.cluster.local
 
 # Generic
 
