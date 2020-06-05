@@ -42,6 +42,14 @@ secrets:
       secretName: openstad-auth-db-test # Originally: openstad-auth-db
       dbName: auth
 
+      credentials:
+        secretName: openstad-auth-credentials-test # Originally: openstad-auth-credentials
+
+        clientId: clientID
+        clientSecret: clientSecret
+        fixedUserId: 2
+        fixedToken: fixedToken
+
     secretName: openstad-db-credentials-test # Originally: openstad-db-credentials
     dbName: mysql
     type: mysql
