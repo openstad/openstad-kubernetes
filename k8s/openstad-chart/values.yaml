@@ -34,6 +34,7 @@ host:
 # Persistence
 persistence:
   storageClassName: "hcloud-volumes"
+  annotations: "{}"
 
 # Ingress
 

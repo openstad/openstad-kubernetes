@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: persistence-claim
   namespace: openstad
+  annotations: {{ .Values.persistence.annotations }}
 spec:
   storageClassName: {{ .Values.persistence.storageClassName }}
   accessModes:
