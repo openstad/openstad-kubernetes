@@ -24,6 +24,53 @@ define:
     host-http: &host-http http://www.openstad.softwaredepartment.net
     host-https: &host-https https://www.openstad.softwaredepartment.net
 
+# Dependencies
+
+dependencies:
+  mongodb: 
+    enabled: false
+  mysql: 
+    enabled: false
+  cert-manager: 
+    enabled: false
+
+# Secrets
+
+secrets:
+  namespace: *namespace
+
+  database: # SQL database
+    image:
+      secretName: openstad-image-db # Originally: openstad-image-db
+    
+    api:
+      secretName: openstad-api-db # Originally: openstad-api-db
+
+    auth:
+      secretName: openstad-auth-db # Originally: openstad-auth-db
+
+      credentials:
+        secretName: openstad-auth-credentials # Originally: openstad-auth-credentials
+
+    secretName: openstad-db-credentials # Originally: openstad-db-credentials
+
+  mongodb: # Mongo Database
+    secretName: openstad-mongo-credentials # Originally: openstad-mongo-credentials
+
+  cookies:
+    secretName: openstad-cookies # Originally: openstad-cookies
+
+  hosts:
+    secretName: openstad-hosts # Originally: openstad-hosts-test
+
+  mail:
+    api:
+      secretName: openstad-api-mail # Originally: openstad-api-mail
+
+    auth:
+      secretName: openstad-auth-mail # Originally: openstad-auth-mail
+  
+
 # Generic
 
 host:

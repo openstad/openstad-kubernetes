@@ -1,0 +1,16 @@
+---
+dependencies:
+- name: cert-manager
+  version: "0.15.1"
+  repository: "https://charts.jetstack.io"
+  condition: dependencies.cert-manager.enabled
+
+- name: mongodb
+  version: "7.14.5"
+  repository: "https://charts.bitnami.com/bitnami"
+  condition: dependencies.mongodb.enabled
+
+- name: mysql
+  version: "6.14.2"
+  repository: "https://charts.bitnami.com/bitnami"
+  condition: dependencies.mysql.enabled
