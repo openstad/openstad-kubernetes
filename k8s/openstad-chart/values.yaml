@@ -31,26 +31,26 @@ secrets:
 
   database: # SQL database
     image:
-      secretName: openstad-image-db-test # Originally: openstad-image-db
+      secretName: openstad-image-db # Originally: openstad-image-db
       dbName: image
     
     api:
-      secretName: openstad-api-db-test # Originally: openstad-api-db
+      secretName: openstad-api-db # Originally: openstad-api-db
       dbName: api
 
     auth:
-      secretName: openstad-auth-db-test # Originally: openstad-auth-db
+      secretName: openstad-auth-db # Originally: openstad-auth-db
       dbName: auth
 
       credentials:
-        secretName: openstad-auth-credentials-test # Originally: openstad-auth-credentials
+        secretName: openstad-auth-credentials # Originally: openstad-auth-credentials
 
         clientId: clientID
         clientSecret: clientSecret
         fixedUserId: 2
         fixedToken: fixedToken
 
-    secretName: openstad-db-credentials-test # Originally: openstad-db-credentials
+    secretName: openstad-db-credentials # Originally: openstad-db-credentials
     dbName: mysql
     type: mysql
     hostname: openstad-mysql.openstad.svc.cluster.local
@@ -59,18 +59,18 @@ secrets:
     username: openstad
 
   mongodb: # Mongo Database
-    secretName: openstad-mongo-credentials-test # Originally: openstad-mongo-credentials
+    secretName: openstad-mongo-credentials # Originally: openstad-mongo-credentials
     hostname: openstad-mongodb.openstad.svc.cluster.local
     hostport: 27017
     database: openstad_mongodb
 
   cookies:
-    secretName: openstad-cookies-test # Originally: openstad-cookies
+    secretName: openstad-cookies # Originally: openstad-cookies
     cookieSecret: IloveCookies
     jwtSecret: SecretToken
 
   hosts:
-    secretName: openstad-hosts-test # Originally: openstad-hosts-test
+    secretName: openstad-hosts # Originally: openstad-hosts-test
     api: api.openstad.svc.cluster.local
     auth: auth.openstad.svc.cluster.local
     frontend: frontend.openstad.svc.cluster.local
@@ -78,14 +78,14 @@ secrets:
 
   mail:
     api:
-      secretName: openstad-api-mail-test # Originally: openstad-api-mail
+      secretName: openstad-api-mail # Originally: openstad-api-mail
       host: mail.example.com
       port: 587
       user: user@example.com
       password: pwd123
 
     auth:
-      secretName: openstad-auth-mail-test # Originally: openstad-auth-mail
+      secretName: openstad-auth-mail # Originally: openstad-auth-mail
       emailAssetsUrl: assets.example.com
       host: mail.example.com
       password: pwd123
