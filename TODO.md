@@ -7,7 +7,7 @@ Last cleanup June 4, 2020 - 12:18PM.
 
 - [ ] Use the correct builds for the containers based on the delivered branches.
 - [ ] Ensure logging communicated is useful (operational logging instead of startup).(*)
-- [ ] Add Health check endpoints (*)
+- [x] Add Health check endpoints (*)
 - [ ] Minimize sizes of build docker images (*)
 - [ ] Default database setup including fixtures (*)
 
