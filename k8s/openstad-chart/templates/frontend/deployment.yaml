@@ -84,6 +84,9 @@ spec:
           volumeMounts:
             - mountPath: /home/app/data
               name: data-vol
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.frontend.deploymentContainer.port }}
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       securityContext:
