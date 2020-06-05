@@ -76,6 +76,13 @@ secrets:
     frontend: frontend.openstad.svc.cluster.local
     image: image.openstad.svc.cluster.local
 
+  mail:
+    api:
+      secretName: openstad-api-mail
+      host: mail.example.com
+      port: 587
+      user: user@example.com
+      password: pwd123
   
 
 # Generic
