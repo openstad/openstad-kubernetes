@@ -78,6 +78,11 @@ host:
   http: *host-http
   https: *host-https
 
+# Persistence
+persistence:
+  storageClassName: "hcloud-volumes"
+  annotations: "{}"
+
 # Ingress
 
 ingress:

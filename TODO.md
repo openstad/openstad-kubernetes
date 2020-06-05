@@ -14,9 +14,10 @@ Last cleanup June 4, 2020 - 12:18PM.
 ## Kubernetes
 
 - [x] Secrets mapping to be added to Helm chart (https://helm.sh/docs/howto/charts_tips_and_tricks/#creating-image-pull-secrets)
-- [ ] PVC mappings in YAML format to be added to repository
-- [ ] PVC mappings to be added to Helm chart
-- [ ] Make PVC mappings configurable from Helm chart so storage-class and annotations can be added.
+- [x] PVC mappings in YAML format to be added to repository
+- [x] PVC mappings to be added to Helm chart
+- [x] Make PVC mappings configurable from Helm chart so storage-class and annotations can be added.
+
 - [ ] Add MongoDB, MySQL and Cert-manager as subscharts including option to override it (enable/disable/set data)
 
 ## Administrative
