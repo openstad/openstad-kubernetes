@@ -24,11 +24,20 @@ define:
     host-http: &host-http http://www.openstad.softwaredepartment.net
     host-https: &host-https https://www.openstad.softwaredepartment.net
 
+  mysql:
+    username: &dbUser openstad
+    password: &dbPass examplePass2146
+
+  mongodb:
+    username: &mgdbUser ( *dbUser )
+    password: &mgdbPass ( *dbPass )
+    database: &mgdbDb openstad_mongodb
+
 # Dependencies
 
 dependencies:
   mongodb: 
-    enabled: false
+    enabled: true
   mysql: 
     enabled: false
   cert-manager: 
@@ -53,9 +62,12 @@ secrets:
         secretName: openstad-auth-credentials # Originally: openstad-auth-credentials
 
     secretName: openstad-db-credentials # Originally: openstad-db-credentials
+    password: *dbPass
+    username: *dbUser
 
   mongodb: # Mongo Database
     secretName: openstad-mongo-credentials # Originally: openstad-mongo-credentials
+    database: *mgdbDb
 
   cookies:
     secretName: openstad-cookies # Originally: openstad-cookies
@@ -223,6 +235,13 @@ image:
     liveness:
       initialDelaySeconds: 30
       periodSeconds: 60
+
+# MongoDB overwrite subchart
+
+mongodb:
+  mongodbUsername: *mgdbUser
+  mongodbPassword: *mgdbPass
+  mongodbDatabase: *mgdbDb
 
 # TLS
 
