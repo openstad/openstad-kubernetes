@@ -87,6 +87,11 @@ spec:
           readinessProbe:
             tcpSocket:
               port: {{ .Values.frontend.deploymentContainer.port }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.frontend.deploymentContainer.port }}
+            initialDelaySeconds: {{ .Values.frontend.probe.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.frontend.probe.liveness.periodSeconds }}
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       securityContext:

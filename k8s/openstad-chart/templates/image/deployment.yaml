@@ -62,6 +62,11 @@ spec:
         readinessProbe:
           tcpSocket:
             port: {{ .Values.image.deploymentContainer.port }}
+        livenessProbe:
+          tcpSocket:
+            port: {{ .Values.image.deploymentContainer.port }}
+          initialDelaySeconds: {{ .Values.image.probe.liveness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.image.probe.liveness.periodSeconds }}
       initContainers:
       - name: create-db-ready
         image: {{ .Values.image.deploymentContainer.image }}

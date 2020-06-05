@@ -133,6 +133,11 @@ spec:
           readinessProbe:
             tcpSocket:
               port: {{ .Values.api.deploymentContainer.port }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.api.deploymentContainer.port }}
+            initialDelaySeconds: {{ .Values.api.probe.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.api.probe.liveness.periodSeconds }}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
