@@ -25,10 +25,13 @@ define:
     host-https: &host-https https://www.openstad.softwaredepartment.net
 
 # Dependencies
-
-dependencies:
-  certManager:
-    enabled: true
+global:
+  mongodb: 
+    enabled: false
+  mysql: 
+    enabled: false
+  cert-manager: 
+    enabled: false
 
 # Secrets
 
