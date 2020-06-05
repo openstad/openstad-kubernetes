@@ -2,3 +2,4 @@ prod_secrets/**
 .idea/
 target/
 *.iml
+.DS_Store

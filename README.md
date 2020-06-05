@@ -27,17 +27,18 @@ After the installs please not the secrets in which the accounts are created for 
 In k8s/ you will find the basic setup files for the environment but they can need some manual adjustments to make it work, can best be rolled out in this order:
 
 - Secrets
-- ConfigMaps
+- Deployments
 
 > For those wondering why the different elements have been sorted by type, this is to make their functions easier to grasp for beginners.
 
 ### Installation
 
 ```bash
-kubectl apply -f secrets/ configmaps/ deployments/ services/
+kubectl apply -f secrets/
+kubectl apply -f deployments/
 ```
 
-You can validate the setup using the command `kubectl get podx 
+You can validate the setup using the command `kubectl get pods -n openstad`
 
 ## Helm chart
 
