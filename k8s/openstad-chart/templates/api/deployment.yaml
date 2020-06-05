@@ -130,6 +130,9 @@ spec:
             requests:
               cpu: 100m
               memory: 500M
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.api.deploymentContainer.port }}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
