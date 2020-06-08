@@ -14,13 +14,21 @@ spec:
       labels:
         app: {{ .Values.auth.label }}
     spec:
+      volumes:
+        - name: certs
+          secret:
+            secretName: openstad-auth-certificates
       containers:
       - name: {{ .Values.auth.deploymentContainer.name }}
         image: {{ .Values.auth.deploymentContainer.image }}
+        volumeMounts:
+          - mountPath: "/home/app/certs"
+            name: certs
+            readOnly: true
         ports:
             - name: http
               containerPort: {{ .Values.auth.deploymentContainer.port }}
-        env:   
+        env:
           # HOSTING
           - name: APP_URL
             valueFrom:

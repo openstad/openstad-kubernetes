@@ -197,7 +197,7 @@ spec:
         volumeMounts:
           - mountPath: "/home/app/certs"
             name: certs
-            readOnly: false
+            readOnly: true
         ports:
         - containerPort: 4000
           name: http
