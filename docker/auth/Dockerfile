@@ -29,7 +29,7 @@ ENV FROM_EMAIL=""
 
 
 # Install all base dependencies.
-RUN apk add --no-cache --update openssl g++ make python3 musl-dev
+RUN apk add --no-cache --update openssl g++ make python musl-dev
 
 # Set the working directory to the root of the container
 WORKDIR /home/app
@@ -37,12 +37,6 @@ WORKDIR /home/app
 # Bundle app source
 COPY . /home/app
 
-# Generate certificates
-RUN openssl genrsa -out privatekey.pem 2048 \     
-    && openssl req -new -key privatekey.pem -out certrequest.csr -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=$APP_URL"     && openssl x509 -req -in certrequest.csr -signkey privatekey.pem -out certificate.pem
-
-# Move certificates
-RUN mkdir -p/home/app/certs     && mv certificate.pem/home/app/certs/     && mv certrequest.csr/home/app/certs/     && mv privatekey.pem/home/app/certs/
 
 # This packages must be installed seperatly to prevent crash
 # @since node 10.16
@@ -52,7 +46,6 @@ RUN npm install bcrypt
 # Install all npm packages
 RUN npm install
 
-
 # ----------------------------------------------
 # TODO: Migrate to database
 RUN npm install knex -g
@@ -60,12 +53,17 @@ RUN npm install knex -g
 # RUN knex migrate:latest
 # ----------------------------------------------
 
-
 # Remove unused packages only used for building.
 RUN apk del openssl g++ make && rm -rf /var/cache/apk/*
 
+# The place where the certificates should be:
+# certificate.pem  certrequest.csr  privatekey.pem
+RUN mkdir /home/app/certs
+VOLUME ["/home/app/certs"]
+
 # Owner rights for node user
-RUN chown -R node:node/home/app
+RUN chown -R node:node /home/app
+
 USER node
 
 # Exposed ports for application
