@@ -1,15 +1,17 @@
 # TODO
 
 Points marked with (*) should be handled by or done together with the Opestad development team.
-Last cleanup June 4, 2020 - 12:18PM.
+Last cleanup June 8, 2020 - 12:18AM.
 
 ## Software
 
-- [ ] Use the correct builds for the containers based on the delivered branches.
+- [x] Use the correct builds for the containers based on the delivered branches.
 - [ ] Ensure logging communicated is useful (operational logging instead of startup).(*)
 - [x] Add Health check endpoints (*)
 - [ ] Minimize sizes of build docker images (*)
-- [ ] Default database setup including fixtures (*)
+- [x] Default database install in helm
+- [ ] Auto configuration of three databases and accounts using standard MySQL helm
+- [ ] setup including fixtures (*)
 
 ## Kubernetes
 
@@ -17,8 +19,11 @@ Last cleanup June 4, 2020 - 12:18PM.
 - [x] PVC mappings in YAML format to be added to repository
 - [x] PVC mappings to be added to Helm chart
 - [x] Make PVC mappings configurable from Helm chart so storage-class and annotations can be added.
-
 - [x] Add MongoDB, MySQL and Cert-manager as subscharts including option to override it (enable/disable/set data)
+- [x] Ingress access to the frontend
+- [x] Automatic generaction of central certificate file using Helm and shared via secrets
+- [ ] Add Ingress files for each container including automapping over multiple containers
+- [ ] Optionally add xip.io or nip.io endpoint combining hostname and IP address if none defined
 
 ## Administrative
 
