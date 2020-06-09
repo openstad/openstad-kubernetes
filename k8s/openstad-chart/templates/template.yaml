@@ -17,62 +17,62 @@
 
 # Secrets
 {{- define "databaseSecret" -}}
-  {{ printf "type: %s" (.Values.secrets.database.type | default "mysql" | b64enc) }}
-  {{ printf "database: %s" (.Values.secrets.database.dbName | default "mysql" | b64enc) }}
-  {{ printf "hostname: %s" (.Values.secrets.database.hostname | default (printf "%s-mysql.%s.svc.cluster.local" .Release.Name .Release.Namespace) | b64enc) }}
-  {{ printf "hostport: %s" (.Values.secrets.database.hostport | default 3306 | toString | b64enc) }}
-  {{ printf "password: %s" (.Values.secrets.database.password | default "LorrmEcZ5aZlYqmR5hAHpV2QhDCImQfW" | b64enc) }}
-  {{ printf "username: %s" (.Values.secrets.database.username | default "openstad" | b64enc) }}
+  type: {{ .Values.secrets.database.type | default "mysql" | b64enc }}
+  database: {{ .Values.secrets.database.dbName | default "mysql" | b64enc }}
+  hostname: {{ .Values.secrets.database.hostname | default (printf "%s-mysql.%s.svc.cluster.local" .Release.Name .Release.Namespace) | b64enc }}
+  hostport: {{ .Values.secrets.database.hostport | default 3306 | toString | b64enc }}
+  password: {{ .Values.secrets.database.password | default "LorrmEcZ5aZlYqmR5hAHpV2QhDCImQfW" | b64enc }}
+  username: {{ .Values.secrets.database.username | default "openstad" | b64enc }}
 {{- end }}
 
 {{- define "mongodbSecret" -}}
-  {{ printf "hostname: %s" (.Values.secrets.mongodb.hostname | default (printf "%s-mongodb.%s.svc.cluster.local" .Release.Name .Release.Namespace) | b64enc) }}
-  {{ printf "hostport: %s" (.Values.secrets.mongodb.hostport | default 27017 | toString | b64enc) }}
-  {{ printf "database: %s" (.Values.secrets.mongodb.database | default "openstad_mongodb" | b64enc) }}
+  hostname: {{ .Values.secrets.mongodb.hostname | default (printf "%s-mongodb.%s.svc.cluster.local" .Release.Name .Release.Namespace) | b64enc }}
+  hostport: {{ .Values.secrets.mongodb.hostport | default 27017 | toString | b64enc }}
+  database: {{ .Values.secrets.mongodb.database | default "openstad_mongodb" | b64enc }}
 {{- end }}
 
 {{- define "cookieSecret" -}}
-  {{ printf "cookie_secret: %s" (.Values.secrets.cookies.cookieSecret | default "IloveCookies" | b64enc) }}
-  {{ printf "jwt_secret: %s" (.Values.secrets.cookies.jwtSecret | default "SecretToken" | b64enc) }}
+  cookie_secret: {{ .Values.secrets.cookies.cookieSecret | default "IloveCookies" | b64enc }}
+  jwt_secret: {{ .Values.secrets.cookies.jwtSecret | default "SecretToken" | b64enc }}
 {{- end }}
 
 {{- define "imageDbSecret" -}}
-  {{ printf "database: %s" (.Values.secrets.database.image.dbName | default "image" | b64enc) }}
+  database: {{ .Values.secrets.database.image.dbName | default "image" | b64enc }}
 {{- end }}
 
 {{- define "apiDbSecret" -}}
-  {{ printf "database: %s" (.Values.secrets.database.api.dbName | default "api" | b64enc) }}
+  database: {{ .Values.secrets.database.api.dbName | default "api" | b64enc }}
 {{- end }}
 
 {{- define "authDbSecret" -}}
-  {{ printf "database: %s" (.Values.secrets.database.auth.dbName | default "auth" | b64enc) }}
+  database: {{ .Values.secrets.database.auth.dbName | default "auth" | b64enc }}
 {{- end }}
 
 {{- define "hostsSecret" -}}
-  {{ printf "api: %s" (.Values.secrets.hosts.api | default (printf "%s.%s.svc.cluster.local" .Values.api.service.name .Release.Namespace) | b64enc) }}
-  {{ printf "auth: %s" (.Values.secrets.hosts.auth | default (printf "%s.%s.svc.cluster.local" .Values.auth.service.name .Release.Namespace) | b64enc) }}
-  {{ printf "frontend: %s" (.Values.secrets.hosts.frontend | default (printf "%s.%s.svc.cluster.local" .Values.frontend.service.name .Release.Namespace) | b64enc) }}
-  {{ printf "image: %s" (.Values.secrets.hosts.image | default (printf "%s.%s.svc.cluster.local" .Values.image.service.name .Release.Namespace) | b64enc) }}
+  api: {{ .Values.secrets.hosts.api | default (printf "%s.%s.svc.cluster.local" .Values.api.service.name .Release.Namespace) | b64enc }}
+  auth: {{ .Values.secrets.hosts.auth | default (printf "%s.%s.svc.cluster.local" .Values.auth.service.name .Release.Namespace) | b64enc }}
+  frontend: {{ .Values.secrets.hosts.frontend | default (printf "%s.%s.svc.cluster.local" .Values.frontend.service.name .Release.Namespace) | b64enc }}
+  image: {{ .Values.secrets.hosts.image | default (printf "%s.%s.svc.cluster.local" .Values.image.service.name .Release.Namespace) | b64enc }}
 {{- end }}
 
 {{- define "authCredSecret" -}}
-  {{ printf "client_id: %s" ( .Values.secrets.database.auth.credentials.clientId | default "clientID" | b64enc) }}
-  {{ printf "client_secret: %s" ( .Values.secrets.database.auth.credentials.clientSecret | default "clientSecret" | b64enc) }}
-  {{ printf "fixed_user_id: %s" ( .Values.secrets.database.auth.credentials.fixedUserId | default 2 | quote | b64enc) }}
-  {{ printf "fixed_token: %s" ( .Values.secrets.database.auth.credentials.fixedToken | default "fixedToken" | b64enc) }}
+  client_id: {{ .Values.secrets.database.auth.credentials.clientId | default "clientID" | b64enc }}
+  client_secret: {{ .Values.secrets.database.auth.credentials.clientSecret | default "clientSecret" | b64enc }}
+  fixed_user_id: {{ .Values.secrets.database.auth.credentials.fixedUserId | default 2 | quote | b64enc }}
+  fixed_token: {{ .Values.secrets.database.auth.credentials.fixedToken | default "fixedToken" | b64enc }}
 {{- end }}
 
 {{- define "apiMailSecret" -}}
-  {{ printf "host: %s" ( .Values.secrets.mail.api.host | default "mail.example.com" | b64enc ) }}
-  {{ printf "port: %s" ( .Values.secrets.mail.api.port | default 587 | toString | b64enc ) }}
-  {{ printf "user: %s" ( .Values.secrets.mail.api.user | default "user@example.com" | b64enc ) }}
-  {{ printf "password: %s" ( .Values.secrets.mail.api.password | default "pwd123" | b64enc ) }}
+  host: {{ .Values.secrets.mail.api.host | default "mail.example.com" | b64enc }}
+  port: {{ .Values.secrets.mail.api.port | default 587 | toString | b64enc }}
+  user: {{ .Values.secrets.mail.api.user | default "user@example.com" | b64enc }}
+  password: {{ .Values.secrets.mail.api.password | default "pwd123" | b64enc }}
 {{- end}}
 
 {{- define "authMailSecret" -}}
-  {{ printf "host: %s" ( .Values.secrets.mail.auth.host | default "mail.example.com" | b64enc ) }}
-  {{ printf "email_assets_url: %s" ( .Values.secrets.mail.auth.emailAssetsUrl | default "assets.example.com" | b64enc ) }}
-  {{ printf "port: %s" ( .Values.secrets.mail.auth.port | default 587 | toString | b64enc ) }}
-  {{ printf "user: %s" ( .Values.secrets.mail.auth.user | default "mail@example.com" | b64enc ) }}
-  {{ printf "password: %s" ( .Values.secrets.mail.auth.password | default "pwd123" | b64enc ) }}
+  host: {{ .Values.secrets.mail.auth.host | default "mail.example.com" | b64enc }}
+  email_assets_url: {{ .Values.secrets.mail.auth.emailAssetsUrl | default "assets.example.com" | b64enc }}
+  port: {{ .Values.secrets.mail.auth.port | default 587 | toString | b64enc }}
+  user: {{ .Values.secrets.mail.auth.user | default "mail@example.com" | b64enc }}
+  password: {{ .Values.secrets.mail.auth.password | default "pwd123" | b64enc }}
 {{- end}}
