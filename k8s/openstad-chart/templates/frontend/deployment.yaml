@@ -28,9 +28,9 @@ spec:
             - name: APP_URL
               value: {{ .Values.host.https }}
             - name: API
-              value: http://api-service:8111
+              value: {{ (printf "%s.%s.svc.cluster.local" .Values.api.service.name .Release.Namespace ) }}
             - name: IMAGE_API_URL
-              value: http://image-service:3000
+              value: {{ (printf "%s.%s.svc.cluster.local" .Values.image.service.name .Release.Namespace ) }}
             - name: IMAGE_API_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
