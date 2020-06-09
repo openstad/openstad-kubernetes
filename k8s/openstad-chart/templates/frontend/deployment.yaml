@@ -1,5 +1,4 @@
 ---
-# Previously $gitRoot/k8s/deployment/frontend.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:

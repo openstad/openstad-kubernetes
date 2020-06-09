@@ -1,5 +1,4 @@
 ---
-# Previously $gitRoot/k8s/service/frontend.yaml
 kind: Service
 apiVersion: v1
 metadata:
