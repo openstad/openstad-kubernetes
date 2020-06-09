@@ -1,12 +1,4 @@
 
-# TODO
-
-# Tests to see whether everything works as it should
-# Check whether the given values can be changed without breaking anything
-# Add PVC (Persistent Volume Claims)
-# Create MySQL/MongoDB databases if there is none already
-# Add initContainers for databases
-
 # Define anchors
 
 define:
@@ -19,6 +11,18 @@ define:
     name: &asName "auth-service"
     path: &asPath /oauth
     containerPort: &asContainerPort 4000
+  apiService:
+    name: &apiName "api-service"
+    path: &apiPath /api
+    containerPort: &apiContainerPort 8111
+  imageService:
+    name: &imgName "image-service"
+    path: &imgPath /img
+    containerPort: &imgContainerPort 4100
+  admService:
+    name: &admName "adminer-service"
+    path: &admPath /adminer
+    containerPort: &admContainerPort 80
   host:
     host-url: &host-url www.openstad.softwaredepartment.net
     host-http: &host-http http://www.openstad.softwaredepartment.net
@@ -98,17 +102,36 @@ persistence:
 
 ingress:
   namespace: *namespace
-  name: "openstad-ingress" # Originally: openstad-ingress 
+
+  admService:
+    ingName: "openstad-ingress-adminer"
+    name: *admName
+    path: *admPath
+    containerPort: *admContainerPort
 
   frontendService:
+    ingName: "openstad-ingress-frontend"
     name: *fesName
     path: *fesPath
     containerPort: *fesContainerPort
 
   authService:
+    ingName: "openstad-ingress-auth"
     name: *asName
     path: *asPath
     containerPort: *asContainerPort
+  
+  apiService:
+    ingName: "openstad-ingress-api"
+    name: *apiName
+    path: *apiPath
+    containerPort: *apiContainerPort
+  
+  imageService:
+    ingName: "openstad-ingress-image"
+    name: *imgName
+    path: *imgPath
+    containerPort: *imgContainerPort
 
 # Frontend
 
@@ -128,7 +151,7 @@ frontend:
         name: "frontend-deploy" # Originally: frontend
 
     service:
-        name: frontend-service # Originally: frontend-service
+        name: *fesName # Originally: frontend-service
         httpPort: *fesContainerPort
         managementPort: 9090
     
@@ -144,7 +167,7 @@ adminer:
 
   namespace: *namespace
   service:
-    name: adminer-service
+    name: *admName
   deployment:
     name: adminer-deploy
   
@@ -153,7 +176,7 @@ adminer:
   deploymentContainer:
     name: auth
     image: adminer
-    port: 8080
+    port: *admContainerPort
 
   probe:
     liveness:
@@ -167,7 +190,7 @@ auth:
 
   namespace: *namespace
   service:
-    name: auth-service
+    name: *asName
   deployment:
     name: auth-deploy
   
@@ -179,7 +202,7 @@ auth:
   deploymentContainer:
     name: auth-container
     image: openstad/auth:test
-    port: 4000
+    port: *asContainerPort
   
   probe:
     liveness:
@@ -193,7 +216,7 @@ api:
   
   namespace: *namespace
   service:
-    name: api-service
+    name: *apiName
   deployment:
     name: api-deploy
   
@@ -202,7 +225,7 @@ api:
   deploymentContainer:
     name: api-container
     image: openstad/api:test
-    port: 8111
+    port: *apiContainerPort
 
   probe:
     liveness:
@@ -216,19 +239,16 @@ image:
   
   namespace: *namespace
   service:
-    name: image-service
+    name: *imgName
   deployment:
     name: image-deploy
   
   label: image-container
 
-  host:
-    path: /
-
   deploymentContainer:
     name: image
     image: openstad/image:test
-    port: 4100
+    port: *imgContainerPort
 
   probe:
     liveness:
