@@ -28,9 +28,9 @@ spec:
             - name: APP_URL
               value: {{ .Values.host.https }}
             - name: API
-              value: {{ (printf "%s.%s.svc.cluster.local" .Values.api.service.name .Release.Namespace ) }}
+              value: {{ template "urlDef" (merge (dict "service" .Values.ingress.apiService) (dict "service" .Values.host)) }}
             - name: IMAGE_API_URL
-              value: {{ (printf "%s.%s.svc.cluster.local" .Values.image.service.name .Release.Namespace ) }}
+              value: {{ template "urlDef" (merge (dict "service" .Values.ingress.imageService) (dict "service" .Values.host)) }}
             - name: IMAGE_API_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
