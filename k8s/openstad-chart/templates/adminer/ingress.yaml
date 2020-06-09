@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress.admService.ingName }}
+  name: {{ .Values.ingress.adminerService.ingName }}
   namespace: {{ .Values.ingress.namespace }}
 spec:
   rules:
@@ -10,10 +10,10 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: {{ .Values.ingress.admService.name }}
-          servicePort: {{ .Values.ingress.admService.containerPort }}
-        path: {{ .Values.ingress.admService.path }}
+          serviceName: {{ .Values.ingress.adminerService.name }}
+          servicePort: {{ .Values.ingress.adminerService.containerPort }}
+        path: {{ .Values.ingress.adminerService.path }}
   tls: 
   - hosts:
     - {{ .Values.tls.host }}
-    secretName: {{ .Values.tls.secretName }}
+    secretName: {{ .Values.tls.secretName | default "openstad-tls" }}
