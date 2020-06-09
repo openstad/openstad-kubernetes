@@ -25,6 +25,7 @@ Last cleanup June 8, 2020 - 19:18PM.
 - [ ] 2.8 Add Ingress files for each container including automapping over multiple containers
 - [ ] 2.9 Optionally add xip.io or nip.io endpoint combining hostname and IP address if none defined
 - [ ] 2.10 Validate the Volume settings including helm annotations describing actions for cleanup and reinstall
+- [ ] 2.11 Validate the ENV values for each container
 
 ## 3. Administrative
 
