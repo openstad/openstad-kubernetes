@@ -21,6 +21,7 @@ define:
     ingressName: &fesIngName "openstad-ingress-frontend"
     serviceName: &fesName "frontend-service"
     servicePath: &fesPath /
+    subdomain: &fesSubdomain 
     containerPort: &fesContainerPort 4444
     replicas: &fesReplicas 1
 
@@ -29,6 +30,7 @@ define:
     ingressName: &asIngName "openstad-ingress-auth"
     serviceName: &asName "auth-service"
     servicePath: &asPath /oauth
+    subdomain: &asSubdomain auth
     containerPort: &asContainerPort 4000
     replicas: &asReplicas 1
   
@@ -37,6 +39,7 @@ define:
     ingressName: &apiIngName "openstad-ingress-api"
     serviceName: &apiName "api-service"
     servicePath: &apiPath /api
+    subdomain: &apiSubdomain api
     containerPort: &apiContainerPort 8111
     replicas: &apiReplicas 1
   
@@ -45,6 +48,7 @@ define:
     ingressName: &imgIngName "openstad-ingress-image"
     serviceName: &imgName "image-service"
     servicePath: &imgPath /img
+    subdomain: &imgSubdomain img
     containerPort: &imgContainerPort 4100
     replicas: &imgReplicas 1
   
@@ -53,6 +57,7 @@ define:
     ingressName: &admIngName "openstad-ingress-adminer"
     serviceName: &admName "adminer-service"
     servicePath: &admPath /adminer
+    subdomain: &admSubdomain nil
     containerPort: &admContainerPort 80
     replicas: &admReplicas 1
   
@@ -89,6 +94,7 @@ frontend:
 
     host:
         path: *fesPath
+        subdomain: *fesSubdomain
 
     deployment:
         name: *fesDepName # Originally: frontend
@@ -139,6 +145,7 @@ auth:
 
   host:
     path: *asPath
+    subdomain: *asSubdomain
 
   deploymentContainer:
     name: auth-container
@@ -162,6 +169,10 @@ api:
   
   label: openstad-api
 
+  host:
+    path: *apiPath
+    subdomain: *apiSubdomain
+
   deploymentContainer:
     name: api-container
     image: openstad/api:test
@@ -183,6 +194,10 @@ image:
     name: *imgDepName
   
   label: image-container
+
+  host:
+    path: *imgPath
+    subdomain: *imgSubdomain
 
   deploymentContainer:
     name: image
@@ -256,30 +271,35 @@ ingress:
     name: *admName
     path: *admPath
     containerPort: *admContainerPort
+    subdomain: *admSubdomain
 
   frontendService:
     ingName: *fesIngName
     name: *fesName
     path: *fesPath
     containerPort: *fesContainerPort
+    subdomain: *fesSubdomain
 
   authService:
     ingName: *asIngName
     name: *asName
     path: *asPath
     containerPort: *asContainerPort
+    subdomain: *asSubdomain
   
   apiService:
     ingName: *apiIngName
     name: *apiName
     path: *apiPath
     containerPort: *apiContainerPort
+    subdomain: *apiSubdomain
   
   imageService:
     ingName: *imgIngName
     name: *imgName
     path: *imgPath
     containerPort: *imgContainerPort
+    subdomain: *imgSubdomain
 
 ## Subcharts
 
