@@ -3,7 +3,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: {{ .Values.auth.service.name }}
-  namespace: {{ .Values.auth.namespace }}
+  namespace: {{ .Release.namespace }}
 spec:
   selector:
     app: {{ .Values.auth.label }}

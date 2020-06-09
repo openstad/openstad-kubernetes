@@ -10,7 +10,6 @@
 # Define anchors
 
 define:
-  namespace: &namespace openstad
   frontendService:
     name: &fesName "frontend-service"
     path: &fesPath /
@@ -45,8 +44,6 @@ dependencies:
 # Secrets
 
 secrets:
-  namespace: *namespace
-
   database: # SQL database
     image:
       secretName: openstad-image-db # Originally: openstad-image-db
@@ -97,7 +94,6 @@ persistence:
 # Ingress
 
 ingress:
-  namespace: *namespace
   name: "openstad-ingress" # Originally: openstad-ingress 
 
   frontendService:
@@ -114,7 +110,6 @@ ingress:
 
 frontend:
     replicas: 1 # Originally: 1
-    namespace: *namespace # Originally: openstad
 
     deploymentContainer:
         name: frontend-container # Originally: frontend
@@ -142,7 +137,6 @@ frontend:
 adminer:
   replicas: 1 # Originally: 1
 
-  namespace: *namespace
   service:
     name: adminer-service
   deployment:
@@ -165,7 +159,6 @@ adminer:
 auth:
   replicas: 1 # Originally: 1
 
-  namespace: *namespace
   service:
     name: auth-service
   deployment:
@@ -191,7 +184,6 @@ auth:
 api:
   replicas: 1 # Originally: 1
   
-  namespace: *namespace
   service:
     name: api-service
   deployment:
@@ -214,7 +206,6 @@ api:
 image:
   replicas: 1 # Originally: 1
   
-  namespace: *namespace
   service:
     name: image-service
   deployment:

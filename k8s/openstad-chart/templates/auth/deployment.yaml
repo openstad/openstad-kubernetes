@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.auth.deployment.name }}
-  namespace: {{ .Values.auth.namespace }}
+  namespace: {{ .Release.namespace }}
 spec:
   replicas: {{ .Values.auth.replicas }}
   selector:

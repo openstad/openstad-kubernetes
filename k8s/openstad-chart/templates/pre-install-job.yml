@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: {{ .Values.secrets.namespace }}
+  namespace: {{ .Release.namespace }}
   name: openstad-secrets-sa
   annotations:
     # This is what defines this resource as a hook. Without this line, the
@@ -12,7 +12,7 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: {{ .Values.secrets.namespace }}
+  namespace: {{ .Release.namespace }}
   name: secret-creator
   annotations:
     # This is what defines this resource as a hook. Without this line, the
@@ -28,7 +28,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: secret-creator-role-to-openstad-secrets-sa
-  namespace: {{ .Values.secrets.namespace }}
+  namespace: {{ .Release.namespace }}
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.
@@ -76,8 +76,8 @@ spec:
               openssl req -new -key ./privatekey.pem -out ./certrequest.csr -subj "/C=NL/ST=All/L=Amsterdam/O=openstad/CN={{ .Values.host.www}}";
               openssl x509 -req -in ./certrequest.csr -signkey ./privatekey.pem -days 3650 -out ./certificate.pem;
               ls -ltra;
-              echo "Creating keys in namespace {{ .Values.secrets.namespace }}";
+              echo "Creating keys in namespace {{ .Release.namespace }}";
               kubectl delete secret openstad-auth-certificates;
-              kubectl -n "{{ .Values.secrets.namespace }}" create secret generic openstad-auth-certificates --from-file ./privatekey.pem --from-file ./certrequest.csr --from-file ./certificate.pem;
+              kubectl -n "{{ .Release.namespace }}" create secret generic openstad-auth-certificates --from-file ./privatekey.pem --from-file ./certrequest.csr --from-file ./certificate.pem;
               echo "Secrets are stored";
       restartPolicy: Never
