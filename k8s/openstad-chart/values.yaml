@@ -249,10 +249,13 @@ mysql:
     user: *dbUser
     password: *dbPass
     name: *dbName
-  initializationFiles:
-    extra_db.sql: |-
-      CREATE DATABASE extra_db;
-      GRANT ALL PRIVILEGES ON extra_db.* TO 'openstad'@'%';
+  initdbScriptsConfigMap: extra-db-map
+
+
+#Extra database just for test
+
+extras:
+  dbName: extra_db
 
 # TLS
 
