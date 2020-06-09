@@ -1,32 +1,71 @@
 
+# Dependencies
+
+dependencies:
+  ## Database
+  mongodb: 
+    enabled: true
+  mysql: 
+    enabled: true
+
+  ## SSL
+  cert-manager: 
+    enabled: false
+
 # Define anchors
 
 define:
-  frontendService:
-    name: &fesName "frontend-service"
-    path: &fesPath /
+  ## Environment
+  namespace: &namespace openstad
+  
+  ## Services
+  frontend:
+    deploymentName: &fesDepName "frontend-deploy"
+    ingressName: &fesIngName "openstad-ingress-frontend"
+    serviceName: &fesName "frontend-service"
+    servicePath: &fesPath /
     containerPort: &fesContainerPort 4444
-  authService:
-    name: &asName "auth-service"
-    path: &asPath /oauth
+    replicas: &fesReplicas 1
+
+  auth:
+    deploymentName: &asDepName "auth-deploy"
+    ingressName: &asIngName "openstad-ingress-auth"
+    serviceName: &asName "auth-service"
+    servicePath: &asPath /oauth
     containerPort: &asContainerPort 4000
-  apiService:
-    name: &apiName "api-service"
-    path: &apiPath /api
+    replicas: &asReplicas 1
+  
+  api:
+    deploymentName: &apiDepName "api-deploy"
+    ingressName: &apiIngName "openstad-ingress-api"
+    serviceName: &apiName "api-service"
+    servicePath: &apiPath /api
     containerPort: &apiContainerPort 8111
-  imageService:
-    name: &imgName "image-service"
-    path: &imgPath /img
+    replicas: &apiReplicas 1
+  
+  image:
+    deploymentName: &imgDepName "image-deploy"
+    ingressName: &imgIngName "openstad-ingress-image"
+    serviceName: &imgName "image-service"
+    servicePath: &imgPath /img
     containerPort: &imgContainerPort 4100
-  admService:
-    name: &admName "adminer-service"
-    path: &admPath /adminer
+    replicas: &imgReplicas 1
+  
+  adminer:
+    deploymentName: &admDepName "adminer-deploy"
+    ingressName: &admIngName "openstad-ingress-adminer"
+    serviceName: &admName "adminer-service"
+    servicePath: &admPath /adminer
     containerPort: &admContainerPort 80
+    replicas: &admReplicas 1
+  
+  ## Host URLs
   host:
     host-url: &host-url www.openstad.softwaredepartment.net
     host-http: &host-http http://www.openstad.softwaredepartment.net
     host-https: &host-https https://www.openstad.softwaredepartment.net
 
+  ## Databases
   mysql:
     username: &dbUser openstad
     password: &dbPass examplePass2146
@@ -35,103 +74,17 @@ define:
   mongodb:
     database: &mgdbDb openstad_mongodb
 
-# Dependencies
-
-dependencies:
-  mongodb: 
-    enabled: true
-  mysql: 
-    enabled: true
-  cert-manager: 
-    enabled: false
-
-# Secrets
-
-secrets:
-  database: # SQL database
-    image:
-      secretName: openstad-image-db # Originally: openstad-image-db
-    
-    api:
-      secretName: openstad-api-db # Originally: openstad-api-db
-
-    auth:
-      secretName: openstad-auth-db # Originally: openstad-auth-db
-
-      credentials:
-        secretName: openstad-auth-credentials # Originally: openstad-auth-credentials
-
-    secretName: openstad-db-credentials # Originally: openstad-db-credentials
-    password: *dbPass
-    username: *dbUser
-
-  mongodb: # Mongo Database
-    secretName: openstad-mongo-credentials # Originally: openstad-mongo-credentials
-    database: *mgdbDb
-
-  cookies:
-    secretName: openstad-cookies # Originally: openstad-cookies
-
-  hosts:
-    secretName: openstad-hosts # Originally: openstad-hosts-test
-
-  mail:
-    api:
-      secretName: openstad-api-mail # Originally: openstad-api-mail
-
-    auth:
-      secretName: openstad-auth-mail # Originally: openstad-auth-mail
-  
-
-# Generic
-
-host:
-  www: *host-url
-  http: *host-http
-  https: *host-https
-
 # Persistence
+
 persistence:
   storageClassName: "hcloud-volumes"
   annotations: "{}"
 
-# Ingress
-
-ingress:
-  adminerService:
-    ingName: "openstad-ingress-adminer"
-    name: *admName
-    path: *admPath
-    containerPort: *admContainerPort
-
-  frontendService:
-    ingName: "openstad-ingress-frontend"
-    name: *fesName
-    path: *fesPath
-    containerPort: *fesContainerPort
-
-  authService:
-    ingName: "openstad-ingress-auth"
-    name: *asName
-    path: *asPath
-    containerPort: *asContainerPort
-  
-  apiService:
-    ingName: "openstad-ingress-api"
-    name: *apiName
-    path: *apiPath
-    containerPort: *apiContainerPort
-  
-  imageService:
-    ingName: "openstad-ingress-image"
-    name: *imgName
-    path: *imgPath
-    containerPort: *imgContainerPort
-
 # Frontend
 
 frontend:
-    replicas: 1 # Originally: 1
+    replicas: *fesReplicas
+    namespace: *namespace # Originally: openstad
 
     deploymentContainer:
         name: frontend-container # Originally: frontend
@@ -142,7 +95,7 @@ frontend:
         path: *fesPath
 
     deployment:
-        name: "frontend-deploy" # Originally: frontend
+        name: *fesDepName # Originally: frontend
 
     service:
         name: *fesName # Originally: frontend-service
@@ -157,12 +110,12 @@ frontend:
 # Adminer
 
 adminer:
-  replicas: 1 # Originally: 1
+  replicas: *admReplicas
 
   service:
     name: *admName
   deployment:
-    name: adminer-deploy
+    name: *admDepName
   
   label: adminer-web
 
@@ -179,12 +132,12 @@ adminer:
 # Auth
 
 auth:
-  replicas: 1 # Originally: 1
+  replicas: *asReplicas
 
   service:
     name: *asName
   deployment:
-    name: auth-deploy
+    name: *asDepName
   
   label: auth-container
 
@@ -204,12 +157,12 @@ auth:
 # API
 
 api:
-  replicas: 1 # Originally: 1
+  replicas: *apiReplicas
   
   service:
     name: *apiName
   deployment:
-    name: api-deploy
+    name: *apiDepName
   
   label: openstad-api
 
@@ -226,12 +179,12 @@ api:
 # Image
 
 image:
-  replicas: 1 # Originally: 1
+  replicas: *imgReplicas
   
   service:
     name: *imgName
   deployment:
-    name: image-deploy
+    name: *imgDepName
   
   label: image-container
 
@@ -245,23 +198,110 @@ image:
       initialDelaySeconds: 30
       periodSeconds: 60
 
-# MongoDB overwrite subchart
+
+
+# Automatically configured sections
+
+## Generic
+
+host:
+  www: *host-url
+  http: *host-http
+  https: *host-https
+
+## Secrets
+
+secrets:
+  namespace: *namespace
+
+  database: # SQL database
+    secretName:
+    image:
+      secretName:
+    auth:
+      secretName:
+      credentials:
+        secretName:
+    api:
+      secretName:
+    frontend:
+      secretName:
+    adminer:
+      secretName:
+
+    password: *dbPass
+    username: *dbUser
+
+  hosts:
+    secretName:
+
+  cookies:
+    secretName:
+
+  mail:
+    auth:
+      secretName:
+    api:
+      secretName:
+
+  mongodb: # Mongo Database
+    secretName:
+    database: *mgdbDb
+
+ 
+## TLS
+
+tls:
+  host: *host-url
+
+## Ingress
+
+ingress:
+  namespace: *namespace
+
+  adminerService:
+    ingName: *admIngName
+    name: *admName
+    path: *admPath
+    containerPort: *admContainerPort
+
+  frontendService:
+    ingName: *fesIngName
+    name: *fesName
+    path: *fesPath
+    containerPort: *fesContainerPort
+
+  authService:
+    ingName: *asIngName
+    name: *asName
+    path: *asPath
+    containerPort: *asContainerPort
+  
+  apiService:
+    ingName: *apiIngName
+    name: *apiName
+    path: *apiPath
+    containerPort: *apiContainerPort
+  
+  imageService:
+    ingName: *imgIngName
+    name: *imgName
+    path: *imgPath
+    containerPort: *imgContainerPort
+
+## Subcharts
+
+### MongoDB overwrite subchart
 
 mongodb:
   mongodbUsername: *dbUser
   mongodbPassword: *dbPass
   mongodbDatabase: *mgdbDb
 
-# MySQL overwrite subchart
+### MySQL overwrite subchart
 
 mysql:
   db:
     user: *dbUser
     password: *dbPass
     name: *dbName
-
-# TLS
-
-tls:
-    host: *host-url
-    secretName: openstad-tls

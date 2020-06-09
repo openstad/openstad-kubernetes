@@ -16,4 +16,4 @@ spec:
   tls: 
   - hosts:
     - {{ .Values.tls.host }}
-    secretName: {{ .Values.tls.secretName }}
+    secretName: {{ .Values.tls.secretName | default "openstad-tls" }}
