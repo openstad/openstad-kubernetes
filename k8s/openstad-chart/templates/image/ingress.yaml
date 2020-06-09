@@ -5,14 +5,7 @@ metadata:
   name: {{ .Values.ingress.imageService.ingName }}
   namespace: {{ .Release.Namespace }}
 spec:
-  rules:
-  - host: {{ .Values.host.www }}
-    http:
-      paths:
-      - backend:
-          serviceName: {{ .Values.ingress.imageService.name }}
-          servicePort: {{ .Values.ingress.imageService.containerPort }}
-        path: {{ .Values.ingress.imageService.path }}
+  {{ template "ingressRules" (merge (dict "service" .Values.ingress.imageService) (dict "service" .Values.host)) }}
   tls: 
   - hosts:
     - {{ .Values.tls.host }}
