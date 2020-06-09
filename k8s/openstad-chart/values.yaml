@@ -151,7 +151,7 @@ frontend:
         name: "frontend-deploy" # Originally: frontend
 
     service:
-        name: frontend-service # Originally: frontend-service
+        name: *fesName # Originally: frontend-service
         httpPort: *fesContainerPort
         managementPort: 9090
     
