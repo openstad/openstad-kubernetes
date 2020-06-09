@@ -1,12 +1,4 @@
 
-# TODO
-
-# Tests to see whether everything works as it should
-# Check whether the given values can be changed without breaking anything
-# Add PVC (Persistent Volume Claims)
-# Create MySQL/MongoDB databases if there is none already
-# Add initContainers for databases
-
 # Define anchors
 
 define:
