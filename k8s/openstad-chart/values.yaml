@@ -98,14 +98,15 @@ persistence:
 
 ingress:
   namespace: *namespace
-  name: "openstad-ingress" # Originally: openstad-ingress 
 
   frontendService:
+    ingName: "openstad-ingress-frontend"
     name: *fesName
     path: *fesPath
     containerPort: *fesContainerPort
 
   authService:
+    ingName: "openstad-ingress-auth"
     name: *asName
     path: *asPath
     containerPort: *asContainerPort
