@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: persistence-claim
-  namespace: openstad
+  namespace: {{ .Release.Namespace }}
   annotations: {{ .Values.persistence.annotations }}
 spec:
   storageClassName: {{ .Values.persistence.storageClassName }}
