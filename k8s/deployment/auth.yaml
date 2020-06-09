@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: openstad
+  namespace: {{ .Release.Namespace }}
   name: openstad-secrets-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: openstad
+  namespace: {{ .Release.Namespace }}
   name: secret-creator
 rules:
   - apiGroups: ['']
@@ -18,7 +18,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: secret-creator-role-to-openstad-secrets-sa
-  namespace: openstad
+  namespace: {{ .Release.Namespace }}
 roleRef:
   apiGroup: ''
   kind: Role
@@ -31,7 +31,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: k8s-initialize-auth-certs
-  namespace: openstad
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
@@ -83,7 +83,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: auth-deploy
-  namespace: openstad
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
