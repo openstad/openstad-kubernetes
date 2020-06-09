@@ -3,7 +3,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: {{ .Values.api.service.name }}
-  namespace: {{ .Release.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     app: {{ .Values.api.label }}

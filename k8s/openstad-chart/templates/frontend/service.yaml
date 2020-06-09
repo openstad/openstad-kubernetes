@@ -3,7 +3,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: {{ .Values.frontend.service.name }}
-  namespace: {{ .Release.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     app: {{ .Values.frontend.deploymentContainer.name }}
