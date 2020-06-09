@@ -1,0 +1,19 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.ingress.adminerService.ingName }}
+  namespace: {{ .Release.namespace }}
+spec:
+  rules:
+  - host: {{ .Values.host.www }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .Values.ingress.adminerService.name }}
+          servicePort: {{ .Values.ingress.adminerService.containerPort }}
+        path: {{ .Values.ingress.adminerService.path }}
+  tls: 
+  - hosts:
+    - {{ .Values.tls.host }}
+    secretName: {{ .Values.tls.secretName }}

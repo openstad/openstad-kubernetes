@@ -2,17 +2,13 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress.name }}
+  name: {{ .Values.ingress.frontendService.ingName }}
   namespace: {{ .Release.namespace }}
 spec:
   rules:
   - host: {{ .Values.host.www }}
     http:
       paths:
-      - backend:
-          serviceName: {{ .Values.ingress.authService.name }}
-          servicePort: {{ .Values.ingress.authService.containerPort }}
-        path: {{ .Values.ingress.authService.path }}
       - backend:
           serviceName: {{ .Values.ingress.frontendService.name }}
           servicePort: {{ .Values.ingress.frontendService.containerPort }}

@@ -1,0 +1,19 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.ingress.authService.ingName }}
+  namespace: {{ .Values.ingress.namespace }}
+spec:
+  rules:
+  - host: {{ .Values.host.www }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .Values.ingress.authService.name }}
+          servicePort: {{ .Values.ingress.authService.containerPort }}
+        path: {{ .Values.ingress.authService.path }}
+  tls: 
+  - hosts:
+    - {{ .Values.tls.host }}
+    secretName: {{ .Values.tls.secretName }}
