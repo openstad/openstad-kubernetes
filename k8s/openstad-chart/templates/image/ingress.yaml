@@ -1,0 +1,19 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.ingress.imageService.ingName }}
+  namespace: {{ .Values.ingress.namespace }}
+spec:
+  rules:
+  - host: {{ .Values.host.www }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .Values.ingress.imageService.name }}
+          servicePort: {{ .Values.ingress.imageService.containerPort }}
+        path: {{ .Values.ingress.imageService.path }}
+  tls: 
+  - hosts:
+    - {{ .Values.tls.host }}
+    secretName: {{ .Values.tls.secretName }}
