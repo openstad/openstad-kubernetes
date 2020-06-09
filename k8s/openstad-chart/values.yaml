@@ -63,6 +63,7 @@ define:
   
   ## Host URLs
   host:
+    host-base: &host-base openstad.softwaredepartment.net
     host-url: &host-url www.openstad.softwaredepartment.net
     host-http: &host-http http://www.openstad.softwaredepartment.net
     host-https: &host-https https://www.openstad.softwaredepartment.net
@@ -216,6 +217,7 @@ image:
 ## Generic
 
 host:
+  base: *host-base
   www: *host-url
   http: *host-http
   https: *host-https
