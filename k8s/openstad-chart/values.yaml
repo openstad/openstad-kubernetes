@@ -29,7 +29,7 @@ define:
     deploymentName: &asDepName "auth-deploy"
     ingressName: &asIngName "openstad-ingress-auth"
     serviceName: &asName "auth-service"
-    servicePath: &asPath /oauth
+    servicePath: &asPath /
     subdomain: &asSubdomain auth
     containerPort: &asContainerPort 4000
     replicas: &asReplicas 1
@@ -38,7 +38,7 @@ define:
     deploymentName: &apiDepName "api-deploy"
     ingressName: &apiIngName "openstad-ingress-api"
     serviceName: &apiName "api-service"
-    servicePath: &apiPath /api
+    servicePath: &apiPath /
     subdomain: &apiSubdomain api
     containerPort: &apiContainerPort 8111
     replicas: &apiReplicas 1
@@ -47,7 +47,7 @@ define:
     deploymentName: &imgDepName "image-deploy"
     ingressName: &imgIngName "openstad-ingress-image"
     serviceName: &imgName "image-service"
-    servicePath: &imgPath /img
+    servicePath: &imgPath /
     subdomain: &imgSubdomain img
     containerPort: &imgContainerPort 4100
     replicas: &imgReplicas 1
@@ -57,7 +57,7 @@ define:
     ingressName: &admIngName "openstad-ingress-adminer"
     serviceName: &admName "adminer-service"
     servicePath: &admPath /adminer
-    subdomain: &admSubdomain nil
+    subdomain: &admSubdomain 
     containerPort: &admContainerPort 80
     replicas: &admReplicas 1
   
