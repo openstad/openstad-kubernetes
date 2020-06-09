@@ -328,9 +328,3 @@ extras:
   dbNames:
     - api
     - auth
-
-# TLS
-
-tls:
-    host: *host-url
-    secretName: openstad-tls
