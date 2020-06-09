@@ -27,6 +27,10 @@ define:
     name: &imgName "image-service"
     path: &imgPath /img
     containerPort: &imgContainerPort 4100
+  admService:
+    name: &admName "adminer-service"
+    path: &admPath /adminer
+    containerPort: &admContainerPort 80
   host:
     host-url: &host-url www.openstad.softwaredepartment.net
     host-http: &host-http http://www.openstad.softwaredepartment.net
@@ -107,6 +111,12 @@ persistence:
 ingress:
   namespace: *namespace
 
+  admService:
+    ingName: "openstad-ingress-adminer"
+    name: *admName
+    path: *admPath
+    containerPort: *admContainerPort
+
   frontendService:
     ingName: "openstad-ingress-frontend"
     name: *fesName
@@ -165,7 +175,7 @@ adminer:
 
   namespace: *namespace
   service:
-    name: adminer-service
+    name: *admName
   deployment:
     name: adminer-deploy
   
@@ -174,7 +184,7 @@ adminer:
   deploymentContainer:
     name: auth
     image: adminer
-    port: 8080
+    port: *admContainerPort
 
   probe:
     liveness:

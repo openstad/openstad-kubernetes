@@ -1,2 +1,3 @@
 templates/api/ingress.yaml
 templates/image/ingress.yaml
+templates/adminer/ingress.yaml
