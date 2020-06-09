@@ -15,9 +15,6 @@ dependencies:
 # Define anchors
 
 define:
-  ## Environment
-  namespace: &namespace openstad
-  
   ## Services
   frontend:
     deploymentName: &fesDepName "frontend-deploy"
@@ -84,7 +81,6 @@ persistence:
 
 frontend:
     replicas: *fesReplicas
-    namespace: *namespace # Originally: openstad
 
     deploymentContainer:
         name: frontend-container # Originally: frontend
@@ -212,8 +208,6 @@ host:
 ## Secrets
 
 secrets:
-  namespace: *namespace
-
   database: # SQL database
     secretName:
     image:
@@ -257,8 +251,6 @@ tls:
 ## Ingress
 
 ingress:
-  namespace: *namespace
-
   adminerService:
     ingName: *admIngName
     name: *admName
