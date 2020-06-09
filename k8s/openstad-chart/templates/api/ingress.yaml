@@ -4,9 +4,9 @@ kind: Ingress
 metadata:
   name: {{ .Values.ingress.apiService.ingName }}
   namespace: {{ .Release.Namespace }}
-spec:
+spec: 
   {{ template "ingressRules" (merge (dict "service" .Values.ingress.apiService) (dict "service" .Values.host)) }}
   tls: 
   - hosts:
     - {{ .Values.tls.host }}
-    secretName: {{ .Values.tls.secretName "openstad-tls" }}
+    secretName: {{ .Values.tls.secretName | default "openstad-tls" }}
