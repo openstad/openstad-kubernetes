@@ -1,0 +1,82 @@
+---
+# Ingress
+
+{{- define "urlDef" -}}
+  {{- if .service.subdomain -}}
+  {{ (printf "www.%s.%s" .service.subdomain .service.base )  }}
+  {{- else -}}
+  {{ .service.www }}
+  {{- end -}}
+{{- end -}}
+
+{{- define "ingressRules" -}}
+  rules:
+  - host: {{ template "urlDef" (dict "service" .service) }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .service.name }}
+          servicePort: {{ .service.containerPort }}
+{{- end -}}
+
+# Secrets
+{{- define "databaseSecret" -}}
+  type: {{ .Values.secrets.database.type | default "mysql" | b64enc }}
+  database: {{ .Values.secrets.database.dbName | default "mysql" | b64enc }}
+  hostname: {{ .Values.secrets.database.hostname | default (printf "%s-mysql.%s.svc.cluster.local" .Release.Name .Release.Namespace) | b64enc }}
+  hostport: {{ .Values.secrets.database.hostport | default 3306 | toString | b64enc }}
+  password: {{ .Values.secrets.database.password | default "LorrmEcZ5aZlYqmR5hAHpV2QhDCImQfW" | b64enc }}
+  username: {{ .Values.secrets.database.username | default "openstad" | b64enc }}
+{{- end }}
+
+{{- define "mongodbSecret" -}}
+  hostname: {{ .Values.secrets.mongodb.hostname | default (printf "%s-mongodb.%s.svc.cluster.local" .Release.Name .Release.Namespace) | b64enc }}
+  hostport: {{ .Values.secrets.mongodb.hostport | default 27017 | toString | b64enc }}
+  database: {{ .Values.secrets.mongodb.database | default "openstad_mongodb" | b64enc }}
+{{- end }}
+
+{{- define "cookieSecret" -}}
+  cookie_secret: {{ .Values.secrets.cookies.cookieSecret | default "IloveCookies" | b64enc }}
+  jwt_secret: {{ .Values.secrets.cookies.jwtSecret | default "SecretToken" | b64enc }}
+{{- end }}
+
+{{- define "imageDbSecret" -}}
+  database: {{ .Values.secrets.database.image.dbName | default "image" | b64enc }}
+{{- end }}
+
+{{- define "apiDbSecret" -}}
+  database: {{ .Values.secrets.database.api.dbName | default "api" | b64enc }}
+{{- end }}
+
+{{- define "authDbSecret" -}}
+  database: {{ .Values.secrets.database.auth.dbName | default "auth" | b64enc }}
+{{- end }}
+
+{{- define "hostsSecret" -}}
+  api: {{ .Values.secrets.hosts.api | default (printf "%s.%s.svc.cluster.local" .Values.api.service.name .Release.Namespace) | b64enc }}
+  auth: {{ .Values.secrets.hosts.auth | default (printf "%s.%s.svc.cluster.local" .Values.auth.service.name .Release.Namespace) | b64enc }}
+  frontend: {{ .Values.secrets.hosts.frontend | default (printf "%s.%s.svc.cluster.local" .Values.frontend.service.name .Release.Namespace) | b64enc }}
+  image: {{ .Values.secrets.hosts.image | default (printf "%s.%s.svc.cluster.local" .Values.image.service.name .Release.Namespace) | b64enc }}
+{{- end }}
+
+{{- define "authCredSecret" -}}
+  client_id: {{ .Values.secrets.database.auth.credentials.clientId | default "clientID" | b64enc }}
+  client_secret: {{ .Values.secrets.database.auth.credentials.clientSecret | default "clientSecret" | b64enc }}
+  fixed_user_id: {{ .Values.secrets.database.auth.credentials.fixedUserId | default 2 | quote | b64enc }}
+  fixed_token: {{ .Values.secrets.database.auth.credentials.fixedToken | default "fixedToken" | b64enc }}
+{{- end }}
+
+{{- define "apiMailSecret" -}}
+  host: {{ .Values.secrets.mail.api.host | default "mail.example.com" | b64enc }}
+  port: {{ .Values.secrets.mail.api.port | default 587 | toString | b64enc }}
+  user: {{ .Values.secrets.mail.api.user | default "user@example.com" | b64enc }}
+  password: {{ .Values.secrets.mail.api.password | default "pwd123" | b64enc }}
+{{- end}}
+
+{{- define "authMailSecret" -}}
+  host: {{ .Values.secrets.mail.auth.host | default "mail.example.com" | b64enc }}
+  email_assets_url: {{ .Values.secrets.mail.auth.emailAssetsUrl | default "assets.example.com" | b64enc }}
+  port: {{ .Values.secrets.mail.auth.port | default 587 | toString | b64enc }}
+  user: {{ .Values.secrets.mail.auth.user | default "mail@example.com" | b64enc }}
+  password: {{ .Values.secrets.mail.auth.password | default "pwd123" | b64enc }}
+{{- end}}

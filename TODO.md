@@ -1,40 +1,46 @@
 # TODO
 
-Points marked with (*) should be handled by or done together with the Opestad development team.
-Last cleanup June 4, 2020 - 12:18PM.
+Points marked with (*) should be handled by or done together with the Openstad development team.
+Last cleanup June 8, 2020 - 19:18PM.
 
-## Software
+## 1. Software
 
-- [ ] Use the correct builds for the containers based on the delivered branches.
-- [ ] Ensure logging communicated is useful (operational logging instead of startup).(*)
-- [x] Add Health check endpoints (*)
-- [ ] Minimize sizes of build docker images (*)
-- [ ] Default database setup including fixtures (*)
+- [x] 1.1 Use the correct builds for the containers based on the delivered branches.
+- [ ] 1.2 Ensure logging communicated is useful (operational logging instead of startup).(*)
+- [x] 1.3 Add Health check endpoints (*)
+- [ ] 1.4 Minimize sizes of build docker images (*)
+- [x] 1.5 Default database install in helm
+- [ ] 1.6 Auto configuration of three databases and accounts using standard MySQL helm
+- [ ] 1.7 Database setup including fixtures (*)
 
-## Kubernetes
+## 2. Kubernetes
 
-- [x] Secrets mapping to be added to Helm chart (https://helm.sh/docs/howto/charts_tips_and_tricks/#creating-image-pull-secrets)
-- [x] PVC mappings in YAML format to be added to repository
-- [x] PVC mappings to be added to Helm chart
-- [x] Make PVC mappings configurable from Helm chart so storage-class and annotations can be added.
+- [x] 2.1 Secrets mapping to be added to Helm chart (https://helm.sh/docs/howto/charts_tips_and_tricks/#creating-image-pull-secrets)
+- [x] 2.2 PVC mappings in YAML format to be added to repository
+- [x] 2.3 PVC mappings to be added to Helm chart
+- [x] 2.4 Make PVC mappings configurable from Helm chart so storage-class and annotations can be added.
+- [x] 2.5 Add MongoDB, MySQL and Cert-manager as subscharts including option to override it (enable/disable/set data)
+- [x] 2.6 Ingress access to the frontend
+- [x] 2.7 Automatic generaction of central certificate file using Helm and shared via secrets
+- [ ] 2.8 Add Ingress files for each container including automapping over multiple containers
+- [ ] 2.9 Optionally add xip.io or nip.io endpoint combining hostname and IP address if none defined
+- [ ] 2.10 Validate the Volume settings including helm annotations describing actions for cleanup and reinstall
 
-- [x] Add MongoDB, MySQL and Cert-manager as subscharts including option to override it (enable/disable/set data)
+## 3. Administrative
 
-## Administrative
+- [ ] 3.1 Add charts to be loaded from repository rather than checkout (https://medium.com/@mattiaperi/create-a-public-helm-chart-repository-with-github-pages-49b180dbb417)
+- [x] 3.2 Structurally move to use the Github Openstad-Kubernetes repository instead of Stash.
+- [ ] 3.3 Ensure that the right branches are used in Dockerhub to support autobuilding and registration of the image.
 
-- [ ] Add charts to be loaded from repository rather than checkout (https://medium.com/containerum/how-to-make-and-share-your-own-helm-package-50ae40f6c221)
-- [ ] Structurally move to use the Github Openstad-Kubernetes repository instead of Stash.
-- [ ] Ensure that the right branches are used in Dockerhub to support autobuilding and registration of the image.
+## 4. Documentation
 
-## Documentation
+- [ ] 4.1 Document the values.yaml and put the configurable blocks on top.
+- [x] 4.2 Finalize the README.md to support the Helm and standard install.
+- [ ] 4.3 Add guidelines for setup with custom Mysql database and Mongodb.
 
-- [ ] Document the values.yaml and put the configurable blocks on top.
-- [ ] Finalize the README.md to support the Helm and standard install.
-- [ ] Add guidelines for setup with custom Mysql database and Mongodb.
+## 5. Testing
 
-## Testing
-
-- [ ] Check working with multiple replicas for each of the containers.
-- [ ] See if deployment of a new version works correctly (*)
-- [ ] Validate full end to end install with or without standard components (database/mongo/cert-manager)
-- [ ] Validate Ingress setup and tune.
+- [ ] 5.1 Check working with multiple replicas for each of the containers.
+- [ ] 5.2 See if deployment of a new version works correctly (*)
+- [ ] 5.3 Validate full end to end install with or without standard components (database/mongo/cert-manager)
+- [ ] 5.4 Validate Ingress setup and tune.

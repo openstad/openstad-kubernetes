@@ -3,7 +3,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: {{ .Values.adminer.service.name }}
-  namespace: {{ .Values.adminer.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     app: {{ .Values.adminer.label }}

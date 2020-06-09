@@ -1,10 +1,9 @@
 ---
-# Previously $gitRoot/k8s/deployment/frontend.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.frontend.deployment.name }}
-  namespace: {{ .Values.frontend.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: {{ .Values.frontend.replicas }}
   selector:
@@ -29,9 +28,9 @@ spec:
             - name: APP_URL
               value: {{ .Values.host.https }}
             - name: API
-              value: http://api-service:8111
+              value: {{ template "urlDef" (merge (dict "service" .Values.ingress.apiService) (dict "service" .Values.host)) }}
             - name: IMAGE_API_URL
-              value: http://image-service:3000
+              value: {{ template "urlDef" (merge (dict "service" .Values.ingress.imageService) (dict "service" .Values.host)) }}
             - name: IMAGE_API_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:

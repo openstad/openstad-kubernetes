@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.auth.deployment.name }}
-  namespace: {{ .Values.auth.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: {{ .Values.auth.replicas }}
   selector:
@@ -14,13 +14,22 @@ spec:
       labels:
         app: {{ .Values.auth.label }}
     spec:
+      volumes:
+        - name: certs
+          secret:
+            secretName: openstad-auth-certificates
       containers:
       - name: {{ .Values.auth.deploymentContainer.name }}
         image: {{ .Values.auth.deploymentContainer.image }}
+        imagePullPolicy: Always
+        volumeMounts:
+          - mountPath: "/home/app/certs"
+            name: certs
+            readOnly: true
         ports:
             - name: http
               containerPort: {{ .Values.auth.deploymentContainer.port }}
-        env:   
+        env:
           # HOSTING
           - name: APP_URL
             valueFrom:
