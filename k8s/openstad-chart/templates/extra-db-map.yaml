@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: extra-db-map
+  namespace: openstad
+data:
+  extra_dbs.sql: |-
+    {{- range .Values.extras.dbNames }}
+    CREATE DATABASE {{ . }};
+    GRANT ALL PRIVILEGES ON {{ . }}.* TO 'openstad'@'%';
+    {{- end }}

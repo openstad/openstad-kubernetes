@@ -255,7 +255,9 @@ mysql:
 #Extra database just for test
 
 extras:
-  dbName: extra_db
+  dbNames:
+    - api
+    - auth
 
 # TLS
 
