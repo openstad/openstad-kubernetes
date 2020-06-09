@@ -1,4 +1,21 @@
 ---
+# Ingress
+
+{{- define "ingressRules" -}}
+  rules:
+  {{- if .service.subdomain }}
+  - host: {{ (printf "www.%s.%s" .service.subdomain .service.base )  }}
+  {{- else }}
+  - host: {{ .service.www }}
+  {{- end }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .service.name }}
+          servicePort: {{ .service.containerPort }}
+{{- end -}}
+
+# Secrets
 {{- define "databaseSecret" -}}
   {{ printf "type: %s" (.Values.secrets.database.type | default "mysql" | b64enc) }}
   {{ printf "database: %s" (.Values.secrets.database.dbName | default "mysql" | b64enc) }}
