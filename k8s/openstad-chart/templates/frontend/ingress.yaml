@@ -4,6 +4,9 @@ kind: Ingress
 metadata:
   name: {{ .Values.ingress.frontendService.ingName }}
   namespace: {{ .Release.Namespace }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.define.certManager.clusterIssuer }}
+    kubernetes.io/ingress.class: nginx
 spec: 
   {{ template "ingressRules" (merge (dict "service" .Values.ingress.frontendService) (dict "service" .Values.host)) }}
   tls: 

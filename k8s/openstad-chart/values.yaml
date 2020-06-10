@@ -15,6 +15,10 @@ dependencies:
 # Define anchors
 
 define:
+  ## SSL
+  certManager:
+    clusterIssuer: letsencrypt-prod
+
   ## Services
   frontend:
     deploymentName: &fesDepName "frontend-deploy"
