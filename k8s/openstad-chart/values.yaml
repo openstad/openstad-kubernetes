@@ -58,7 +58,7 @@ define:
     serviceName: &admName "adminer-service"
     servicePath: &admPath /adminer
     subdomain: &admSubdomain 
-    containerPort: &admContainerPort 80
+    containerPort: &admContainerPort 8080
     replicas: &admReplicas 1
   
   ## Host URLs
