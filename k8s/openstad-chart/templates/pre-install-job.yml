@@ -46,6 +46,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: "{{ .Release.Name }}"
+  namespace: {{ .Release.Namespace }}
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.
@@ -77,7 +78,7 @@ spec:
               openssl x509 -req -in ./certrequest.csr -signkey ./privatekey.pem -days 3650 -out ./certificate.pem;
               ls -ltra;
               echo "Creating keys in namespace {{ .Release.Namespace }}";
-              kubectl delete secret openstad-auth-certificates;
+              kubectl -n "{{ .Release.Namespace }}" delete secret openstad-auth-certificates;
               kubectl -n "{{ .Release.Namespace }}" create secret generic openstad-auth-certificates --from-file ./privatekey.pem --from-file ./certrequest.csr --from-file ./certificate.pem;
               echo "Secrets are stored";
       restartPolicy: Never
