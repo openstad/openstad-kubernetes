@@ -83,6 +83,8 @@ spec:
           volumeMounts:
             - mountPath: /home/app/data
               name: data-vol
+            - mountPath: /home/app/public/uploads
+              name: data-uploads
           readinessProbe:
             tcpSocket:
               port: {{ .Values.frontend.deploymentContainer.port }}
@@ -91,6 +93,7 @@ spec:
               port: {{ .Values.frontend.deploymentContainer.port }}
             initialDelaySeconds: {{ .Values.frontend.probe.liveness.initialDelaySeconds }}
             periodSeconds: {{ .Values.frontend.probe.liveness.periodSeconds }}
+
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       securityContext:
@@ -98,5 +101,9 @@ spec:
         runAsGroup: 1000
         runAsUser: 1000
       volumes:
-        - emptyDir: {}
-          name: data-vol
+        - name: data-vol
+          persistentVolumeClaim:
+            claimName: frontend-data-claim
+        - name: data-uploads
+          persistentVolumeClaim:
+            claimName: frontend-uploads-claim
