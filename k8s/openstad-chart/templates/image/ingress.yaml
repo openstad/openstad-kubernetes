@@ -8,5 +8,5 @@ spec:
   {{ template "ingressRules" (merge (dict "service" .Values.ingress.imageService) (dict "service" .Values.host)) }}
   tls: 
   - hosts:
-    - {{ .Values.tls.host }}
+    - {{ template "urlDef" (dict "service" .Values.ingress.imageService) }}
     secretName: {{ .Values.tls.secretName | default "openstad-tls" }}
