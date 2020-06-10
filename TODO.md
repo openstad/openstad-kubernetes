@@ -10,7 +10,7 @@ Last cleanup June 8, 2020 - 19:18PM.
 - [x] 1.3 Add Health check endpoints (*)
 - [ ] 1.4 Minimize sizes of build docker images (*)
 - [x] 1.5 Default database install in helm
-- [ ] 1.6 Auto configuration of three databases and accounts using standard MySQL helm
+- [x] 1.6 Auto configuration of three databases and accounts using standard MySQL helm
 - [ ] 1.7 Database setup including fixtures (*)
 
 ## 2. Kubernetes
