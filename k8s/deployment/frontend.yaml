@@ -27,9 +27,9 @@ spec:
             - name: APP_URL
               value: https://www.openstad.softwaredepartment.net
             - name: API
-              value: http://api-service:8111
+              value: {{ template "urlDef" (dict "service" .Values.ingress.apiService) }}
             - name: IMAGE_API_URL
-              value: http://image-service:3000
+              value: {{ template "urlDef" (dict "service" .Values.ingress.imageService) }}
             - name: IMAGE_API_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
