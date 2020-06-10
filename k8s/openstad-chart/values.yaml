@@ -110,6 +110,14 @@ frontend:
         initialDelaySeconds: 30
         periodSeconds: 60
 
+    volumes:
+      data:
+        size:
+          1Gi
+      uploads:
+        size:
+          1Gi
+
 # Adminer
 
 adminer:
@@ -157,6 +165,7 @@ auth:
     liveness:
       initialDelaySeconds: 30
       periodSeconds: 60
+
 
 # API
 
@@ -210,6 +219,10 @@ image:
       initialDelaySeconds: 30
       periodSeconds: 60
 
+    volumes:
+      data:
+        size:
+          1Gi
 
 
 # Automatically configured sections

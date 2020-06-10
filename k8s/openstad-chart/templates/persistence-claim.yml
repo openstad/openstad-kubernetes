@@ -10,7 +10,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: {{ .Values.frontend.volumes.data.size }}
 
 ---
 apiVersion: v1
@@ -25,7 +25,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: {{ .Values.frontend.volumes.uploads.size }}
 
 ---
 apiVersion: v1
@@ -40,4 +40,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: {{ .Values.image.volumes.data.size }}

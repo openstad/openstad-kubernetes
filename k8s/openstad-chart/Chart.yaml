@@ -2,4 +2,4 @@ apiVersion: v1
 name: openstad-chart
 version: 0.1.0
 appVersion: 1.0
-description: This chart should hold all deployment files for OpenStadv
+description: This chart should hold all deployment files for OpenStad
