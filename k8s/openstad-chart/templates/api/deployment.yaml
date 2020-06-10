@@ -18,7 +18,7 @@ spec:
       containers:
         - env:
             - name: APP_HOST
-              value: api
+              value: api # More documentation required
             - name: APP_PORT
               value: {{ .Values.api.deploymentContainer.port | quote }}
             - name: DB_TYPE
