@@ -228,12 +228,15 @@ secrets:
   database: # SQL database
     secretName:
     image:
+      dbName: image
       secretName:
     auth:
+      dbName: auth
       secretName:
       credentials:
         secretName:
     api:
+      dbName: api
       secretName:
     frontend:
       secretName:

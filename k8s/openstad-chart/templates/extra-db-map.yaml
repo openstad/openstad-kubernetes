@@ -2,10 +2,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: extra-db-map
-  namespace: openstad
+  namespace: {{ .Release.Namespace }}
 data:
   extra_dbs.sql: |-
-    {{- range .Values.extras.dbNames }}
+    {{- $root := . -}}
+    {{ range .Values.extras.dbNames }}
     CREATE DATABASE {{ . }};
-    GRANT ALL PRIVILEGES ON {{ . }}.* TO 'openstad'@'%';
-    {{- end }}
+    GRANT ALL PRIVILEGES ON {{ . }}.* TO '{{ $root.Values.define.mysql.username }}'@'%';
+    {{ end }}
