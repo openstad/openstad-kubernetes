@@ -143,10 +143,9 @@ spec:
           terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
       initContainers:
-        - args:
-            - reset.js
-          command:
-            - node
+        - command: ["/bin/sh", "-c"]
+          args:
+            - nslookup {{.Release.Name}}-mysql 0.0.0.0 && node reset.js;
           env:
             - name: DB_TYPE
               value: mysql
