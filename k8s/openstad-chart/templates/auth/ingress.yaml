@@ -11,5 +11,5 @@ spec:
   {{ template "ingressRules" (merge (dict "service" .Values.ingress.authService) (dict "service" .Values.host)) }}
   tls: 
   - hosts:
-    - {{ (printf "*.%s" .Values.host.base) | quote }}
-    secretName: {{ .Values.tls.secretName | default "openstad-tls" }}
+    - {{ template "urlDef" (dict "service" .Values.ingress.authService) }}
+    secretName: "openstad-tls-auth"
