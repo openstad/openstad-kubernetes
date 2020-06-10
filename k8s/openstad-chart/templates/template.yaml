@@ -62,7 +62,7 @@
 {{- define "authCredSecret" -}}
   client_id: {{ .Values.secrets.database.auth.credentials.clientId | default "clientID" | b64enc }}
   client_secret: {{ .Values.secrets.database.auth.credentials.clientSecret | default "clientSecret" | b64enc }}
-  fixed_user_id: {{ .Values.secrets.database.auth.credentials.fixedUserId | default 2 | quote | b64enc }}
+  fixed_user_id: {{ .Values.secrets.database.auth.credentials.fixedUserId | default 2 | toString | b64enc }}
   fixed_token: {{ .Values.secrets.database.auth.credentials.fixedToken | default "fixedToken" | b64enc }}
 {{- end }}
 
