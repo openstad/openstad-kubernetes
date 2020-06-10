@@ -68,6 +68,9 @@ spec:
             port: {{ .Values.image.deploymentContainer.port }}
           initialDelaySeconds: {{ .Values.image.probe.liveness.initialDelaySeconds }}
           periodSeconds: {{ .Values.image.probe.liveness.periodSeconds }}
+        volumeMounts:
+          - mountPath: /home/app/data
+            name: data-vol
       initContainers:
       - name: create-db-ready
         image: {{ .Values.image.deploymentContainer.image }}
@@ -95,3 +98,7 @@ spec:
               key: password
         command: ["/bin/sh","-c"]         
         args: ['knex migrate:latest']    
+      volumes:
+        - name: data-vol
+          persistentVolumeClaim:
+            claimName: image-data-claim
