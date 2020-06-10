@@ -335,6 +335,8 @@ mongodb:
 ### MySQL overwrite subchart
 
 mysql:
+  image:
+    tag: 5.7.30
   db:
     user: *dbUser
     password: *dbPass
