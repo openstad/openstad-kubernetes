@@ -219,10 +219,10 @@ image:
       initialDelaySeconds: 30
       periodSeconds: 60
 
-    volumes:
-      data:
-        size:
-          1Gi
+  volumes:
+    data:
+      size:
+        1Gi
 
 
 # Automatically configured sections
