@@ -17,7 +17,7 @@ dependencies:
 define:
   ## SSL
   certManager:
-    clusterIssuer: letsencrypt-prod
+    clusterIssuer: letsencrypt-staging
 
   ## Services
   frontend:
