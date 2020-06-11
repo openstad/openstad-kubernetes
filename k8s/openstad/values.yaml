@@ -50,13 +50,10 @@ mysql:
     user: openstad
     password: examplePass2146
     name: image
+    additionalDbNames:
+      - api
+      - auth
   initdbScriptsConfigMap: extra-db-map
-
-### Extra databases which should be added
-extras:
-  dbNames:
-    - api
-    - auth
 
 ## Settings for DNS
 host:
