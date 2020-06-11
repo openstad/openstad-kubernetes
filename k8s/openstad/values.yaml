@@ -4,7 +4,7 @@
 ## Naming: Release.Name-resource-chart.name
 ## Standard Helm annotations
 
-# Dependencies
+# Optional Dependencies
 
 ##
 ## In this block you can toggle all optional dependencies.
@@ -29,15 +29,14 @@ dependencies:
   cert-manager: 
     enabled: false
 
-# SSL
-define:
-  certManager:
-    ## You can switch the issuer here
-    ## For development use: letsencrypt-staging
-    ## For production use: letsencrypt-prod
-    ## The latter issues a working certificate
-    ## The former can be issued multiple times a day
-    clusterIssuer: letsencrypt-staging
+# Settings
+certManager:
+  ## You can switch the issuer here
+  ## For development use: letsencrypt-staging
+  ## For production use: letsencrypt-prod
+  ## The latter issues a working production certificate (limited requests)
+  ## The former can be issued multiple times a day
+  clusterIssuer: letsencrypt-staging
 
 # Persistence
 
