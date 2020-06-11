@@ -10,5 +10,5 @@ spec:
   ports:
   - name: http
     protocol: TCP
-    port: {{ .Values.api.deploymentContainer.port }}
+    port: {{ .Values.api.service.httpPort }}
   type: ClusterIP

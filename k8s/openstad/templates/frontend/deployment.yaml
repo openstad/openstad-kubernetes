@@ -20,7 +20,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - name: http
-              containerPort: {{ .Values.frontend.deploymentContainer.port }}
+              containerPort: {{ .Values.frontend.service.httpPort }}
               protocol: TCP
           env:
             - name: DEFAULT_HOST
@@ -28,9 +28,9 @@ spec:
             - name: APP_URL
               value: {{ .Values.host.https }}
             - name: API
-              value: https://{{ template "urlDef" (merge (dict "service" .Values.ingress.apiService) (dict "service" .Values.host)) }}
+              value: https://{{ index .Values.frontend.ingress.hosts 0 }}
             - name: IMAGE_API_URL
-              value: https://{{ template "urlDef" (merge (dict "service" .Values.ingress.imageService) (dict "service" .Values.host)) }}
+              value: https://{{ index .Values.image.ingress.hosts 0 }}
             - name: IMAGE_API_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
@@ -42,7 +42,7 @@ spec:
                   key: frontend
                   name: openstad-hosts
             - name: PORT
-              value: {{ .Values.frontend.deploymentContainer.port | quote }}
+              value: {{ .Values.frontend.service.httpPort | quote }}
             - name: SITE_API_KEY
               valueFrom:
                 secretKeyRef:
@@ -87,10 +87,10 @@ spec:
               name: data-uploads
           readinessProbe:
             tcpSocket:
-              port: {{ .Values.frontend.deploymentContainer.port }}
+              port: {{ .Values.frontend.service.httpPort }}
           livenessProbe:
             tcpSocket:
-              port: {{ .Values.frontend.deploymentContainer.port }}
+              port: {{ .Values.frontend.service.httpPort }}
             initialDelaySeconds: {{ .Values.frontend.probe.liveness.initialDelaySeconds }}
             periodSeconds: {{ .Values.frontend.probe.liveness.periodSeconds }}
 

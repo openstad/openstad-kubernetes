@@ -20,7 +20,7 @@ spec:
         imagePullPolicy: Always
         ports:
             - name: http
-              containerPort: {{ .Values.image.deploymentContainer.port }}
+              containerPort: {{ .Values.image.service.httpPort }}
         env:
           - name: DB_HOST
             valueFrom:
@@ -62,10 +62,10 @@ spec:
             memory: "500M"
         readinessProbe:
           tcpSocket:
-            port: {{ .Values.image.deploymentContainer.port }}
+            port: {{ .Values.image.service.httpPort }}
         livenessProbe:
           tcpSocket:
-            port: {{ .Values.image.deploymentContainer.port }}
+            port: {{ .Values.image.service.httpPort }}
           initialDelaySeconds: {{ .Values.image.probe.liveness.initialDelaySeconds }}
           periodSeconds: {{ .Values.image.probe.liveness.periodSeconds }}
         volumeMounts:

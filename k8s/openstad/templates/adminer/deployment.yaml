@@ -19,17 +19,17 @@ spec:
         image: {{ .Values.adminer.deploymentContainer.image }}
         ports:
             - name: http
-              containerPort: {{ .Values.adminer.deploymentContainer.port }}
+              containerPort: {{ .Values.adminer.service.httpPort }}
         env:
           # DB Reference
           - name: ADMINER_DEFAULT_SERVER
             value: {{ printf "%s-mysql" .Release.Name }}
         readinessProbe:
           tcpSocket:
-            port: {{ .Values.adminer.deploymentContainer.port }}
+            port: {{ .Values.adminer.service.httpPort }}
         livenessProbe:
           tcpSocket:
-            port: {{ .Values.adminer.deploymentContainer.port }}
+            port: {{ .Values.adminer.service.httpPort }}
           initialDelaySeconds: {{ .Values.adminer.probe.liveness.initialDelaySeconds }}
           periodSeconds: {{ .Values.adminer.probe.liveness.periodSeconds }}
 

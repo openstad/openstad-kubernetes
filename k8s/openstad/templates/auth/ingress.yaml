@@ -1,15 +1,33 @@
 ---
+{{- if .Values.auth.ingress.enabled -}}
+{{ $serviceName := .Values.auth.service.name }}
+{{ $servicePort := .Values.auth.service.httpPort }}
+{{ $tls := .Values.auth.ingress.tls }}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress.authService.ingName }}
-  namespace: {{ .Release.Namespace }}
+{{- if .Values.auth.ingress.annotations }}
   annotations:
-    cert-manager.io/cluster-issuer: {{ .Values.certManager.clusterIssuer }}
-    kubernetes.io/ingress.class: nginx
+{{ toYaml .Values.auth.ingress.annotations | indent 4 }}
+{{- end }}
+  labels:
+{{- range $key, $value := .Values.auth.ingress.extraLabels }}
+  {{ $key }}: {{ $value }}
+{{- end }}
+  name: {{ .Values.auth.ingress.name }}
+  namespace: {{ .Release.Namespace }}
 spec:
-  {{ template "ingressRules" (merge (dict "service" .Values.ingress.authService) (dict "service" .Values.host)) }}
-  tls: 
-  - hosts:
-    - {{ template "urlDef" (dict "service" .Values.ingress.authService) }}
-    secretName: "openstad-tls-auth"
+  rules:
+  {{- range .Values.auth.ingress.hosts }}
+    {{- $url := splitList "/" . }}
+    - host: {{ first $url }}
+      http:
+        paths:
+          - path: /{{ rest $url | join "/" }}
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+  tls:
+{{ toYaml $tls | indent 4 }}
+  {{- end -}}
+{{- end -}}

@@ -1,15 +1,33 @@
 ---
+{{- if .Values.frontend.ingress.enabled -}}
+{{ $serviceName := .Values.frontend.service.name }}
+{{ $servicePort := .Values.frontend.service.httpPort }}
+{{ $tls := .Values.frontend.ingress.tls }}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress.frontendService.ingName }}
-  namespace: {{ .Release.Namespace }}
+{{- if .Values.frontend.ingress.annotations }}
   annotations:
-    cert-manager.io/cluster-issuer: {{ .Values.certManager.clusterIssuer }}
-    kubernetes.io/ingress.class: nginx
-spec: 
-  {{ template "ingressRules" (merge (dict "service" .Values.ingress.frontendService) (dict "service" .Values.host)) }}
-  tls: 
-  - hosts:
-    - {{ template "urlDef" (dict "service" .Values.ingress.frontendService) }}
-    secretName: "openstad-tls-frontend"
+{{ toYaml .Values.frontend.ingress.annotations | indent 4 }}
+{{- end }}
+  labels:
+{{- range $key, $value := .Values.frontend.ingress.extraLabels }}
+  {{ $key }}: {{ $value }}
+{{- end }}
+  name: {{ .Values.frontend.ingress.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  rules:
+  {{- range .Values.frontend.ingress.hosts }}
+    {{- $url := splitList "/" . }}
+    - host: {{ first $url }}
+      http:
+        paths:
+          - path: /{{ rest $url | join "/" }}
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+  tls:
+{{ toYaml $tls | indent 4 }}
+  {{- end -}}
+{{- end -}}

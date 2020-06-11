@@ -10,7 +10,7 @@ spec:
   ports:
   - name: http
     protocol: TCP
-    port: {{ .Values.auth.deploymentContainer.port }}
+    port: {{ .Values.auth.service.httpPort }}
   - name: management
     port: 9090
   type: ClusterIP

@@ -1,23 +1,4 @@
 ---
-# Ingress
-
-{{- define "urlDef" -}}
-  {{- if .service.subdomain -}}
-  {{ (printf "www.%s.%s" .service.subdomain .service.base )  }}
-  {{- else -}}
-  {{ .service.www }}
-  {{- end -}}
-{{- end -}}
-
-{{- define "ingressRules" -}}
-  rules:
-  - host: {{ template "urlDef" (dict "service" .service) }}
-    http:
-      paths:
-      - backend:
-          serviceName: {{ .service.name }}
-          servicePort: {{ .service.containerPort }}
-{{- end -}}
 
 # Secrets
 {{- define "databaseSecret" -}}

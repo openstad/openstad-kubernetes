@@ -35,14 +35,6 @@ dependencies:
 ## All base settings can be changed in this block.
 ##
 
-certManager:
-  ## You can switch the issuer here
-  ## For development use: letsencrypt-staging
-  ## For production use: letsencrypt-prod
-  ## The latter issues a working production certificate (limited requests)
-  ## The former can be issued multiple times a day
-  clusterIssuer: letsencrypt-staging
-
 ## Settings for MongoDB
 mongodb:
   usePassword: false
@@ -73,48 +65,6 @@ persistence:
   storageClassName: "hcloud-volumes"
   annotations: "{}"
 
-## Ingress
-
-##
-## You can find all ingress settings here
-##
-
-ingress:
-  adminerService:
-    ingName: "openstad-ingress-adminer"
-    name: "adminer-service"
-    path: /
-    containerPort: 8080
-    subdomain: 
-
-  frontendService:
-    ingName: "openstad-ingress-frontend"
-    name: "frontend-service"
-    path: /
-    containerPort: 4444
-    subdomain: 
-
-  authService:
-    ingName: "openstad-ingress-auth"
-    name: "auth-service"
-    path: /
-    containerPort: 4000
-    subdomain: auth
-  
-  apiService:
-    ingName: "openstad-ingress-api"
-    name: "api-service"
-    path: /
-    containerPort: 8111
-    subdomain: api
-  
-  imageService:
-    ingName: "openstad-ingress-image"
-    name: "image-service"
-    path: /
-    containerPort: 4100
-    subdomain: img
-
 ## Settings for the Frontend
 
 frontend:
@@ -123,11 +73,6 @@ frontend:
     deploymentContainer:
         name: frontend-container # Originally: frontend
         image: openstad/frontend:debug # Originally: openstad/frontend:debug
-        port: 4444 # Originally: 4444
-
-    host:
-        path: /
-        subdomain: 
 
     deployment:
         name: "frontend-deploy" # Originally: frontend
@@ -137,6 +82,20 @@ frontend:
         httpPort: 4444
         managementPort: 9090
     
+    ingress:
+      name: "frontend-ingress"
+      enabled: true
+      annotations: 
+        cert-manager.io/cluster-issuer: letsencrypt-staging
+        kubernetes.io/ingress.class: nginx
+      extraLabels: {}
+      hosts:
+      - www.openstad.softwaredepartment.net
+      tls:
+      - secretName: openstad-tls-frontend
+        hosts:
+        - www.openstad.softwaredepartment.net
+
     probe:
       liveness:
         initialDelaySeconds: 30
@@ -157,15 +116,29 @@ adminer:
 
   service:
     name: "adminer-service"
+    httpPort: 8080
   deployment:
     name: "adminer-deploy"
+
+  ingress:
+    name: "adminer-ingress"
+    enabled: false
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      kubernetes.io/ingress.class: nginx
+    extraLabels: {}
+    hosts:
+    - www.openstad.softwaredepartment.net
+    tls:
+    - secretName: openstad-tls-adminer
+      hosts:
+      - www.openstad.softwaredepartment.net
   
   label: adminer-web
 
   deploymentContainer:
     name: auth
     image: adminer
-    port: 8080
 
   probe:
     liveness:
@@ -179,19 +152,29 @@ auth:
 
   service:
     name: "auth-service"
+    httpPort: 4000
   deployment:
     name: "auth-deploy"
   
   label: auth-container
 
-  host:
-    path: /
-    subdomain: auth
+  ingress:
+    name: "auth-ingress"
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      kubernetes.io/ingress.class: nginx
+    extraLabels: {}
+    hosts:
+    - www.auth.openstad.softwaredepartment.net
+    tls:
+    - secretName: openstad-tls-auth
+      hosts:
+      - www.auth.openstad.softwaredepartment.net
 
   deploymentContainer:
     name: auth-container
     image: openstad/auth:test
-    port: 4000
   
   probe:
     liveness:
@@ -206,19 +189,29 @@ api:
   
   service:
     name: "api-service"
+    httpPort: 8111
   deployment:
     name: "api-deploy"
   
   label: openstad-api
 
-  host:
-    path: /
-    subdomain: api
+  ingress:
+    name: "api-ingress"
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      kubernetes.io/ingress.class: nginx
+    extraLabels: {}
+    hosts:
+    - www.api.openstad.softwaredepartment.net
+    tls:
+    - secretName: openstad-tls-api
+      hosts:
+      - www.api.openstad.softwaredepartment.net
 
   deploymentContainer:
     name: api-container
     image: openstad/api:test
-    port: 8111
 
   probe:
     liveness:
@@ -232,19 +225,29 @@ image:
   
   service:
     name: "image-service"
+    httpPort: 4100
   deployment:
     name: "image-deploy"
   
   label: image-container
 
-  host:
-    path: /
-    subdomain: img
+  ingress:
+    name: "image-ingress"
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      kubernetes.io/ingress.class: nginx
+    extraLabels: {}
+    hosts:
+      - www.img.openstad.softwaredepartment.net
+    tls:
+      - secretName: openstad-tls-image
+        hosts:
+          - www.img.openstad.softwaredepartment.net
 
   deploymentContainer:
     name: image
     image: openstad/image:test
-    port: 4100
 
   probe:
     liveness:

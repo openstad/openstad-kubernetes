@@ -28,7 +28,7 @@ spec:
             readOnly: true
         ports:
             - name: http
-              containerPort: {{ .Values.auth.deploymentContainer.port }}
+              containerPort: {{ .Values.auth.service.httpPort }}
         env:
           # HOSTING
           - name: APP_URL
@@ -147,10 +147,10 @@ spec:
             memory: "500M"
         readinessProbe:
           tcpSocket:
-            port: {{ .Values.auth.deploymentContainer.port }}
+            port: {{ .Values.auth.service.httpPort }}
         livenessProbe:
           tcpSocket:
-            port: {{ .Values.auth.deploymentContainer.port }}
+            port: {{ .Values.auth.service.httpPort }}
           initialDelaySeconds: {{ .Values.auth.probe.liveness.initialDelaySeconds }}
           periodSeconds: {{ .Values.auth.probe.liveness.periodSeconds }}
       initContainers:

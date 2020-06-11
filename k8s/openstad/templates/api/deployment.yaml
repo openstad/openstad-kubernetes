@@ -20,7 +20,7 @@ spec:
             - name: APP_HOST
               value: api # More documentation required
             - name: APP_PORT
-              value: {{ .Values.api.deploymentContainer.port | quote }}
+              value: {{ .Values.api.service.httpPort | quote }}
             - name: DB_TYPE
               valueFrom:
                 secretKeyRef:
@@ -86,7 +86,7 @@ spec:
             - name: AUTH_HOST
               value: auth_container
             - name: AUTH_PORT
-              value: {{ .Values.auth.deploymentContainer.port | quote }}
+              value: {{ .Values.auth.service.httpPort | quote }}
             - name: AUTH_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -121,7 +121,7 @@ spec:
           imagePullPolicy: Always
           name: {{ .Values.api.deploymentContainer.name }}
           ports:
-            - containerPort: {{ .Values.api.deploymentContainer.port }}
+            - containerPort: {{ .Values.api.service.httpPort }}
               name: http
               protocol: TCP
           resources:
@@ -133,10 +133,10 @@ spec:
               memory: 500M
           readinessProbe:
             tcpSocket:
-              port: {{ .Values.api.deploymentContainer.port }}
+              port: {{ .Values.api.service.httpPort }}
           livenessProbe:
             tcpSocket:
-              port: {{ .Values.api.deploymentContainer.port }}
+              port: {{ .Values.api.service.httpPort }}
             initialDelaySeconds: {{ .Values.api.probe.liveness.initialDelaySeconds }}
             periodSeconds: {{ .Values.api.probe.liveness.periodSeconds }}
           terminationMessagePath: /dev/termination-log

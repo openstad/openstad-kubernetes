@@ -1,15 +1,33 @@
 ---
+{{- if .Values.adminer.ingress.enabled -}}
+{{ $serviceName := .Values.adminer.service.name }}
+{{ $servicePort := .Values.adminer.service.httpPort }}
+{{ $tls := .Values.adminer.ingress.tls }}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress.adminerService.ingName }}
-  namespace: {{ .Release.Namespace }}
+{{- if .Values.adminer.ingress.annotations }}
   annotations:
-    cert-manager.io/cluster-issuer: {{ .Values.certManager.clusterIssuer }}
-    kubernetes.io/ingress.class: nginx
+{{ toYaml .Values.adminer.ingress.annotations | indent 4 }}
+{{- end }}
+  labels:
+{{- range $key, $value := .Values.adminer.ingress.extraLabels }}
+  {{ $key }}: {{ $value }}
+{{- end }}
+  name: {{ .Values.adminer.ingress.name }}
+  namespace: {{ .Release.Namespace }}
 spec:
-  {{ template "ingressRules" (merge (dict "service" .Values.ingress.adminerService) (dict "service" .Values.host)) }}
-  tls: 
-  - hosts:
-    - {{ template "urlDef" (dict "service" .Values.ingress.adminerService) }}
-    secretName: "openstad-tls-adminer"
+  rules:
+  {{- range .Values.adminer.ingress.hosts }}
+    {{- $url := splitList "/" . }}
+    - host: {{ first $url }}
+      http:
+        paths:
+          - path: /{{ rest $url | join "/" }}
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+  tls:
+{{ toYaml $tls | indent 4 }}
+  {{- end -}}
+{{- end -}}
