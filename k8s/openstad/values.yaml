@@ -38,6 +38,21 @@ certManager:
   ## The former can be issued multiple times a day
   clusterIssuer: letsencrypt-staging
 
+## Settings for MongoDB
+mongodb:
+  usePassword: false
+
+## Settings for MySQL
+mysql:
+  image: # Docker Image
+    tag: 5.7.30 # Docker Tag: 5.7.30 for compatibility
+  db:
+    user: openstad
+    password: examplePass2146
+    name: image
+  initdbScriptsConfigMap: extra-db-map
+
+
 # Persistence
 
 persistence:
@@ -279,25 +294,6 @@ ingress:
     path: /
     containerPort: 4100
     subdomain: img
-
-## Subcharts
-
-### MongoDB overwrite subchart
-
-mongodb:
-  usePassword: false
-
-### MySQL overwrite subchart
-
-mysql:
-  image:
-    tag: 5.7.30
-  db:
-    user: openstad
-    password: examplePass2146
-    name: image
-  initdbScriptsConfigMap: extra-db-map
-
 
 #Extra database just for test
 
