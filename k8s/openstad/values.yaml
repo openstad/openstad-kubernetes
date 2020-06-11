@@ -30,6 +30,11 @@ dependencies:
     enabled: false
 
 # Settings
+
+##
+## All base settings can be changed in this block.
+##
+
 certManager:
   ## You can switch the issuer here
   ## For development use: letsencrypt-staging
@@ -67,6 +72,48 @@ host:
 persistence:
   storageClassName: "hcloud-volumes"
   annotations: "{}"
+
+## Ingress
+
+##
+## You can find all ingress settings here
+##
+
+ingress:
+  adminerService:
+    ingName: "openstad-ingress-adminer"
+    name: "adminer-service"
+    path: /
+    containerPort: 8080
+    subdomain: 
+
+  frontendService:
+    ingName: "openstad-ingress-frontend"
+    name: "frontend-service"
+    path: /
+    containerPort: 4444
+    subdomain: 
+
+  authService:
+    ingName: "openstad-ingress-auth"
+    name: "auth-service"
+    path: /
+    containerPort: 4000
+    subdomain: auth
+  
+  apiService:
+    ingName: "openstad-ingress-api"
+    name: "api-service"
+    path: /
+    containerPort: 8111
+    subdomain: api
+  
+  imageService:
+    ingName: "openstad-ingress-image"
+    name: "image-service"
+    path: /
+    containerPort: 4100
+    subdomain: img
 
 ## Settings for the Frontend
 
@@ -211,6 +258,11 @@ image:
 
 # Overwrite Secrets
 
+##
+## In this block you can choose to overwrite
+## the default values of the secrets.
+##
+
 secrets:
   database: # SQL database
     secretName:
@@ -248,41 +300,3 @@ secrets:
   mongodb: # Mongo Database
     secretName:
     database: openstad_mongodb # Remove
-
-## Ingress
-
-ingress:
-  adminerService:
-    ingName: "openstad-ingress-adminer"
-    name: "adminer-service"
-    path: /
-    containerPort: 8080
-    subdomain: 
-
-  frontendService:
-    ingName: "openstad-ingress-frontend"
-    name: "frontend-service"
-    path: /
-    containerPort: 4444
-    subdomain: 
-
-  authService:
-    ingName: "openstad-ingress-auth"
-    name: "auth-service"
-    path: /
-    containerPort: 4000
-    subdomain: auth
-  
-  apiService:
-    ingName: "openstad-ingress-api"
-    name: "api-service"
-    path: /
-    containerPort: 8111
-    subdomain: api
-  
-  imageService:
-    ingName: "openstad-ingress-image"
-    name: "image-service"
-    path: /
-    containerPort: 4100
-    subdomain: img
