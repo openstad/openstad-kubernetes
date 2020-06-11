@@ -1,11 +1,22 @@
 
 # TODO:
-## Make it simpler, remove anchors
 ## Add documentation
 ## Naming: Release.Name-resource-chart.name
 ## Standard Helm annotations
 
 # Dependencies
+
+##
+## In this block you can toggle all optional dependencies.
+## If you want to use an existing database(s) or services, disable
+## the chart database(s) here.
+##
+## - To enable a depency, set the enabled value of the relevant
+##   depency to true.
+##
+## - To disable a depency, set the enabled value of the relevant
+##   depency to false.
+##
 
 dependencies:
   ## Database
