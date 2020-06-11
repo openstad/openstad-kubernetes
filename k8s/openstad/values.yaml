@@ -18,79 +18,15 @@ dependencies:
   cert-manager: 
     enabled: false
 
-# Define anchors
-
+# SSL
 define:
-  ## SSL
   certManager:
-    ### You can switch the issuer here
-    ### For development use: letsencrypt-staging
-    ### For production use: letsencrypt-prod
-    ### The latter issues a working certificate
-    ### The former can be issued multiple times a day
+    ## You can switch the issuer here
+    ## For development use: letsencrypt-staging
+    ## For production use: letsencrypt-prod
+    ## The latter issues a working certificate
+    ## The former can be issued multiple times a day
     clusterIssuer: letsencrypt-staging
-
-  ## Services
-  frontend:
-    deploymentName: &fesDepName "frontend-deploy"
-    ingressName: &fesIngName "openstad-ingress-frontend"
-    serviceName: &fesName "frontend-service"
-    servicePath: &fesPath /
-    subdomain: &fesSubdomain 
-    containerPort: &fesContainerPort 4444
-    replicas: &fesReplicas 1
-
-  auth:
-    deploymentName: &asDepName "auth-deploy"
-    ingressName: &asIngName "openstad-ingress-auth"
-    serviceName: &asName "auth-service"
-    servicePath: &asPath /
-    subdomain: &asSubdomain auth
-    containerPort: &asContainerPort 4000
-    replicas: &asReplicas 1
-  
-  api:
-    deploymentName: &apiDepName "api-deploy"
-    ingressName: &apiIngName "openstad-ingress-api"
-    serviceName: &apiName "api-service"
-    servicePath: &apiPath /
-    subdomain: &apiSubdomain api
-    containerPort: &apiContainerPort 8111
-    replicas: &apiReplicas 1
-  
-  image:
-    deploymentName: &imgDepName "image-deploy"
-    ingressName: &imgIngName "openstad-ingress-image"
-    serviceName: &imgName "image-service"
-    servicePath: &imgPath /
-    subdomain: &imgSubdomain img
-    containerPort: &imgContainerPort 4100
-    replicas: &imgReplicas 1
-  
-  adminer:
-    deploymentName: &admDepName "adminer-deploy"
-    ingressName: &admIngName "openstad-ingress-adminer"
-    serviceName: &admName "adminer-service"
-    servicePath: &admPath /adminer
-    subdomain: &admSubdomain 
-    containerPort: &admContainerPort 8080
-    replicas: &admReplicas 1
-  
-  ## Host URLs
-  host:
-    hostBase: &hostBase openstad.softwaredepartment.net
-    hostUrl: &hostUrl www.openstad.softwaredepartment.net
-    hostHttp: &hostHttp http://www.openstad.softwaredepartment.net
-    hostHttps: &hostHttps https://www.openstad.softwaredepartment.net
-
-  ## Databases
-  mysql:
-    username: &dbUser openstad
-    password: &dbPass examplePass2146
-    database: &dbName image
-
-  mongodb:
-    database: &mgdbDb openstad_mongodb
 
 # Persistence
 
@@ -101,23 +37,23 @@ persistence:
 # Frontend
 
 frontend:
-    replicas: *fesReplicas
+    replicas: 1
 
     deploymentContainer:
         name: frontend-container # Originally: frontend
         image: openstad/frontend:debug # Originally: openstad/frontend:debug
-        port: *fesContainerPort # Originally: 4444
+        port: 4444 # Originally: 4444
 
     host:
-        path: *fesPath
-        subdomain: *fesSubdomain
+        path: /
+        subdomain: 
 
     deployment:
-        name: *fesDepName # Originally: frontend
+        name: "frontend-deploy" # Originally: frontend
 
     service:
-        name: *fesName # Originally: frontend-service
-        httpPort: *fesContainerPort
+        name: "frontend-service" # Originally: frontend-service
+        httpPort: 4444
         managementPort: 9090
     
     probe:
@@ -136,19 +72,19 @@ frontend:
 # Adminer
 
 adminer:
-  replicas: *admReplicas
+  replicas: 1
 
   service:
-    name: *admName
+    name: "adminer-service"
   deployment:
-    name: *admDepName
+    name: "adminer-deploy"
   
   label: adminer-web
 
   deploymentContainer:
     name: auth
     image: adminer
-    port: *admContainerPort
+    port: 8080
 
   probe:
     liveness:
@@ -158,23 +94,23 @@ adminer:
 # Auth
 
 auth:
-  replicas: *asReplicas
+  replicas: 1
 
   service:
-    name: *asName
+    name: "auth-service"
   deployment:
-    name: *asDepName
+    name: "auth-deploy"
   
   label: auth-container
 
   host:
-    path: *asPath
-    subdomain: *asSubdomain
+    path: /
+    subdomain: auth
 
   deploymentContainer:
     name: auth-container
     image: openstad/auth:test
-    port: *asContainerPort
+    port: 4000
   
   probe:
     liveness:
@@ -185,23 +121,23 @@ auth:
 # API
 
 api:
-  replicas: *apiReplicas
+  replicas: 1
   
   service:
-    name: *apiName
+    name: "api-service"
   deployment:
-    name: *apiDepName
+    name: "api-deploy"
   
   label: openstad-api
 
   host:
-    path: *apiPath
-    subdomain: *apiSubdomain
+    path: /
+    subdomain: api
 
   deploymentContainer:
     name: api-container
     image: openstad/api:test
-    port: *apiContainerPort
+    port: 8111
 
   probe:
     liveness:
@@ -211,23 +147,23 @@ api:
 # Image
 
 image:
-  replicas: *imgReplicas
+  replicas: 1
   
   service:
-    name: *imgName
+    name: "image-service"
   deployment:
-    name: *imgDepName
+    name: "image-deploy"
   
   label: image-container
 
   host:
-    path: *imgPath
-    subdomain: *imgSubdomain
+    path: /
+    subdomain: img
 
   deploymentContainer:
     name: image
     image: openstad/image:test
-    port: *imgContainerPort
+    port: 4100
 
   probe:
     liveness:
@@ -245,10 +181,10 @@ image:
 ## Generic
 
 host:
-  base: *hostBase
-  www: *hostUrl
-  http: *hostHttp
-  https: *hostHttps
+  base: openstad.softwaredepartment.net
+  www: www.openstad.softwaredepartment.net
+  http: http://www.openstad.softwaredepartment.net
+  https: https://www.openstad.softwaredepartment.net
 
 ## Secrets
 
@@ -271,8 +207,8 @@ secrets:
     adminer:
       secretName:
 
-    password: *dbPass
-    username: *dbUser
+    password: examplePass2146
+    username: openstad
 
   hosts:
     secretName:
@@ -288,51 +224,51 @@ secrets:
 
   mongodb: # Mongo Database
     secretName:
-    database: *mgdbDb
+    database: openstad_mongodb
 
  
 ## TLS
 
 tls:
-  host: *hostUrl
+  host: www.openstad.softwaredepartment.net
 
 ## Ingress
 
 ingress:
   adminerService:
-    ingName: *admIngName
-    name: *admName
-    path: *admPath
-    containerPort: *admContainerPort
-    subdomain: *admSubdomain
+    ingName: "openstad-ingress-adminer"
+    name: "adminer-service"
+    path: /
+    containerPort: 8080
+    subdomain: 
 
   frontendService:
-    ingName: *fesIngName
-    name: *fesName
-    path: *fesPath
-    containerPort: *fesContainerPort
-    subdomain: *fesSubdomain
+    ingName: "openstad-ingress-frontend"
+    name: "frontend-service"
+    path: /
+    containerPort: 4444
+    subdomain: 
 
   authService:
-    ingName: *asIngName
-    name: *asName
-    path: *asPath
-    containerPort: *asContainerPort
-    subdomain: *asSubdomain
+    ingName: "openstad-ingress-auth"
+    name: "auth-service"
+    path: /
+    containerPort: 4000
+    subdomain: auth
   
   apiService:
-    ingName: *apiIngName
-    name: *apiName
-    path: *apiPath
-    containerPort: *apiContainerPort
-    subdomain: *apiSubdomain
+    ingName: "openstad-ingress-api"
+    name: "api-service"
+    path: /
+    containerPort: 8111
+    subdomain: api
   
   imageService:
-    ingName: *imgIngName
-    name: *imgName
-    path: *imgPath
-    containerPort: *imgContainerPort
-    subdomain: *imgSubdomain
+    ingName: "openstad-ingress-image"
+    name: "image-service"
+    path: /
+    containerPort: 4100
+    subdomain: img
 
 ## Subcharts
 
@@ -347,9 +283,9 @@ mysql:
   image:
     tag: 5.7.30
   db:
-    user: *dbUser
-    password: *dbPass
-    name: *dbName
+    user: openstad
+    password: examplePass2146
+    name: image
   initdbScriptsConfigMap: extra-db-map
 
 

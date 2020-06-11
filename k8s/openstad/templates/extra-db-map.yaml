@@ -8,5 +8,5 @@ data:
     {{- $root := . -}}
     {{ range .Values.extras.dbNames }}
     CREATE DATABASE IF NOT EXISTS {{ . }} DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-    GRANT ALL PRIVILEGES ON {{ . }}.* TO '{{ $root.Values.define.mysql.username }}'@'%';
+    GRANT ALL PRIVILEGES ON {{ . }}.* TO '{{ $root.Values.mysql.db.user }}'@'%';
     {{ end }}
