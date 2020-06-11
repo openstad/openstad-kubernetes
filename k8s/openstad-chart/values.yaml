@@ -328,9 +328,7 @@ ingress:
 ### MongoDB overwrite subchart
 
 mongodb:
-  mongodbUsername: *dbUser
-  mongodbPassword: *dbPass
-  mongodbDatabase: *mgdbDb
+  usePassword: false
 
 ### MySQL overwrite subchart
 
