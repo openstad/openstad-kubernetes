@@ -1,4 +1,10 @@
 
+# TODO:
+## Make it simpler, remove anchors
+## Add documentation
+## Naming: Release.Name-resource-chart.name
+## Standard Helm annotations
+
 # Dependencies
 
 dependencies:
@@ -72,10 +78,10 @@ define:
   
   ## Host URLs
   host:
-    host-base: &host-base openstad.softwaredepartment.net
-    host-url: &host-url www.openstad.softwaredepartment.net
-    host-http: &host-http http://www.openstad.softwaredepartment.net
-    host-https: &host-https https://www.openstad.softwaredepartment.net
+    hostBase: &hostBase openstad.softwaredepartment.net
+    hostUrl: &hostUrl www.openstad.softwaredepartment.net
+    hostHttp: &hostHttp http://www.openstad.softwaredepartment.net
+    hostHttps: &hostHttps https://www.openstad.softwaredepartment.net
 
   ## Databases
   mysql:
@@ -239,10 +245,10 @@ image:
 ## Generic
 
 host:
-  base: *host-base
-  www: *host-url
-  http: *host-http
-  https: *host-https
+  base: *hostBase
+  www: *hostUrl
+  http: *hostHttp
+  https: *hostHttps
 
 ## Secrets
 
@@ -288,7 +294,7 @@ secrets:
 ## TLS
 
 tls:
-  host: *host-url
+  host: *hostUrl
 
 ## Ingress
 
