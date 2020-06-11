@@ -1,4 +1,4 @@
-chart-name=openstad-chart
+chart-name=openstad
 
 debug: clean
 	@echo "Creating a dry-run log..."
