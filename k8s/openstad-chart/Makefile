@@ -10,7 +10,7 @@ install-dependencies:
 	helm dependency update
 
 install: install-dependencies
-	helm install $(chart-name) .
+	helm install $(chart-name) . -n openstad --create-namespace
 
 upgrade: 
 	helm upgrade $(chart-name) .
