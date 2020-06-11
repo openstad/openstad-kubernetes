@@ -22,7 +22,7 @@ Last cleanup June 8, 2020 - 19:18PM.
 - [x] 2.5 Add MongoDB, MySQL and Cert-manager as subscharts including option to override it (enable/disable/set data)
 - [x] 2.6 Ingress access to the frontend
 - [x] 2.7 Automatic generaction of central certificate file using Helm and shared via secrets
-- [ ] 2.8 Add Ingress files for each container including automapping over multiple containers
+- [x] 2.8 Add Ingress files for each container including automapping over multiple containers
 - [ ] 2.9 Optionally add xip.io or nip.io endpoint combining hostname and IP address if none defined
 - [ ] 2.10 Validate the Volume settings including helm annotations describing actions for cleanup and reinstall
 
