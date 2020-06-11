@@ -4,6 +4,8 @@ kind: Deployment
 metadata:
   name: {{ .Values.auth.deployment.name }}
   namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openstad.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.auth.replicas }}
   selector:

@@ -11,6 +11,7 @@ metadata:
 {{ toYaml .Values.api.ingress.annotations | indent 4 }}
 {{- end }}
   labels:
+  {{- include "openstad.labels" . | nindent 4 }}
 {{- range $key, $value := .Values.api.ingress.extraLabels }}
   {{ $key }}: {{ $value }}
 {{- end }}
