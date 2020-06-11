@@ -2,7 +2,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ .Values.api.service.name }}
+  name: {{ template "openstad.api.fullname" . }}
   namespace: {{ .Release.Namespace }}
 spec:
   selector:

@@ -1,8 +1,8 @@
 ---
 {{- if .Values.image.ingress.enabled -}}
-{{ $serviceName := .Values.image.service.name }}
-{{ $servicePort := .Values.image.service.httpPort }}
-{{ $tls := .Values.image.ingress.tls }}
+{{- $serviceName := include "openstad.image.fullname" . -}}
+{{- $servicePort := .Values.image.service.httpPort -}}
+{{- $tls := .Values.image.ingress.tls -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -15,7 +15,7 @@ metadata:
 {{- range $key, $value := .Values.image.ingress.extraLabels }}
   {{ $key }}: {{ $value }}
 {{- end }}
-  name: {{ .Values.image.ingress.name }}
+  name: {{ template "openstad.image.fullname" . }}
   namespace: {{ .Release.Namespace }}
 spec:
   rules:

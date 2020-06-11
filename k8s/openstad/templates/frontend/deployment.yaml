@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.frontend.deployment.name }}
+  name: {{ template "openstad.frontend.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "openstad.labels" . | nindent 4 }}
@@ -10,14 +10,14 @@ spec:
   replicas: {{ .Values.frontend.replicas }}
   selector:
     matchLabels:
-      app: {{ .Values.frontend.deploymentContainer.name }}
+      app: {{ template "openstad.frontend.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ .Values.frontend.deploymentContainer.name }}
+        app: {{ template "openstad.frontend.fullname" . }}
     spec:
       containers:
-        - name: {{ .Values.frontend.deployment.name }}
+        - name: {{ template "openstad.frontend.fullname" . }}
           image: {{ .Values.frontend.deploymentContainer.image }}
           imagePullPolicy: Always
           ports:

@@ -24,6 +24,26 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 
+{{- define "openstad.frontend.fullname" -}}
+{{- printf "%s-%s" (include "openstad.fullname" .) .Values.frontend.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "openstad.adminer.fullname" -}}
+{{- printf "%s-%s" (include "openstad.fullname" .) .Values.adminer.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "openstad.auth.fullname" -}}
+{{- printf "%s-%s" (include "openstad.fullname" .) .Values.auth.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "openstad.api.fullname" -}}
+{{- printf "%s-%s" (include "openstad.fullname" .) .Values.api.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "openstad.image.fullname" -}}
+{{- printf "%s-%s" (include "openstad.fullname" .) .Values.image.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}

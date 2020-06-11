@@ -70,20 +70,17 @@ persistence:
 frontend:
     replicas: 1
 
+    name: "frontend"
+
     deploymentContainer:
         name: frontend-container # Originally: frontend
         image: openstad/frontend:debug # Originally: openstad/frontend:debug
 
-    deployment:
-        name: "frontend-deploy" # Originally: frontend
-
     service:
-        name: "frontend-service" # Originally: frontend-service
         httpPort: 4444
         managementPort: 9090
     
     ingress:
-      name: "frontend-ingress"
       enabled: true
       annotations: 
         cert-manager.io/cluster-issuer: letsencrypt-staging
@@ -114,14 +111,12 @@ frontend:
 adminer:
   replicas: 1
 
+  name: "adminer"
+
   service:
-    name: "adminer-service"
     httpPort: 8080
-  deployment:
-    name: "adminer-deploy"
 
   ingress:
-    name: "adminer-ingress"
     enabled: false
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-staging
@@ -150,16 +145,14 @@ adminer:
 auth:
   replicas: 1
 
+  name: "auth"
+
   service:
-    name: "auth-service"
     httpPort: 4000
-  deployment:
-    name: "auth-deploy"
   
   label: auth-container
 
   ingress:
-    name: "auth-ingress"
     enabled: true
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-staging
@@ -186,17 +179,15 @@ auth:
 
 api:
   replicas: 1
+
+  name: "api"
   
   service:
-    name: "api-service"
     httpPort: 8111
-  deployment:
-    name: "api-deploy"
   
   label: openstad-api
 
   ingress:
-    name: "api-ingress"
     enabled: true
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-staging
@@ -222,17 +213,15 @@ api:
 
 image:
   replicas: 1
+
+  name: "image"
   
   service:
-    name: "image-service"
     httpPort: 4100
-  deployment:
-    name: "image-deploy"
   
   label: image-container
 
   ingress:
-    name: "image-ingress"
     enabled: true
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-staging

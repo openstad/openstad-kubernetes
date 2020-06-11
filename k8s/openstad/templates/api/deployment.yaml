@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.api.deployment.name }}
+  name: {{ template "openstad.api.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "openstad.labels" . | nindent 4 }}
@@ -121,7 +121,7 @@ spec:
                   fieldPath: status.podIP
           image: {{ .Values.api.deploymentContainer.image }}
           imagePullPolicy: Always
-          name: {{ .Values.api.deploymentContainer.name }}
+          name: {{ template "openstad.api.fullname" . }}
           ports:
             - containerPort: {{ .Values.api.service.httpPort }}
               name: http

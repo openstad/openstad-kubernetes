@@ -1,6 +1,6 @@
 ---
 {{- if .Values.frontend.ingress.enabled -}}
-{{ $serviceName := .Values.frontend.service.name }}
+{{ $serviceName := include "openstad.frontend.fullname" . }}
 {{ $servicePort := .Values.frontend.service.httpPort }}
 {{ $tls := .Values.frontend.ingress.tls }}
 apiVersion: networking.k8s.io/v1beta1
@@ -15,7 +15,7 @@ metadata:
 {{- range $key, $value := .Values.frontend.ingress.extraLabels }}
   {{ $key }}: {{ $value }}
 {{- end }}
-  name: {{ .Values.frontend.ingress.name }}
+  name: {{ template "openstad.frontend.fullname" . }}
   namespace: {{ .Release.Namespace }}
 spec:
   rules:

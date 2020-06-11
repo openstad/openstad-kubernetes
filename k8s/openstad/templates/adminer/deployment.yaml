@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.adminer.deployment.name }}
+  name: {{ template "openstad.adminer.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "openstad.labels" . | nindent 4 }}
@@ -17,7 +17,7 @@ spec:
         app: {{ .Values.adminer.label }}
     spec:
       containers:
-      - name: {{ .Values.adminer.deploymentContainer.name }}
+      - name: {{ template "openstad.adminer.fullname" . }}
         image: {{ .Values.adminer.deploymentContainer.image }}
         ports:
             - name: http

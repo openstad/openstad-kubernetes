@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.auth.deployment.name }}
+  name: {{ template "openstad.auth.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "openstad.labels" . | nindent 4 }}
@@ -21,7 +21,7 @@ spec:
           secret:
             secretName: openstad-auth-certificates
       containers:
-      - name: {{ .Values.auth.deploymentContainer.name }}
+      - name: {{ template "openstad.auth.fullname" . }}
         image: {{ .Values.auth.deploymentContainer.image }}
         imagePullPolicy: Always
         volumeMounts:
