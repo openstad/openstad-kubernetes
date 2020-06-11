@@ -52,14 +52,26 @@ mysql:
     name: image
   initdbScriptsConfigMap: extra-db-map
 
+### Extra databases which should be added
+extras:
+  dbNames:
+    - api
+    - auth
 
-# Persistence
+## Settings for DNS
+host:
+  base: openstad.softwaredepartment.net
+  www: www.openstad.softwaredepartment.net
+  http: http://www.openstad.softwaredepartment.net
+  https: https://www.openstad.softwaredepartment.net
+
+## Settings for persistent volumes
 
 persistence:
   storageClassName: "hcloud-volumes"
   annotations: "{}"
 
-# Frontend
+## Settings for the Frontend
 
 frontend:
     replicas: 1
@@ -94,7 +106,7 @@ frontend:
         size:
           1Gi
 
-# Adminer
+## Settings for Adminer
 
 adminer:
   replicas: 1
@@ -116,7 +128,7 @@ adminer:
       initialDelaySeconds: 30
       periodSeconds: 60
 
-# Auth
+## Settings for the Auth server
 
 auth:
   replicas: 1
@@ -143,7 +155,7 @@ auth:
       periodSeconds: 60
 
 
-# API
+## Settings for the API server
 
 api:
   replicas: 1
@@ -169,7 +181,7 @@ api:
       initialDelaySeconds: 30
       periodSeconds: 60
 
-# Image
+## Settings for the Image server
 
 image:
   replicas: 1
@@ -200,18 +212,7 @@ image:
       size:
         1Gi
 
-
-# Automatically configured sections
-
-## Generic
-
-host:
-  base: openstad.softwaredepartment.net
-  www: www.openstad.softwaredepartment.net
-  http: http://www.openstad.softwaredepartment.net
-  https: https://www.openstad.softwaredepartment.net
-
-## Secrets
+# Overwrite Secrets
 
 secrets:
   database: # SQL database
@@ -232,8 +233,8 @@ secrets:
     adminer:
       secretName:
 
-    password: examplePass2146
-    username: openstad
+    password: examplePass2146 # Remove
+    username: openstad # Remove
 
   hosts:
     secretName:
@@ -249,13 +250,7 @@ secrets:
 
   mongodb: # Mongo Database
     secretName:
-    database: openstad_mongodb
-
- 
-## TLS
-
-tls:
-  host: www.openstad.softwaredepartment.net
+    database: openstad_mongodb # Remove
 
 ## Ingress
 
@@ -294,10 +289,3 @@ ingress:
     path: /
     containerPort: 4100
     subdomain: img
-
-#Extra database just for test
-
-extras:
-  dbNames:
-    - api
-    - auth
