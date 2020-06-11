@@ -17,6 +17,11 @@ dependencies:
 define:
   ## SSL
   certManager:
+    ### You can switch the issuer here
+    ### For development use: letsencrypt-staging
+    ### For production use: letsencrypt-prod
+    ### The latter issues a working certificate
+    ### The former can be issued multiple times a day
     clusterIssuer: letsencrypt-staging
 
   ## Services
