@@ -76,7 +76,7 @@ host:
 ## Settings for persistent volumes
 
 persistence:
-  storageClassName: "hcloud-volumes"
+  storageClassName: null
   annotations: "{}"
 
 ## Settings for the Frontend
@@ -235,6 +235,11 @@ auth:
     - secretName: openstad-tls-auth
       hosts:
       - www.auth.openstad.softwaredepartment.net
+
+  volumes:
+    certs:
+      size:
+        1Gi
 
   # Resources:
   resources:

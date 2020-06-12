@@ -24,10 +24,6 @@ spec:
       - name: {{ template "openstad.auth.fullname" . }}
         image: {{ .Values.auth.deploymentContainer.image }}
         imagePullPolicy: Always
-        volumeMounts:
-          - mountPath: "/home/app/certs"
-            name: certs
-            readOnly: true
         ports:
             - name: http
               containerPort: {{ .Values.auth.service.httpPort }}
@@ -142,6 +138,9 @@ spec:
 
         resources:
 {{ toYaml .Values.auth.resources | indent 12 }}
+        volumeMounts:
+          - mountPath: /home/app/certs
+            name: certs-vol
         readinessProbe:
           tcpSocket:
             port: {{ .Values.auth.service.httpPort }}
@@ -183,3 +182,8 @@ spec:
           value: auth
         command: ["/bin/sh","-c"]
         args: ['knex migrate:latest']   
+
+      volumes:
+        - name: certs-vol
+          persistentVolumeClaim:
+            claimName: auth-certs-claim
