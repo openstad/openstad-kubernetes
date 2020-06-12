@@ -76,7 +76,7 @@ host:
 ## Settings for persistent volumes
 
 persistence:
-  storageClassName: "hcloud-volumes"
+  storageClassName: null
   annotations: "{}"
 
 ## Settings for the Frontend
