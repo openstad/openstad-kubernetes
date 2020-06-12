@@ -73,8 +73,10 @@ persistence:
 ## Settings for the Frontend
 
 frontend:
+  # Configure how many replicas exists of this service
   replicas: 1
 
+  # Configure how the service is named and labeled
   name: "frontend"
 
   # Service settings:
@@ -127,8 +129,10 @@ frontend:
 ## Settings for Adminer
 
 adminer:
+  # Configure how many replicas exists of this service
   replicas: 1
 
+  # Configure how the service is named and labeled
   name: "adminer"
   label: adminer-web
 
@@ -171,8 +175,10 @@ adminer:
 ## Settings for the Auth server
 
 auth:
+  # Configure how many replicas exists of this service
   replicas: 1
 
+  # Configure how the service is named and labeled
   name: "auth"
   label: auth-container
 
@@ -216,8 +222,10 @@ auth:
 ## Settings for the API server
 
 api:
+  # Configure how many replicas exists of this service
   replicas: 1
 
+  # Configure how the service is named and labeled
   name: "api"
   label: openstad-api
   
@@ -260,8 +268,10 @@ api:
 ## Settings for the Image server
 
 image:
+  # Configure how many replicas exists of this service
   replicas: 1
 
+  # Configure how the service is named and labeled
   name: "image"
   label: image-container
   
@@ -316,7 +326,7 @@ image:
 ##
 
 secrets:
-  database: # SQL database
+  database: 
     secretName:
     image:
       dbName: image
@@ -346,5 +356,5 @@ secrets:
     api:
       secretName:
 
-  mongodb: # Mongo Database
+  mongodb:
     secretName:
