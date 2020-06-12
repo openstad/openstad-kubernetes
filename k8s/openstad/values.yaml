@@ -73,6 +73,12 @@ host:
   http: http://www.openstad.softwaredepartment.net
   https: https://www.openstad.softwaredepartment.net
 
+## Settings for Cert-Manager/Cluster issuer
+clusterIssuer:
+  enabled: false
+  acme:
+    email: info@openstad.org
+
 ## Settings for persistent volumes
 
 persistence:

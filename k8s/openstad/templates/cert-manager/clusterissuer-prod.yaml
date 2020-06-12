@@ -1,0 +1,20 @@
+---
+{{- if .Values.clusterIssuer.enabled -}}
+apiVersion: cert-manager.io/v1alpha3
+kind: ClusterIssuer
+metadata:
+  name: {{ template "openstad.clusterIssuer.prod.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/resource-policy": keep
+spec:
+  acme:
+    email: {{ .Values.clusterIssuer.acme.email }}
+    privateKeySecretRef:
+      name: {{ template "openstad.clusterIssuer.prod.fullname" . }}
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+{{- end -}}
