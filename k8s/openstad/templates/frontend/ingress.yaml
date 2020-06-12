@@ -12,6 +12,7 @@ metadata:
 {{- end }}
   labels:
   {{- include "openstad.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ template "openstad.frontend.fullname" . }}-ingress
 {{- range $key, $value := .Values.frontend.ingress.extraLabels }}
   {{ $key }}: {{ $value }}
 {{- end }}

@@ -6,6 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "openstad.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ template "openstad.frontend.fullname" . }}-deployment
 spec:
   replicas: {{ .Values.frontend.replicas }}
   selector:
