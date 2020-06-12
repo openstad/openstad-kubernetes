@@ -36,7 +36,7 @@ Last cleanup June 8, 2020 - 19:18PM.
 
 ## 4. Documentation
 
-- [ ] 4.1 Document the values.yaml and put the configurable blocks on top.
+- [x] 4.1 Document the values.yaml and put the configurable blocks on top.
 - [x] 4.2 Finalize the README.md to support the Helm and standard install.
 - [ ] 4.3 Add guidelines for setup with custom Mysql database and Mongodb.
 - [ ] 4.4 Describe use of xip.io or nip.io endpoint combining hostname and IP address if none defined

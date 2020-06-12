@@ -1,7 +1,4 @@
 
-# TODO:
-## Standard Helm annotations
-
 # Optional Dependencies
 
 ##
@@ -75,8 +72,8 @@ host:
 
 ## Settings for Cert-Manager/Cluster issuer
 clusterIssuer:
-  enabled: false
-  acme:
+  enabled: false  # Whether this issuer is created
+  acme:           # Email used for requesting the certificates
     email: info@openstad.org
 
 ## Settings for persistent volumes
@@ -110,7 +107,7 @@ frontend:
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
-    enabled: true
+    enabled: true # Whether there is a ingress for this service
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-staging
       kubernetes.io/ingress.class: nginx
@@ -175,7 +172,7 @@ adminer:
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
-    enabled: false
+    enabled: false # Whether there is a ingress for this service
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-staging
       kubernetes.io/ingress.class: nginx
@@ -230,7 +227,7 @@ auth:
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
-    enabled: true
+    enabled: true # Whether there is a ingress for this service
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-staging
       kubernetes.io/ingress.class: nginx
@@ -286,7 +283,7 @@ api:
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
-    enabled: true
+    enabled: true # Whether there is a ingress for this service
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-staging
       kubernetes.io/ingress.class: nginx
@@ -341,7 +338,7 @@ image:
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
-    enabled: true
+    enabled: true # Whether there is a ingress for this service
     annotations: 
       cert-manager.io/cluster-issuer: letsencrypt-staging
       kubernetes.io/ingress.class: nginx
