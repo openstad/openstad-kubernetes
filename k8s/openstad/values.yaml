@@ -55,11 +55,13 @@ mysql:
 
 ## Settings for DNS
 host:
-  # Base URL of the web app
-  # subdomains will be prefixed with a .
-  # to this url
+  ### Base URL of the web app
+  ### subdomains will be prefixed with a .
+  ### to this url
+  ### e.g. subdomain.example.com
   base: openstad.softwaredepartment.net
 
+  ### Variants of the base url:
   www: www.openstad.softwaredepartment.net
   http: http://www.openstad.softwaredepartment.net
   https: https://www.openstad.softwaredepartment.net
