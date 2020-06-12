@@ -46,6 +46,8 @@ mysql:
     user: openstad
     password: examplePass2146
     name: image
+
+    # The following databases will be created by initialization:
     additionalDbNames:
       - api
       - auth
@@ -53,7 +55,11 @@ mysql:
 
 ## Settings for DNS
 host:
+  # Base URL of the web app
+  # subdomains will be prefixed with a .
+  # to this url
   base: openstad.softwaredepartment.net
+
   www: www.openstad.softwaredepartment.net
   http: http://www.openstad.softwaredepartment.net
   https: https://www.openstad.softwaredepartment.net
@@ -72,8 +78,8 @@ frontend:
     name: "frontend"
 
     deploymentContainer:
-        name: frontend-container # Originally: frontend
-        image: openstad/frontend:debug # Originally: openstad/frontend:debug
+        name: frontend
+        image: openstad/frontend:debug
 
     service:
         httpPort: 4444
@@ -92,6 +98,9 @@ frontend:
         hosts:
         - www.openstad.softwaredepartment.net
 
+    # Check whether the service is healthy:
+    # First time after $(initialDelaySeconds) seconds.
+    # After that every $(periodSeconds) seconds
     probe:
       liveness:
         initialDelaySeconds: 30
@@ -131,9 +140,12 @@ adminer:
   label: adminer-web
 
   deploymentContainer:
-    name: auth
+    name: adminer
     image: adminer
 
+  # Check whether the service is healthy:
+  # First time after $(initialDelaySeconds) seconds.
+  # After that every $(periodSeconds) seconds
   probe:
     liveness:
       initialDelaySeconds: 30
@@ -165,9 +177,12 @@ auth:
       - www.auth.openstad.softwaredepartment.net
 
   deploymentContainer:
-    name: auth-container
+    name: auth
     image: openstad/auth:test
   
+  # Check whether the service is healthy:
+  # First time after $(initialDelaySeconds) seconds.
+  # After that every $(periodSeconds) seconds
   probe:
     liveness:
       initialDelaySeconds: 30
@@ -203,6 +218,9 @@ api:
     name: api-container
     image: openstad/api:test
 
+  # Check whether the service is healthy:
+  # First time after $(initialDelaySeconds) seconds.
+  # After that every $(periodSeconds) seconds
   probe:
     liveness:
       initialDelaySeconds: 30
@@ -237,6 +255,9 @@ image:
     name: image
     image: openstad/image:test
 
+  # Check whether the service is healthy:
+  # First time after $(initialDelaySeconds) seconds.
+  # After that every $(periodSeconds) seconds
   probe:
     liveness:
       initialDelaySeconds: 30
@@ -273,9 +294,6 @@ secrets:
     adminer:
       secretName:
 
-    password: examplePass2146 # Remove
-    username: openstad # Remove
-
   hosts:
     secretName:
 
@@ -290,4 +308,3 @@ secrets:
 
   mongodb: # Mongo Database
     secretName:
-    database: openstad_mongodb # Remove
