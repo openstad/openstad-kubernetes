@@ -3,3 +3,4 @@ prod_secrets/**
 target/
 *.iml
 .DS_Store
+.vscode
