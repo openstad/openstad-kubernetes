@@ -15,6 +15,10 @@ install: install-dependencies
 upgrade: 
 	helm upgrade $(chart-name) .
 
+test:
+	helm install openstad .
+	helm uninstall openstad
+
 get-values:
 	clear
 
