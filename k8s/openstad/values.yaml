@@ -73,46 +73,56 @@ persistence:
 ## Settings for the Frontend
 
 frontend:
-    replicas: 1
+  replicas: 1
 
-    name: "frontend"
+  name: "frontend"
 
-    deploymentContainer:
-        name: frontend
-        image: openstad/frontend:debug
+  # Service settings:
+  # Primarily port configuration
+  service:
+      httpPort: 4444
+      managementPort: 9090
 
-    service:
-        httpPort: 4444
-        managementPort: 9090
-    
-    ingress:
-      enabled: true
-      annotations: 
-        cert-manager.io/cluster-issuer: letsencrypt-staging
-        kubernetes.io/ingress.class: nginx
-      extraLabels: {}
+  # Deployment container is what is eventually run in the pod
+  deploymentContainer:
+      name: frontend
+      image: openstad/frontend:debug
+  
+  # Ingress settings:
+  # Configure how the service is accessed
+  ingress:
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      kubernetes.io/ingress.class: nginx
+    extraLabels: {}
+    hosts:
+    - www.openstad.softwaredepartment.net
+    tls:
+    - secretName: openstad-tls-frontend
       hosts:
       - www.openstad.softwaredepartment.net
-      tls:
-      - secretName: openstad-tls-frontend
-        hosts:
-        - www.openstad.softwaredepartment.net
 
-    # Check whether the service is healthy:
-    # First time after $(initialDelaySeconds) seconds.
-    # After that every $(periodSeconds) seconds
-    probe:
-      liveness:
-        initialDelaySeconds: 30
-        periodSeconds: 60
+  # Resources:
+  # TODO: add configurable resources
 
-    volumes:
-      data:
-        size:
-          1Gi
-      uploads:
-        size:
-          1Gi
+  # Probe checks whether the service is healthy:
+  # First time after $(initialDelaySeconds) seconds.
+  # After that every $(periodSeconds) seconds
+  probe:
+    liveness:
+      initialDelaySeconds: 30
+      periodSeconds: 60
+
+  # Volumes:
+  # Configure the persistent volumes for this service
+  volumes:
+    data:
+      size:
+        1Gi
+    uploads:
+      size:
+        1Gi
 
 ## Settings for Adminer
 
@@ -120,10 +130,20 @@ adminer:
   replicas: 1
 
   name: "adminer"
+  label: adminer-web
 
+  # Service settings:
+  # Primarily port configuration
   service:
     httpPort: 8080
 
+  # Deployment container is what is eventually run in the pod
+  deploymentContainer:
+    name: adminer
+    image: adminer
+
+  # Ingress settings:
+  # Configure how the service is accessed
   ingress:
     enabled: false
     annotations: 
@@ -136,12 +156,9 @@ adminer:
     - secretName: openstad-tls-adminer
       hosts:
       - www.openstad.softwaredepartment.net
-  
-  label: adminer-web
 
-  deploymentContainer:
-    name: adminer
-    image: adminer
+  # Resources:
+  # TODO: add configurable resources
 
   # Check whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
@@ -157,12 +174,20 @@ auth:
   replicas: 1
 
   name: "auth"
+  label: auth-container
 
+  # Service settings:
+  # Primarily port configuration
   service:
     httpPort: 4000
   
-  label: auth-container
+  # Deployment container is what is eventually run in the pod
+  deploymentContainer:
+    name: auth
+    image: openstad/auth:test
 
+  # Ingress settings:
+  # Configure how the service is accessed
   ingress:
     enabled: true
     annotations: 
@@ -176,10 +201,9 @@ auth:
       hosts:
       - www.auth.openstad.softwaredepartment.net
 
-  deploymentContainer:
-    name: auth
-    image: openstad/auth:test
-  
+  # Resources:
+  # TODO: add configurable resources
+
   # Check whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
   # After that every $(periodSeconds) seconds
@@ -195,12 +219,20 @@ api:
   replicas: 1
 
   name: "api"
+  label: openstad-api
   
+  # Service settings:
+  # Primarily port configuration
   service:
     httpPort: 8111
-  
-  label: openstad-api
 
+  # Deployment container is what is eventually run in the pod
+  deploymentContainer:
+    name: api-container
+    image: openstad/api:test
+
+  # Ingress settings:
+  # Configure how the service is accessed
   ingress:
     enabled: true
     annotations: 
@@ -214,9 +246,8 @@ api:
       hosts:
       - www.api.openstad.softwaredepartment.net
 
-  deploymentContainer:
-    name: api-container
-    image: openstad/api:test
+  # Resources:
+  # TODO: add configurable resources
 
   # Check whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
@@ -232,12 +263,20 @@ image:
   replicas: 1
 
   name: "image"
+  label: image-container
   
+  # Service settings:
+  # Primarily port configuration
   service:
     httpPort: 4100
   
-  label: image-container
-
+  # Deployment container is what is eventually run in the pod
+  deploymentContainer:
+    name: image
+    image: openstad/image:test
+  
+  # Ingress settings:
+  # Configure how the service is accessed
   ingress:
     enabled: true
     annotations: 
@@ -251,9 +290,8 @@ image:
         hosts:
           - www.img.openstad.softwaredepartment.net
 
-  deploymentContainer:
-    name: image
-    image: openstad/image:test
+  # Resources:
+  # TODO: add configurable resources
 
   # Check whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
@@ -263,6 +301,8 @@ image:
       initialDelaySeconds: 30
       periodSeconds: 60
 
+  # Volumes:
+  # Configure the persistent volumes for this service
   volumes:
     data:
       size:
