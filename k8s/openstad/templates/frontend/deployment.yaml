@@ -10,11 +10,11 @@ spec:
   replicas: {{ .Values.frontend.replicas }}
   selector:
     matchLabels:
-      app: {{ template "openstad.frontend.fullname" . }}
+      app: {{ .Values.frontend.label }}
   template:
     metadata:
       labels:
-        app: {{ template "openstad.frontend.fullname" . }}
+        app: {{ .Values.frontend.label }}
     spec:
       containers:
         - name: {{ template "openstad.frontend.fullname" . }}
@@ -76,12 +76,7 @@ spec:
                   apiVersion: v1
                   fieldPath: status.podIP
           resources:
-            limits:
-              cpu: 100m
-              memory: 1Gi
-            requests:
-              cpu: 100m
-              memory: 500M
+{{ toYaml .Values.frontend.resources | indent 12 }}
           volumeMounts:
             - mountPath: /home/app/data
               name: data-vol

@@ -22,6 +22,8 @@ spec:
         ports:
             - name: http
               containerPort: {{ .Values.adminer.service.httpPort }}
+        resources:
+{{ toYaml .Values.adminer.resources | indent 12 }}
         env:
           # DB Reference
           - name: ADMINER_DEFAULT_SERVER

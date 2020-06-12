@@ -141,12 +141,7 @@ spec:
                 fieldPath: status.podIP
 
         resources:
-          limits:
-            cpu: "0.1"
-            memory: 1Gi
-          requests:
-            cpu: "100m"
-            memory: "500M"
+{{ toYaml .Values.auth.resources | indent 12 }}
         readinessProbe:
           tcpSocket:
             port: {{ .Values.auth.service.httpPort }}

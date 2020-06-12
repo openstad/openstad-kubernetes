@@ -80,6 +80,7 @@ frontend:
 
   # Configure how the service is named and labeled
   name: "frontend"
+  label: frontend
 
   # Service settings:
   # Primarily port configuration
@@ -108,7 +109,15 @@ frontend:
       - www.openstad.softwaredepartment.net
 
   # Resources:
-  # TODO: add configurable resources
+  resources:
+    # Max resources
+    limits:
+      cpu: 100m
+      memory: 1Gi
+    # Min resources
+    requests:
+      cpu: 100m
+      memory: 500M
 
   # Probe checks whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
@@ -164,7 +173,15 @@ adminer:
       - www.openstad.softwaredepartment.net
 
   # Resources:
-  # TODO: add configurable resources
+  resources:
+    # Max resources
+    limits:
+      cpu: 100m
+      memory: 1Gi
+    # Min resources
+    requests:
+      cpu: 100m
+      memory: 500M
 
   # Check whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
@@ -210,7 +227,15 @@ auth:
       - www.auth.openstad.softwaredepartment.net
 
   # Resources:
-  # TODO: add configurable resources
+  resources:
+    # Max resources
+    limits:
+      cpu: 100m
+      memory: 1Gi
+    # Min resources
+    requests:
+      cpu: 100m
+      memory: 500M
 
   # Check whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
@@ -257,7 +282,15 @@ api:
       - www.api.openstad.softwaredepartment.net
 
   # Resources:
-  # TODO: add configurable resources
+  resources:
+    # Max resources
+    limits:
+      cpu: 100m
+      memory: 1Gi
+    # Min resources
+    requests:
+      cpu: 100m
+      memory: 500M
 
   # Check whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
@@ -303,7 +336,15 @@ image:
           - www.img.openstad.softwaredepartment.net
 
   # Resources:
-  # TODO: add configurable resources
+  resources:
+    # Max resources
+    limits:
+      cpu: 100m
+      memory: 1Gi
+    # Min resources
+    requests:
+      cpu: 100m
+      memory: 500M
 
   # Check whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
