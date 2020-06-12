@@ -25,7 +25,10 @@ dependencies:
     enabled: true
 
   ## SSL
-  cert-manager: 
+  # FIXME:
+  # When you enable cert-manager base resources
+  # aren't created yet. #12
+  cert-manager:
     enabled: false
 
 # Settings
@@ -43,14 +46,19 @@ mysql:
   image: # Docker Image
     tag: 5.7.30 # Docker Tag: 5.7.30 for compatibility
   db:
+    # Credentials for both MongoDB and MySQL
     user: openstad
     password: examplePass2146
-    name: image
 
-    # The following databases will be created by initialization:
+    # Name of the initial database
+    name: image
+    # The following databases will be created additionally 
+    # during initialization:
     additionalDbNames:
       - api
       - auth
+  
+  # DB initialization scripts are put in this config map:
   initdbScriptsConfigMap: extra-db-map
 
 ## Settings for DNS
@@ -85,13 +93,14 @@ frontend:
   # Service settings:
   # Primarily port configuration
   service:
-      httpPort: 4444
-      managementPort: 9090
+    httpPort: 4444
+    managementPort: 9090
 
   # Deployment container is what is eventually run in the pod
   deploymentContainer:
-      name: frontend
-      image: openstad/frontend:debug
+    name: frontend
+    # Docker image for this pod
+    image: openstad/frontend:debug
   
   # Ingress settings:
   # Configure how the service is accessed
@@ -155,6 +164,7 @@ adminer:
   # Deployment container is what is eventually run in the pod
   deploymentContainer:
     name: adminer
+    # Docker image for this pod
     image: adminer
 
   # Ingress settings:
@@ -209,6 +219,7 @@ auth:
   # Deployment container is what is eventually run in the pod
   deploymentContainer:
     name: auth
+    # Docker image for this pod
     image: openstad/auth:test
 
   # Ingress settings:
@@ -264,6 +275,7 @@ api:
   # Deployment container is what is eventually run in the pod
   deploymentContainer:
     name: api-container
+    # Docker image for this pod
     image: openstad/api:test
 
   # Ingress settings:
@@ -318,6 +330,7 @@ image:
   # Deployment container is what is eventually run in the pod
   deploymentContainer:
     name: image
+    # Docker image for this pod
     image: openstad/image:test
   
   # Ingress settings:
