@@ -1,7 +1,7 @@
 
 # OpenStad-Chart
 
-This chart handles the deployemont of the OpenStad application.
+This chart handles the deployment of the OpenStad application.
 
 ## Makefile
 

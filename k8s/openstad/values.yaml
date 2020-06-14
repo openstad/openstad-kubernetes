@@ -6,11 +6,11 @@
 ## If you want to use an existing database(s) or services, disable
 ## the chart database(s) here.
 ##
-## - To enable a depency, set the enabled value of the relevant
-##   depency to true.
+## - To enable a dependency, set the enabled value of the relevant
+##   dependency to true.
 ##
-## - To disable a depency, set the enabled value of the relevant
-##   depency to false.
+## - To disable a dependency, set the enabled value of the relevant
+##   dependency to false.
 ##
 
 dependencies:
@@ -21,6 +21,7 @@ dependencies:
     enabled: true
 
   ## SSL
+  # NOTE: Also change clusterIssuer.acme.email in this file below
   cert-manager:
     enabled: false
 
@@ -39,8 +40,7 @@ mysql:
   image: # Docker Image
     tag: 5.7.30 # Docker Tag: 5.7.30 for compatibility
   db:
-    # Credentials for both MongoDB and MySQL
-    # NOTE: Also change this in secrets
+    # NOTE: Also change this in secrets in this file below
     user: openstad
     password: examplePass2146
 
