@@ -21,9 +21,6 @@ dependencies:
     enabled: true
 
   ## SSL
-  # FIXME:
-  # When you enable cert-manager base resources
-  # aren't created yet. #12
   cert-manager:
     enabled: false
 
