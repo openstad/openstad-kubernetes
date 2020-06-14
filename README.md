@@ -1,6 +1,6 @@
 # Repository for OpenStad Kubernetes related material
 
-This repository holds the Kubernetes YAML files and the Helm chart for automated full stack deployment.
+This repository holds the Kubernetes YAML files and the Helm chart for automated full stack deployment of [the components of OpenStad](https://github.com/Amsterdam/openstad-docs/blob/master/technical/README.md).
 There are two options of rollout, using a Helm chart which will install every needed component or for advanced users a manual setup using Kubernetes YAML files.
 
 ## Helm chart
