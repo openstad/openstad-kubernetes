@@ -5,7 +5,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations: {{ .Values.persistence.annotations }}
 spec:
+{{- if ( and .Values.persistence .Values.persistence.storageClassName) }}
   storageClassName: {{ .Values.persistence.storageClassName }}
+{{- end }}
   accessModes:
     - ReadWriteOnce
   resources:
@@ -20,7 +22,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations: {{ .Values.persistence.annotations }}
 spec:
+{{- if (and .Values.persistence .Values.persistence.storageClassName) }}
   storageClassName: {{ .Values.persistence.storageClassName }}
+{{- end }}
   accessModes:
     - ReadWriteOnce
   resources:
@@ -35,7 +39,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations: {{ .Values.persistence.annotations }}
 spec:
+{{- if (and .Values.persistence .Values.persistence.storageClassName) }}
   storageClassName: {{ .Values.persistence.storageClassName }}
+{{- end }}
   accessModes:
     - ReadWriteOnce
   resources:
