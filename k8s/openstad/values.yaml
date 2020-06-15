@@ -21,9 +21,6 @@ dependencies:
     enabled: true
 
   ## SSL
-  # FIXME:
-  # When you enable cert-manager base resources
-  # aren't created yet. #12
   cert-manager:
     enabled: false
 
@@ -80,7 +77,8 @@ clusterIssuer:
 ## Settings for persistent volumes
 
 persistence:
-  storageClassName: null
+  #configure the cloud-specific storageClassName, will use the clouds default if not specified
+  storageClassName:
   annotations: "{}"
 
 ## Settings for the Frontend

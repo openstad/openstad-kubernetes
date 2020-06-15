@@ -5,7 +5,7 @@ This chart handles the deployemont of the OpenStad application.
 
 ## Makefile
 
-I use [make](Makefile) to make commands easier and faster for me to type. This isn't a requirement, you can also stick with `helm` commands.
+One can use [make](Makefile) to make commands easier and faster to type. This isn't a requirement, you can also stick with `helm` commands.
 
 ### Requirements
 
@@ -16,6 +16,8 @@ sudo apt-get install build-essentials
 ```
 
 ### Commands
+
+All these commands use [the `values.yaml` file](./values.yaml), and installation uses the `openstad` namespace.
 
 `make install-dependencies` install any required chart, run this before any other command
 
