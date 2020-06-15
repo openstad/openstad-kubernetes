@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
-    app: {{ template "openstad.frontend.fullname" . }}
+    app: {{ .Values.frontend.label }}
   ports:
   - name: http
     protocol: TCP
