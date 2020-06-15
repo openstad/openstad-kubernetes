@@ -87,7 +87,7 @@ spec:
                   key: jwt_secret
                   name: openstad-cookies
             - name: AUTH_HOST
-              value: auth_container
+              value: {{ index .Values.auth.ingress.hosts 0 }}
             - name: AUTH_PORT
               value: {{ .Values.auth.service.httpPort | quote }}
             - name: AUTH_CLIENT_ID
