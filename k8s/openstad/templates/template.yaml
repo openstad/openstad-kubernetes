@@ -6,7 +6,7 @@
   database: {{ .Values.secrets.database.dbName | default "mysql" | b64enc }}
   hostname: {{ .Values.secrets.database.hostname | default (printf "%s-mysql.%s.svc.cluster.local" .Release.Name .Release.Namespace) | b64enc }}
   hostport: {{ .Values.secrets.database.hostport | default 3306 | toString | b64enc }}
-  password: {{ .Values.secrets.database.password | default "LorrmEcZ5aZlYqmR5hAHpV2QhDCImQfW" | b64enc }}
+  password: {{ .Values.secrets.database.password | default .Values.mysql.db.password | b64enc }}
   username: {{ .Values.secrets.database.username | default "openstad" | b64enc }}
 {{- end }}
 
