@@ -89,7 +89,7 @@ frontend:
 
   # Configure how the service is named and labeled
   name: "frontend"
-  label: frontend
+  label: openstad-frontend-service
 
   # Service settings:
   # Primarily port configuration
@@ -155,7 +155,7 @@ adminer:
 
   # Configure how the service is named and labeled
   name: "adminer"
-  label: adminer-web
+  label: openstad-adminer-service
 
   # Service settings:
   # Primarily port configuration
@@ -210,7 +210,7 @@ auth:
 
   # Configure how the service is named and labeled
   name: "auth"
-  label: auth-container
+  label: openstad-auth-service
 
   # Service settings:
   # Primarily port configuration
@@ -266,7 +266,7 @@ api:
 
   # Configure how the service is named and labeled
   name: "api"
-  label: openstad-api
+  label: openstad-api-service
   
   # Service settings:
   # Primarily port configuration
@@ -321,7 +321,7 @@ image:
 
   # Configure how the service is named and labeled
   name: "image"
-  label: image-container
+  label: openstad-image-service
   
   # Service settings:
   # Primarily port configuration
