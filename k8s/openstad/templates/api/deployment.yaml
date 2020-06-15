@@ -172,7 +172,7 @@ spec:
                 secretKeyRef:
                   key: database
                   name: openstad-api-db
-          image: openstad/api:test
+          image: {{ .Values.api.deploymentContainer.image }}
           imagePullPolicy: Always
           name: init-db-ready
           terminationMessagePath: /dev/termination-log
