@@ -77,7 +77,8 @@ clusterIssuer:
 ## Settings for persistent volumes
 
 persistence:
-  storageClassName: null
+  #configure the cloud-specific storageClassName, will use the clouds default if not specified
+  storageClassName:
   annotations: "{}"
 
 ## Settings for the Frontend
