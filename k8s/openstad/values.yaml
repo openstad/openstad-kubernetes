@@ -86,7 +86,8 @@ persistence:
 frontend:
   # Configure how many replicas exists of this service
   replicas: 1
-
+  # If using let's encrypt staging you might want to switch certificate verification off for internal calls
+  verifyCertificate: false
   # Configure how the service is named and labeled
   name: "frontend"
   label: openstad-frontend-service
@@ -279,8 +280,6 @@ api:
     name: api-container
     # Docker image for this pod
     image: openstad/api:test
-
-  fixedAuthTokens: "{}"
 
   # Ingress settings:
   # Configure how the service is accessed
