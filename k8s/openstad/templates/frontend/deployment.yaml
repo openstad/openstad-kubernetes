@@ -31,7 +31,7 @@ spec:
             - name: APP_URL
               value: {{ .Values.host.https }}
             - name: API
-              value: https://{{ index .Values.frontend.ingress.hosts 0 }}
+              value: https://{{ index .Values.api.ingress.hosts 0 }}
             - name: IMAGE_API_URL
               value: https://{{ index .Values.image.ingress.hosts 0 }}
             - name: IMAGE_API_ACCESS_TOKEN
@@ -83,15 +83,6 @@ spec:
               name: data-vol
             - mountPath: /home/app/public/uploads
               name: data-uploads
-          readinessProbe:
-            tcpSocket:
-              port: {{ .Values.frontend.service.httpPort }}
-          livenessProbe:
-            tcpSocket:
-              port: {{ .Values.frontend.service.httpPort }}
-            initialDelaySeconds: {{ .Values.frontend.probe.liveness.initialDelaySeconds }}
-            periodSeconds: {{ .Values.frontend.probe.liveness.periodSeconds }}
-
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       securityContext:

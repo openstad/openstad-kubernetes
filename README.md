@@ -1,6 +1,6 @@
 # Repository for Openstad Kubernetes related material
 
-In this repository we will place the Kubenernetes YAML files and the Helm chart for automated full stack deployment.
+In this repository we will place the Kubernetes YAML files and the Helm chart for automated full stack deployment.
 There are two options of rollout, using a Helm chart which will install every needed component or for advanced users a manual setup using Kubernetes YAML files.
 
 ## Helm chart
