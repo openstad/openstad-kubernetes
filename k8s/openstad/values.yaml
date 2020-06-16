@@ -267,7 +267,8 @@ api:
   # Configure how the service is named and labeled
   name: "api"
   label: openstad-api-service
-  
+  emailAddress: info@example.com
+
   # Service settings:
   # Primarily port configuration
   service:
@@ -278,6 +279,8 @@ api:
     name: api-container
     # Docker image for this pod
     image: openstad/api:test
+
+  fixedAuthTokens: "{}"
 
   # Ingress settings:
   # Configure how the service is accessed
