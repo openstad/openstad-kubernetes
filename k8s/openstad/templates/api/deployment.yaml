@@ -133,7 +133,7 @@ spec:
       initContainers:
         - command: ["/bin/sh", "-c"]
           args:
-            - nc {{.Release.Name}}-mysql 3306 -z -w1 && node reset.js;
+            - nc {{.Release.Name}}-mysql 3306 -z -w1 && node migrate.js;
           env:
             - name: DB_TYPE
               value: mysql
