@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-example
+  namespace: openstad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-example
+  template:
+    metadata:
+      labels:
+        app: ubuntu-example
+    spec:
+      serviceAccountName: openstad-ingress-sa
+      containers:
+      - name: ubuntu
+        image: ubuntu:18.04 
+        stdin: true
+        tty: true
