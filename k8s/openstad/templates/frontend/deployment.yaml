@@ -76,10 +76,11 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: status.podIP
-{{- if not .Values.frontend.verifyCertificate }}
+{{- if and .Values.frontend.ingress.enabled (eq (index .Values.frontend.ingress.annotations "cert-manager.io/cluster-issuer") "letsencrypt-staging") }}
             - name: NODE_TLS_REJECT_UNAUTHORIZED
               value: "0"
 {{- end }}
+
           resources:
 {{ toYaml .Values.frontend.resources | indent 12 }}
           volumeMounts:
