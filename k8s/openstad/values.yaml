@@ -267,6 +267,8 @@ api:
   name: "api"
   label: openstad-api-service
   emailAddress: info@example.com
+  # The userId that is attached to the fixed auth token
+  fixedUserId: 2
 
   # Service settings:
   # Primarily port configuration

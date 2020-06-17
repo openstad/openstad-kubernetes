@@ -98,11 +98,15 @@ spec:
               secretKeyRef:
                 key: jwt_secret
                 name: openstad-cookies
-          - name: API_AUTHORIZATION_FIXEDAUTHTOKENS
+          - name: AUTH_FIXED_TOKEN
             valueFrom:
               secretKeyRef:
                 key: fixed_token
                 name: openstad-auth-credentials
+          - name: AUTH_FIXED_USER_ID
+            value: "{{ .Values.api.fixedUserId }}"
+          - name: API_AUTHORIZATION_FIXEDAUTHTOKENS
+            value: "[{ \"token\": \"$(AUTH_FIXED_TOKEN)\", \"userId\": \"$(AUTH_FIXED_USER_ID)\" }]"
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
