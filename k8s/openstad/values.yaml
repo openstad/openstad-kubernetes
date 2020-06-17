@@ -100,7 +100,7 @@ frontend:
   deploymentContainer:
     name: frontend
     # Docker image for this pod
-    image: openstad/frontend:debug
+    image: openstad/frontend:test
   
   # Ingress settings:
   # Configure how the service is accessed
