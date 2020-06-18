@@ -12,7 +12,7 @@
 ## - To disable a dependency, set the enabled value of the relevant
 ##   dependency to false.
 ##
-## Note: If you use an existing database, please change add the 
+## Note: If you use an existing database, please change the 
 ##      relevant credentials in secrets.database for MySQL and/or
 ##      secrets.mongodb for MongoDB
 ##
