@@ -63,10 +63,6 @@ host:
   ### e.g. subdomain.example.com
   base: openstad.softwaredepartment.net
 
-  ### Variants of the base url:
-  www: www.openstad.softwaredepartment.net
-  http: http://www.openstad.softwaredepartment.net
-  https: https://www.openstad.softwaredepartment.net
 
 ## Settings for Cert-Manager/Cluster issuer
 clusterIssuer:

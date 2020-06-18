@@ -74,7 +74,7 @@ spec:
             - echo "Generating certificates";
               cd /home/keys;
               openssl genrsa -out ./privatekey.pem 2048;
-              openssl req -new -key ./privatekey.pem -out ./certrequest.csr -subj "/C=NL/ST=All/L=Amsterdam/O=openstad/CN={{ .Values.host.www}}";
+              openssl req -new -key ./privatekey.pem -out ./certrequest.csr -subj "/C=NL/ST=All/L=Amsterdam/O=openstad/CN=www.{{ .Values.host.base}}";
               openssl x509 -req -in ./certrequest.csr -signkey ./privatekey.pem -days 3650 -out ./certificate.pem;
               ls -ltra;
               echo "Creating keys in namespace {{ .Release.Namespace }}";

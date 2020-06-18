@@ -21,9 +21,9 @@ spec:
       containers:
         - env:
           - name: API_URL
-            value: {{ .Values.host.https }}
+            value: https://www.{{ .Values.host.base }}
           - name: API_HOSTNAME
-            value: {{ .Values.host.www}}
+            value: www.{{ .Values.host.base}}
           - name: API_DATABASE_USER
             valueFrom:
               secretKeyRef:

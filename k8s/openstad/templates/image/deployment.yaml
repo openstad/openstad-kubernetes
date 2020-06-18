@@ -46,7 +46,7 @@ spec:
                 name: openstad-db-credentials
                 key: password
           - name: APP_URL
-            value: {{ .Values.host.www }}
+            value: www.{{ .Values.host.base }}
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:

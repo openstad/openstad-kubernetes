@@ -27,9 +27,9 @@ spec:
               protocol: TCP
           env:
             - name: DEFAULT_HOST
-              value: {{ .Values.host.www }}
+              value: www.{{ .Values.host.base }}
             - name: APP_URL
-              value: {{ .Values.host.https }}
+              value: https://www.{{ .Values.host.base }}
             - name: API
               value: https://{{ index .Values.api.ingress.hosts 0 }}
             - name: IMAGE_API_URL
