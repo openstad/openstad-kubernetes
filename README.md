@@ -15,7 +15,7 @@ Checkout this repository and go into `k8s/openstad-chart` directory.
 Please ensure that the following is available:
 
 - Ingress Controller : by default any controller can be used but it is tested using Nginx Ingress Controller including integration with Cert-Manager.
-- Namespace : A namespace named 'openstad' is created automatically
+- Namespace : A namespace named 'openstad' is created automatically if you add this to the install command, otherwise create it manually.
 
 ### Values file
 
@@ -23,7 +23,7 @@ You can adjust the `values.yaml` file to change setup or create a separate file 
 This file is the high level configuration of the Helm chart.
 
 The setup is created to add configuration and allow to switch on and off dependencies.
-For instance if you already have a database installed, this can be skipped.
+For instance if you already have a database installed, this can be adjusted.
 
 ```yaml
 dependencies:
@@ -34,6 +34,25 @@ dependencies:
   cert-manager:
     enabled: false
 ```
+
+#### Configuration Variables
+
+|  Parameter | Description | Default |
+|---|---|---|
+|  dependencies.mongodb.enabled | Install and configure MongoDB  | true  |
+|  mongodb.usePassword | Use a password to access MongoDB  | false  |
+|   |   |   |
+|  dependencies.mysql.enabled | Install and configure MySQL  | true  |
+|  mysql.db.user |   |   |
+|  mysql.db.password |   |   |
+|  mysql.db.password |  database for API   |   |
+|  mysql.db.password |  database for Auth  |   |
+|  mysql.db.password |  database for Image |   |
+|   |   |   |
+|  dependencies.cert-manager.enabled |  Install Cert-Manager | false |
+|   |   |   |
+|  host.base | base address of the openstad environment |  openstad.softwaredepartment.net |
+|   |   |   |
 
 ### Deployment
 
@@ -70,8 +89,19 @@ helm install --replace openstad openstad/openstad --namespace=openstad --create-
 When using clusters with built-in catalogs you can add the repo catalog directory to the cluster using the UI.
 For updating the Helm repository version see the description at [Helm Repository Update](docs/helm_repo_update.md).
 
+### Deletion and Reinstallation
+
+Due to the way the MySQL install works the accounts created are part of the data stored in the Persistent Volume Claims.
+When uninstalling the application, the secrets and database storage are still there. So when doing a fresh reinstall the system will use new passwords but old stored data which will clash.
+
+Quick fix here is to delete the namespace and the left-over PVC which removes everything:
+
+```bash
+kubectl delete ns openstad
+```
+
 ## Additional
 
-List of troubleshooting or customization items can be found in [Customization](docs/customization.md).
-
+List of customization items can be found in [Customization](docs/customization.md).
+In order to check application issues check the [Troubleshooting document](docs/troubleshooting.md).
 A description how to use internal Kubernetes API calls to update Ingress objects is in [Update Ingress](docs/update_ingress.md).

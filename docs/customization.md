@@ -45,6 +45,15 @@ dependencies:
     enabled: true
 ```
 
+When settings this up separately you can define another ClusterIssuer email address for better maintainability.
+
+```yaml
+clusterIssuer:
+  enabled: false  # Whether this issuer is created
+  acme:           # Email used for requesting the certificates
+    email: info@openstad.org
+```
+
 > Default setting on LetsEncrypt is the staging environment which installs the fake certificate.
 > Please use this wil setting up until you are satisfied with the result and then switch to the production environment.
 > Update thew Helm chart with this value adjustment.
