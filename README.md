@@ -10,7 +10,7 @@ For quick setup we have a Helm chart defined that can be used to setup a full en
 ### Helm Preparation
 
 Ensure you have Helm 3 installed.
-Checkout this repository and go into `k8s/openstad-chart` directory.
+Checkout this repository and go into `k8s/openstad` directory.
 
 Please ensure that the following is available:
 
@@ -61,13 +61,13 @@ dependencies:
 With the default values you can run the install using this command.
 
 ```bash
-helm install --replace openstad-chart . --namespace=openstad --create-namespace
+helm install --replace openstad . --namespace=openstad --create-namespace
 ```
 
 If you created a separate values file like custom-values.yaml you can add this:
 
 ```bash
-helm install --values custom-values.yaml --replace openstad-chart . --namespace=openstad --create-namespace
+helm install --values custom-values.yaml --replace openstad . --namespace=openstad --create-namespace
 ```
 
 #### From Helm repository
