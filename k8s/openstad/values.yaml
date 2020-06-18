@@ -58,6 +58,9 @@ mysql:
   
   # DB initialization scripts are put in this config map:
   initdbScriptsConfigMap: extra-db-map
+  
+  # Secret which can be controlled by us
+  existingSecret: mysql-secret
 
 ## Settings for DNS
 host:
@@ -393,6 +396,10 @@ secrets:
     dbName:
     hostname:
     hostport:
+    
+    ### Default db passwords for when you use the dependency
+    rootPassword:
+    replicationPassword:
     
     secretName:
     

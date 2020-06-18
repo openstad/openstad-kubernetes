@@ -25,6 +25,12 @@
 {{- define "imageDbSecret" -}}
   database: {{ .Values.secrets.database.image.dbName | default "image" | b64enc }}
 {{- end }}
+  
+{{- define "mysqlSecret" -}}
+  mysql-root-password: {{ .Values.secrets.database.rootPassword | default "fy4P3M31FCzg0@a1L!" | b64enc }}
+  mysql-replication-password: {{ .Values.secrets.database.replicationPassword | default "2B@9bR!pyF6Z3h#bM" | b64enc }}
+  mysql-password: {{ .Values.secrets.database.password | default .Values.mysql.db.password | b64enc }}
+{{- end }}
 
 {{- define "apiDbSecret" -}}
   database: {{ .Values.secrets.database.api.dbName | default "api" | b64enc }}
