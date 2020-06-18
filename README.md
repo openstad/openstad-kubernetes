@@ -12,6 +12,11 @@ For a quick setup we have a Helm chart defined that can be used to set up a full
 Ensure you have Helm 3 installed. To use `--create-namespace`, version 3.2.0 or later is required.
 Checkout this repository and go into [the `k8s/openstad` directory](./k8s/openstad).
 
+Please ensure that the following is available:
+
+- Ingress Controller : by default any controller can be used but it is tested using Nginx Ingress Controller including integration with Cert-Manager.
+- Namespace : A namespace named 'openstad' is created automatically
+
 ### Values file
 
 You can adjust [the `values.yaml` file](./k8s/openstad/values.yaml) to change setup, or create a separate file with only the values that are changed.
@@ -22,11 +27,11 @@ For instance if you already have a database installed, this can be skipped.
 
 ```yaml
 dependencies:
-  mongodb: 
+  mongodb:
     enabled: true
-  mysql: 
+  mysql:
     enabled: true
-  cert-manager: 
+  cert-manager:
     enabled: false
 ```
 
@@ -46,6 +51,7 @@ If you created an additional custom values file, like `custom-values.yaml`, then
 helm install --values custom-values.yaml --replace openstad . --namespace=openstad --create-namespace 
 ```
 
-## Troubleshooting
+## Additional
 
 List of troubleshooting or customization items can be found in [docs/customization.md]
+A description how to use internal Kubernetes API calls to update Ingress objects is in [docs/update_ingress.md]
