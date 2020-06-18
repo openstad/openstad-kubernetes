@@ -37,6 +37,8 @@ dependencies:
 
 ### Deployment
 
+#### From Source
+
 With the default values you can run the install using this command.
 
 ```bash
@@ -49,7 +51,27 @@ If you created a separate values file like custom-values.yaml you can add this:
 helm install --values custom-values.yaml --replace openstad-chart . --namespace=openstad --create-namespace
 ```
 
+#### From Helm repository
+
+In order to install the Helm chart without the need to checkout you can add it as repository.
+
+```bash
+helm repo add openstad https://amsterdam.github.io/openstad-kubernetes/
+helm3 repo update
+helm3 search openstad
+```
+
+After that you can do the installation using Helm by name of openstad/openstad.
+
+```bash
+helm install --replace openstad openstad/openstad --namespace=openstad --create-namespace
+```
+
+When using clusters with built-in catalogs you can add the repo catalog directory to the cluster using the UI.
+For updating the Helm repository version see the description at [Helm Repository Update](docs/helm_repo_update.md).
+
 ## Additional
 
-List of troubleshooting or customization items can be found in [docs/customization.md]
-A description how to use internal Kubernetes API calls to update Ingress objects is in [docs/update_ingress.md]
+List of troubleshooting or customization items can be found in [Customization](docs/customization.md).
+
+A description how to use internal Kubernetes API calls to update Ingress objects is in [Update Ingress](docs/update_ingress.md).

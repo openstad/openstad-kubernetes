@@ -65,7 +65,7 @@ The service account spec including the settings for Ingress update are added to 
 
 ## Implement code
 
-To access the Kubernetes API using code from the container you can use a prepackaged solution using an Javascript (https://kubernetes.io/docs/tasks/administer-cluster/access-cluster-api/#javascript-client), but for demonstration purposes and because for this case it can be easier to manually code the action as HTTP requests.
+To access the Kubernetes API using code from the container you can use a prepackaged solution using a [Javascript Client](https://kubernetes.io/docs/tasks/administer-cluster/access-cluster-api/#javascript-client), but for demonstration purposes and because for this case it can be easier to manually code the action as HTTP requests.
 
 ### 1. Locate the API
 
@@ -86,7 +86,7 @@ export TOKEN=`cat /var/run/secrets/kubernetes.io/serviceaccount/token`
 curl -H "Authorization: Bearer $TOKEN" -k https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/api/
 ```
 
-If curl is not available do a quick install 
+If curl is not available do a quick install:
 
 ```bash
 apt update; apt install -y curl
@@ -237,5 +237,43 @@ In order to do this perform the following steps from above:
 2. Add the role to the RoleMapping
 3. Create the interaction
 
+### Using Node.js
 
+The default Javascript client can be used for integration with Openstad.
+It can be found at the [Kubernetes Website](https://kubernetes.io/docs/tasks/administer-cluster/access-cluster-api/#javascript-client).
 
+Creating a new Ingress would look like this:
+
+```javascript
+const k8s = require('@kubernetes/client-node')
+const kc = new k8s.KubeConfig()
+kc.loadFromCluster();
+
+const k8sApi = kc.makeApiClient(k8s.NetworkingV1beta1Api)
+const clientIdentifier = 'openstad'
+
+k8sApi.createNamespacedIngress('default', {
+  apiVersions: 'networking.k8s.io/v1beta1',
+  kind: 'Ingress',
+  metadata: { name: `${clientIdentifier}-custom-domain` },
+  spec: {
+    rules: [{
+      host: `${clientIdentifier}.openstad.org`,
+      http: {
+        paths: [{
+          backend: {
+            serviceName: 'openstad-frontend-service',
+            servicePort: 4444
+          },
+          path: '/'
+        }]
+      }
+    }],
+    tls: [{ hosts: [`${clientIdentifier}.openstad.org`] }]
+  }
+}).catch(e => console.log(e))
+```
+
+For listing there is a standard function as is [documented in the source](https://github.com/kubernetes-client/javascript/blob/master/src/gen/api/networkingV1beta1Api.ts#L933)
+
+For updating you can ([se the following](https://github.com/kubernetes-client/javascript/blob/master/src/gen/api/networkingV1beta1Api.ts#L1254)
