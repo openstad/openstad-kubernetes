@@ -385,18 +385,23 @@ image:
 ##
 
 secrets:
-  database: 
-    username: openstad
-    password: examplePass2146
+  database:
+    ### These values are for the MySQL db
+    username:
+    password: 
     type:
     dbName:
     hostname:
     hostport:
-
+    
     secretName:
+    
+    ### Overwrites for image db
     image:
       dbName: image
       secretName:
+    
+    ### Overwrites for auth db 
     auth:
       dbName: auth
       secretName:
@@ -406,6 +411,8 @@ secrets:
         clientSecret:
         fixedUserId:
         fixedToken:
+          
+    ### Overwrites for API db
     api:
       dbName: api
       secretName:
@@ -413,7 +420,8 @@ secrets:
       secretName:
     adminer:
       secretName:
-
+  
+  ### Local references to services:
   hosts:
     secretName:
     api:
@@ -421,12 +429,14 @@ secrets:
     frontend:
     image:
 
+  ### Cookie secrets
   cookies:
     secretName:
     cookieName:
     onlySecure:
     jwtSecret:
 
+  ### Mail server secretes
   mail:
     auth:
       secretName:
@@ -435,6 +445,7 @@ secrets:
       emailAssetsUrl:
       user:
       password:
+    
     api:
       secretName:
       host:
@@ -446,6 +457,7 @@ secrets:
       requireSsl:
 
   mongodb:
+    ### These values are for MongoDB
     secretName:
     hostname:
     hostport:
