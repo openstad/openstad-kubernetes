@@ -382,8 +382,12 @@ image:
 
 secrets:
   database: 
-    user: openstad
+    username: openstad
     password: examplePass2146
+    type:
+    dbName:
+    hostname:
+    hostport:
 
     secretName:
     image:
@@ -394,6 +398,10 @@ secrets:
       secretName:
       credentials:
         secretName:
+        clientId:
+        clientSecret:
+        fixedUserId:
+        fixedToken:
     api:
       dbName: api
       secretName:
@@ -404,15 +412,37 @@ secrets:
 
   hosts:
     secretName:
+    api:
+    auth:
+    frontend:
+    image:
 
   cookies:
     secretName:
+    cookieName:
+    onlySecure:
+    jwtSecret:
 
   mail:
     auth:
       secretName:
+      host:
+      port:
+      emailAssetsUrl:
+      user:
+      password:
     api:
       secretName:
+      host:
+      port:
+      user:
+      emailFrom:
+      adminEmailFrom:
+      password:
+      requireSsl:
 
   mongodb:
     secretName:
+    hostname:
+    hostport:
+    database:
