@@ -86,7 +86,6 @@ persistence:
 frontend:
   # Configure how many replicas exists of this service
   replicas: 1
-
   # Configure how the service is named and labeled
   name: "frontend"
   label: openstad-frontend-service
@@ -101,7 +100,7 @@ frontend:
   deploymentContainer:
     name: frontend
     # Docker image for this pod
-    image: openstad/frontend:debug
+    image: openstad/frontend:test
   
   # Ingress settings:
   # Configure how the service is accessed
@@ -268,6 +267,8 @@ api:
   name: "api"
   label: openstad-api-service
   emailAddress: info@example.com
+  # The userId that is attached to the fixed auth token
+  fixedUserId: 2
 
   # Service settings:
   # Primarily port configuration
@@ -279,8 +280,6 @@ api:
     name: api-container
     # Docker image for this pod
     image: openstad/api:test
-
-  fixedAuthTokens: "{}"
 
   # Ingress settings:
   # Configure how the service is accessed

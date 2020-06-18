@@ -1,0 +1,56 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-post-install-hook"
+  namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "openstad.labels" . | nindent 4 }}
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-reset-database
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: post-install-job-reset-database
+          image: {{ .Values.api.deploymentContainer.image }}
+          imagePullPolicy: Always
+          command: ["node","reset.js"]
+          env:
+            - name: DB_TYPE
+              value: mysql
+            - name: API_DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: openstad-db-credentials
+            - name: API_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: openstad-db-credentials
+            - name: API_DATABASE_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database
+                  name: openstad-api-db
+            - name: API_DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: hostname
+                  name: openstad-db-credentials
+      initContainers:
+        - name: post-install-check-database-up
+          image: {{ .Values.api.deploymentContainer.image }}
+          imagePullPolicy: Always
+          command: ["nc", "{{.Release.Name}}-mysql", "3306", "-z", "-w1"]

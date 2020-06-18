@@ -98,8 +98,15 @@ spec:
               secretKeyRef:
                 key: jwt_secret
                 name: openstad-cookies
+          - name: AUTH_FIXED_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: fixed_token
+                name: openstad-auth-credentials
+          - name: AUTH_FIXED_USER_ID
+            value: "{{ .Values.api.fixedUserId }}"
           - name: API_AUTHORIZATION_FIXEDAUTHTOKENS
-            value: {{ .Values.api.fixedAuthTokens | toJson }}
+            value: "[{ \"token\": \"$(AUTH_FIXED_TOKEN)\", \"userId\": \"$(AUTH_FIXED_USER_ID)\" }]"
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
@@ -133,7 +140,7 @@ spec:
       initContainers:
         - command: ["/bin/sh", "-c"]
           args:
-            - nc {{.Release.Name}}-mysql 3306 -z -w1 && node reset.js;
+            - nc {{.Release.Name}}-mysql 3306 -z -w1 && node migrate.js;
           env:
             - name: DB_TYPE
               value: mysql
