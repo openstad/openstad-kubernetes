@@ -6,11 +6,11 @@
 ## If you want to use an existing database(s) or services, disable
 ## the chart database(s) here.
 ##
-## - To enable a depency, set the enabled value of the relevant
-##   depency to true.
+## - To enable a dependency, set the enabled value of the relevant
+##   dependency to true.
 ##
-## - To disable a depency, set the enabled value of the relevant
-##   depency to false.
+## - To disable a dependency, set the enabled value of the relevant
+##   dependency to false.
 ##
 
 dependencies:
