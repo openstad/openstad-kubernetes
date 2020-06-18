@@ -53,5 +53,5 @@ helm install --values custom-values.yaml --replace openstad . --namespace=openst
 
 ## Additional
 
-List of troubleshooting or customization items can be found in [docs/customization.md]
-A description how to use internal Kubernetes API calls to update Ingress objects is in [docs/update_ingress.md]
+List of troubleshooting or customization items can be found in [docs/customization.md](docs/customization.md).
+A description how to use internal Kubernetes API calls to update Ingress objects is in [docs/update_ingress.md](docs/update_ingress.md).
