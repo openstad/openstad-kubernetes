@@ -64,6 +64,17 @@ clusterIssuer:
 >      cert-manager.io/cluster-issuer: letsencrypt-production
 > ```
 
+## Using cluster-issuer from the Helm Chart
+
+To be able to use the cluster issuer provided by this Helm Chart you first have to install the required CRD's. Currently this process is not automated. Please install the Helm Chart first with: 
+```
+$ helm install openstad . --namespace openstad --create-namespace --set clusterIssuer.enabled=false
+```
+After the Chart is install you can enable the cluster issuer with the following command:
+```
+$ helm upgrade openstad . --namespace openstad --set clusterIssuer.enabled=true
+```
+
 ## Install without domain name
 
 Initially you might not have the final hostname available or the option to quickly change it to the cluster Ingress IP LoadBalancer address.
