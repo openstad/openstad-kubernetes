@@ -104,6 +104,11 @@ frontend:
     name: frontend
     # Docker image for this pod
     image: openstad/frontend:test
+
+  # Subdomain for the service:
+  # If filled it it will create a default url of: www.$subdomain.$baseurl
+  # If not filled in the base will be used instead: www.$baseurl
+  subdomain: 
   
   # Ingress settings:
   # Configure how the service is accessed
@@ -113,12 +118,10 @@ frontend:
       cert-manager.io/cluster-issuer: letsencrypt-staging
       kubernetes.io/ingress.class: nginx
     extraLabels: {}
-    hosts:
-    - www.openstad.softwaredepartment.net
+    hosts: []
     tls:
-    - secretName: openstad-tls-frontend
-      hosts:
-      - www.openstad.softwaredepartment.net
+      secretName: openstad-tls-frontend
+      hosts: []
 
   # Resources:
   resources:
@@ -170,6 +173,11 @@ adminer:
     # Docker image for this pod
     image: adminer
 
+  # Subdomain for the service:
+  # If filled it it will create a default url of: www.$subdomain.$baseurl
+  # If not filled in the base will be used instead: www.$baseurl
+  subdomain: 
+
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
@@ -178,12 +186,10 @@ adminer:
       cert-manager.io/cluster-issuer: letsencrypt-staging
       kubernetes.io/ingress.class: nginx
     extraLabels: {}
-    hosts:
-    - www.openstad.softwaredepartment.net
+    hosts: []
     tls:
-    - secretName: openstad-tls-adminer
-      hosts:
-      - www.openstad.softwaredepartment.net
+      secretName: openstad-tls-adminer
+      hosts: []
 
   # Resources:
   resources:
@@ -225,6 +231,11 @@ auth:
     # Docker image for this pod
     image: openstad/auth:test
 
+  # Subdomain for the service:
+  # If filled it it will create a default url of: www.$subdomain.$baseurl
+  # If not filled in the base will be used instead: www.$baseurl
+  subdomain: auth
+  
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
@@ -233,12 +244,10 @@ auth:
       cert-manager.io/cluster-issuer: letsencrypt-staging
       kubernetes.io/ingress.class: nginx
     extraLabels: {}
-    hosts:
-    - www.auth.openstad.softwaredepartment.net
+    hosts: []
     tls:
-    - secretName: openstad-tls-auth
-      hosts:
-      - www.auth.openstad.softwaredepartment.net
+      secretName: openstad-tls-auth
+      hosts: []
 
   # Resources:
   resources:
@@ -283,7 +292,12 @@ api:
     name: api-container
     # Docker image for this pod
     image: openstad/api:test
-
+  
+  # Subdomain for the service:
+  # If filled it it will create a default url of: www.$subdomain.$baseurl
+  # If not filled in the base will be used instead: www.$baseurl
+  subdomain: api
+  
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
@@ -292,12 +306,10 @@ api:
       cert-manager.io/cluster-issuer: letsencrypt-staging
       kubernetes.io/ingress.class: nginx
     extraLabels: {}
-    hosts:
-    - www.api.openstad.softwaredepartment.net
+    hosts: []
     tls:
-    - secretName: openstad-tls-api
-      hosts:
-      - www.api.openstad.softwaredepartment.net
+      secretName: openstad-tls-api
+      hosts: []
 
   # Resources:
   resources:
@@ -339,6 +351,11 @@ image:
     # Docker image for this pod
     image: openstad/image:test
   
+  # Subdomain for the service:
+  # If filled it it will create a default url of: www.$subdomain.$baseurl
+  # If not filled in the base will be used instead: www.$baseurl
+  subdomain: img
+  
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
@@ -347,12 +364,10 @@ image:
       cert-manager.io/cluster-issuer: letsencrypt-staging
       kubernetes.io/ingress.class: nginx
     extraLabels: {}
-    hosts:
-      - www.img.openstad.softwaredepartment.net
+    hosts: []
     tls:
-      - secretName: openstad-tls-image
-        hosts:
-          - www.img.openstad.softwaredepartment.net
+        secretName: openstad-tls-image
+        hosts: []
 
   # Resources:
   resources:

@@ -3,33 +3,50 @@
 {{ $serviceName := include "openstad.api.fullname" . }}
 {{ $servicePort := .Values.api.service.httpPort }}
 {{ $tls := .Values.api.ingress.tls }}
+
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
+
 metadata:
+
 {{- if .Values.api.ingress.annotations }}
   annotations:
 {{ toYaml .Values.api.ingress.annotations | indent 4 }}
 {{- end }}
+
   labels:
   {{- include "openstad.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ template "openstad.api.fullname" . }}-ingress
 {{- range $key, $value := .Values.api.ingress.extraLabels }}
   {{ $key }}: {{ $value }}
 {{- end }}
+
   name: {{ template "openstad.api.fullname" . }}
   namespace: {{ .Release.Namespace }}
+  
 spec:
   rules:
-  {{- range .Values.api.ingress.hosts }}
-    {{- $url := splitList "/" . }}
-    - host: {{ first $url }}
+{{- range $host := .Values.api.ingress.hosts }}
+    - host: {{ 1 }}
       http:
         paths:
-          - path: /{{ rest $url | join "/" }}
-            backend:
+          - backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
+{{- end }}
+    - host: {{ template "openstad.api.url" . }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+              
   tls:
-{{ toYaml $tls | indent 4 }}
+    - secretName: {{ .Values.api.ingress.tls.secretName }}
+      hosts:
+        - {{ template "openstad.api.url" . }}
+  {{- range $value := .Values.api.ingress.tls.hosts -}}
+        - {{ $value }}
   {{- end -}}
+
 {{- end -}}

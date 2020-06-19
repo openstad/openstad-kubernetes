@@ -3,33 +3,50 @@
 {{ $serviceName := include "openstad.adminer.fullname" . }}
 {{ $servicePort := .Values.adminer.service.httpPort }}
 {{ $tls := .Values.adminer.ingress.tls }}
+
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
+
 metadata:
+
 {{- if .Values.adminer.ingress.annotations }}
   annotations:
 {{ toYaml .Values.adminer.ingress.annotations | indent 4 }}
 {{- end }}
+
   labels:
   {{- include "openstad.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ template "openstad.adminer.fullname" . }}-ingress
 {{- range $key, $value := .Values.adminer.ingress.extraLabels }}
   {{ $key }}: {{ $value }}
 {{- end }}
+
   name: {{ template "openstad.adminer.fullname" . }}
   namespace: {{ .Release.Namespace }}
+  
 spec:
   rules:
-  {{- range .Values.adminer.ingress.hosts }}
-    {{- $url := splitList "/" . }}
-    - host: {{ first $url }}
+{{- range $host := .Values.adminer.ingress.hosts }}
+    - host: {{ 1 }}
       http:
         paths:
-          - path: /{{ rest $url | join "/" }}
-            backend:
+          - backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
+{{- end }}
+    - host: {{ template "openstad.adminer.url" . }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+              
   tls:
-{{ toYaml $tls | indent 4 }}
+    - secretName: {{ .Values.adminer.ingress.tls.secretName }}
+      hosts:
+        - {{ template "openstad.adminer.url" . }}
+  {{- range $value := .Values.adminer.ingress.tls.hosts -}}
+        - {{ $value }}
   {{- end -}}
+
 {{- end -}}
