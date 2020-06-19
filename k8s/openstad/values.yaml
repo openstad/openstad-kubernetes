@@ -31,8 +31,20 @@ dependencies:
 # Settings
 
 ##
-## All base settings can be changed in this block.
+## Settings for when you use one or more dependencies from above
 ##
+
+## Settings for Cert-Manager/Cluster issuer
+clusterIssuer:
+  enabled: true   # Whether this issuer is created
+  acme:           # Email used for requesting the certificates
+    email: info@openstad.org
+  prodIssuerName: openstad-letsencrypt-prod
+  stagingIssuerName: openstad-letsencrypt-staging
+
+cert-manager: 
+  # Whether we want to install CRDs. 
+  installCRDs: true
 
 ## Settings for MongoDB
 mongodb:
@@ -62,6 +74,10 @@ mysql:
   # Secret which can be controlled by us
   existingSecret: mysql-secret
 
+##
+## All base settings can be changed in this block.
+##
+
 ## Settings for DNS
 host:
   ### Base URL of the web app
@@ -70,12 +86,6 @@ host:
   ### e.g. subdomain.example.com
   base: openstad.softwaredepartment.net
 
-
-## Settings for Cert-Manager/Cluster issuer
-clusterIssuer:
-  enabled: false  # Whether this issuer is created
-  acme:           # Email used for requesting the certificates
-    email: info@openstad.org
 
 ## Settings for persistent volumes
 

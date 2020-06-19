@@ -45,11 +45,11 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{- define "openstad.clusterIssuer.staging.fullname" -}}
-    letsencrypt-staging
+    {{ .Values.clusterIssuer.stagingIssuerName }}
 {{- end -}}
 
 {{- define "openstad.clusterIssuer.prod.fullname" -}}
-    letsencrypt-prod
+    {{ .Values.clusterIssuer.prodIssuerName }}
 {{- end -}}
 
 {{/*
