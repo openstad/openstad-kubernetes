@@ -1,7 +1,7 @@
 # TODO
 
 Points marked with (*) should be handled by or done together with the Openstad development team.
-Last cleanup June 8, 2020 - 19:18PM.
+Last cleanup June 19, 2020 - 9:08AM.
 
 ## 1. Software
 
@@ -11,10 +11,10 @@ Last cleanup June 8, 2020 - 19:18PM.
 - [ ] 1.4 Minimize sizes of build docker images (*)
 - [x] 1.5 Default database install in helm
 - [x] 1.6 Auto configuration of three databases and accounts using standard MySQL helm
-- [ ] 1.7 Database setup including fixtures (*)
+- [x] 1.7 Database setup including fixtures (*)
 - [ ] 1.8 Prevent overwriting existing database after restart (*)
-- [ ] 1.9 Local.js for development was patched for containers but needs integration (*)
-- [ ] 1.10 Dependency of old branches to older MySQL where master has not (*)
+- [x] 1.9 Local.js for development was patched for containers but needs integration (*)
+- [x] 1.10 Dependency of old branches to older MySQL where master has not (*)
 
 ## 2. Kubernetes
 
@@ -30,7 +30,7 @@ Last cleanup June 8, 2020 - 19:18PM.
 
 ## 3. Administrative
 
-- [ ] 3.1 Add charts to be loaded from repository rather than checkout (https://medium.com/@mattiaperi/create-a-public-helm-chart-repository-with-github-pages-49b180dbb417)
+- [x] 3.1 Add charts to be loaded from repository rather than checkout (https://medium.com/@mattiaperi/create-a-public-helm-chart-repository-with-github-pages-49b180dbb417)
 - [x] 3.2 Structurally move to use the Github Openstad-Kubernetes repository instead of Stash.
 - [x] 3.3 Ensure that the right branches are used in Dockerhub to support autobuilding and registration of the image.
 
@@ -38,12 +38,12 @@ Last cleanup June 8, 2020 - 19:18PM.
 
 - [x] 4.1 Document the values.yaml and put the configurable blocks on top.
 - [x] 4.2 Finalize the README.md to support the Helm and standard install.
-- [ ] 4.3 Add guidelines for setup with custom Mysql database and Mongodb.
-- [ ] 4.4 Describe use of xip.io or nip.io endpoint combining hostname and IP address if none defined
+- [x] 4.3 Add guidelines for setup with custom Mysql database and Mongodb.
+- [x] 4.4 Describe use of xip.io or nip.io endpoint combining hostname and IP address if none defined
 
 ## 5. Testing
 
-- [ ] 5.1 Check working with multiple replicas for each of the containers.
+- [x] 5.1 Check working with multiple replicas for each of the containers.
 - [ ] 5.2 See if deployment of a new version works correctly (*)
 - [ ] 5.3 Validate full end to end install with or without standard components (database/mongo/cert-manager)
-- [ ] 5.4 Validate Ingress setup and tune.
+- [x] 5.4 Validate Ingress setup and tune.

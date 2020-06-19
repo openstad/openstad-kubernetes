@@ -275,6 +275,11 @@ api:
   # Configure how many replicas exists of this service
   replicas: 1
 
+  # Do we need to reset the database on install? Defaults to true, assuming that we are using a
+  # pristine database volume, however, if the database volumes exists and the application is not installed (
+  # after an uninstall or when using an existing database) then you might set this flag to false, so the database is re-used
+  resetApiDatabaseOnInstall: true
+
   # Configure how the service is named and labeled
   name: "api"
   label: openstad-api-service
