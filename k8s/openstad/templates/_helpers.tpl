@@ -52,6 +52,14 @@ If release name contains chart name it will be used as a full name.
     {{ .Values.clusterIssuer.prodIssuerName }}
 {{- end -}}
 
+{{- define "openstad.clusterIssuer.name" -}}
+{{- if .Values.clusterIssuer.useProdIssuer -}}
+    {{ template "openstad.clusterIssuer.prod.fullname" . }}
+{{- else -}}
+    {{ template "openstad.clusterIssuer.staging.fullname" . }}
+{{- end -}}
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}

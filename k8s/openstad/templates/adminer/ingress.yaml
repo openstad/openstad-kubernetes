@@ -11,6 +11,7 @@ metadata:
 
 {{- if .Values.adminer.ingress.annotations }}
   annotations:
+    cert-manager.io/cluster-issuer: {{ template "openstad.clusterIssuer.name" . }}
 {{ toYaml .Values.adminer.ingress.annotations | indent 4 }}
 {{- end }}
 
