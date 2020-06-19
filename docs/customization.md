@@ -83,3 +83,18 @@ On your own machine you need something publically available to make DNS work and
 There is a tunnel service available for developers that can supply this called [https://ngrok.com/](https://ngrok.com/).
 It will allow you to create a tunnel to your cluster so it will have a public IP address.
 For setup please read the NGrok manual at [https://ngrok.com/docs](https://ngrok.com/docs).
+
+### Scalability
+
+To create multiple replicas of any service, find an appropriate section (frontend, adminer, auth, api, image) in values.conf and change
+
+```yaml
+  replicas: 1
+```
+
+with a desired value.
+
+---
+Replication of frontend and image services might not work properly on some hosts. It's caused by persistent volume limitations and depends on supported storage class. Possible way to workaround it in future releases is using ScaleIO plugin.
+---
+
