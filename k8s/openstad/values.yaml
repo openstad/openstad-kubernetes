@@ -36,7 +36,7 @@ dependencies:
 
 ## Settings for Cert-Manager/Cluster issuer
 clusterIssuer:
-  enabled: true   # Whether this issuer is created
+  enabled: false   # Whether this issuer is created
   acme:           # Email used for requesting the certificates
     email: info@openstad.org
   prodIssuerName: openstad-letsencrypt-prod
