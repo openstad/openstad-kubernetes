@@ -123,6 +123,7 @@ spec:
         image: openstad/api:test
         imagePullPolicy: Always
         name: api-container
+        command: ['node migrate.js', 'npm start']
         ports:
         - containerPort: 8111
           name: http

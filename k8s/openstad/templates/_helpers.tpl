@@ -36,6 +36,11 @@ If release name contains chart name it will be used as a full name.
 {{- printf "%s-%s" (include "openstad.fullname" .) .Values.auth.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "openstad.admin.fullname" -}}
+{{- printf "%s-%s" (include "openstad.fullname" .) .Values.admin.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+
 {{- define "openstad.api.fullname" -}}
 {{- printf "%s-%s" (include "openstad.fullname" .) .Values.api.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
@@ -102,6 +107,14 @@ www.{{ .Values.host.base }}
 {{- define "openstad.auth.url" -}}
 {{- if .Values.auth.subdomain -}}
 www.{{ .Values.auth.subdomain }}.{{ .Values.host.base }}
+{{- else -}}
+www.{{ .Values.host.base }}
+{{- end -}}
+{{- end -}}
+
+{{- define "openstad.admin.url" -}}
+{{- if .Values.admin.subdomain -}}
+www.{{ .Values.admin.subdomain }}.{{ .Values.host.base }}
 {{- else -}}
 www.{{ .Values.host.base }}
 {{- end -}}

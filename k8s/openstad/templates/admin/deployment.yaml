@@ -1,0 +1,73 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "openstad.admin.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openstad.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ template "openstad.admin.fullname" . }}-deployment
+spec:
+  replicas: {{ .Values.admin.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.admin.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.admin.label }}
+    spec:
+      volumes:
+        - name: certs
+          secret:
+            secretName: openstad-auth-certificates
+      containers:
+      - name: {{ template "openstad.admin.fullname" . }}
+        image: {{ .Values.admin.deploymentContainer.image }}
+        imagePullPolicy: Always
+        ports:
+            - name: http
+              containerPort: {{ .Values.admin.service.httpPort }}
+        env:
+          # HOSTING
+          - name: SITE_ID
+            value: 1
+
+          - name: BASIC_AUTH_USER
+            value: "user"
+
+          - name: BASIC_AUTH_PASSWORD
+            value: "pass"
+
+          # KUBERNETES
+          - name: SESSION_SECRET
+            value: "1234567890123456"
+
+          - name: SITE_API_KEY
+            valueFrom:
+              secretKeyRef:
+                key: fixed_token
+                name: openstad-auth-credentials
+
+          - name: API_URL
+            value: https://{{ template "openstad.api.url" }}
+
+          - name: USER_API
+            value: https://{{ template "openstad.auth.url" }}
+
+          - name: USER_API_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                key: client_id
+                name: openstad-auth-credentials
+
+          - name: USER_API_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: client_secret
+                name: openstad-auth-credentials
+
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
