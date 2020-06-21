@@ -26,12 +26,12 @@ spec:
         image: {{ .Values.admin.deploymentContainer.image }}
         imagePullPolicy: Always
         ports:
-            - name: http
-              containerPort: {{ .Values.admin.service.httpPort }}
+          - containerPort: {{ .Values.admin.service.httpPort }}
+            name: http
         env:
           # HOSTING
           - name: SITE_ID
-            value: 1
+            value: "1"
 
           - name: BASIC_AUTH_USER
             value: "user"
@@ -71,3 +71,5 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
+        resources:
+{{ toYaml .Values.admin.resources | indent 12 }}

@@ -6,11 +6,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
-    app: {{ .Values.auth.label }}
+    app: {{ .Values.admin.label }}
   ports:
   - name: http
     protocol: TCP
     port: {{ .Values.admin.service.httpPort }}
-  - name: management
-    port: 9090
   type: ClusterIP

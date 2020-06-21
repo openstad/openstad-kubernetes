@@ -1,2 +1,4 @@
 charts
 *.lock
+custom-values.yaml
+c-values.yaml
