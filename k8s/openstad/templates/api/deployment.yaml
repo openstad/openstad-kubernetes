@@ -48,6 +48,8 @@ spec:
             value: {{ .Values.api.emailAddress }}
           - name: API_EXPRESS_PORT
             value: {{ .Values.api.service.httpPort | quote }}
+          - name: AUTH_API_URL
+            value: https://{{ template "openstad.auth.url" . }}
           - name: API_MAIL_FROM
             valueFrom:
               secretKeyRef:

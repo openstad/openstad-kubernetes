@@ -31,9 +31,9 @@ spec:
             - name: APP_URL
               value: https://www.{{ .Values.host.base }}
             - name: API
-              value: https://{{ template "openstad.api.url" }}
+              value: https://{{ template "openstad.api.url" . }}
             - name: IMAGE_API_URL
-              value: https://{{ template "openstad.image.url" }}
+              value: https://{{ template "openstad.image.url" . }}
             - name: IMAGE_API_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:

@@ -50,10 +50,10 @@ spec:
                 name: openstad-auth-credentials
 
           - name: API_URL
-            value: https://{{ template "openstad.api.url" }}
+            value: https://{{ template "openstad.api.url" . }}
 
           - name: USER_API
-            value: https://{{ template "openstad.auth.url" }}
+            value: https://{{ template "openstad.auth.url" . }}
 
           - name: USER_API_CLIENT_ID
             valueFrom:
@@ -71,5 +71,11 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
+                
+          - name: KUBERNETES_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
         resources:
 {{ toYaml .Values.admin.resources | indent 12 }}
