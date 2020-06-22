@@ -35,10 +35,7 @@ spec:
         env:
           # HOSTING
           - name: APP_URL
-            valueFrom:
-              secretKeyRef:
-                name: openstad-hosts
-                key: auth
+            value: https://{{ template "openstad.auth.url" . }}
 
           # HOSTING
           - name: ADMIN_REDIRECT_URL

@@ -78,6 +78,29 @@ host:
 - update custom mysql password
 - check which containers are set, latest one currently is development (and devel for application), but be aware these are auto pushed on git updates, so it might break every know and then
 
+- Set mail server if you want login to work. By default is e-mail for now. Will move it to have a token by default
+```
+### Mail server secretes
+mail:
+  auth:
+    secretName:
+    host:
+    port:
+    emailAssetsUrl:
+    user:
+    password:
+
+  api:
+    secretName:
+    host:
+    port:
+    user:
+    emailFrom:
+    adminEmailFrom:
+    password:
+    requireSsl:
+    ```
+
 ## First installation
 On first install keep certissuer to false;
 
