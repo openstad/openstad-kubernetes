@@ -70,9 +70,18 @@ To be able to use the cluster issuer provided by this Helm Chart you first have 
 ```
 $ helm install openstad . --namespace openstad --create-namespace --set clusterIssuer.enabled=false
 ```
+Or in case you are using custom-values, use the following command:
+```
+$ helm install openstad . --namespace openstad --create-namespace --values custom-values.yaml --set clusterIssuer.enabled=false
+```
+
 After the Chart is installed, wait for about a minute to let everything process, and after that you can enable the cluster issuer with the following command:
 ```
 $ helm upgrade openstad . --namespace openstad --set clusterIssuer.enabled=true
+```
+Or in case you are using custom-values, use the following command:
+```
+$ helm upgrade openstad . --namespace openstad --values custom-values.yaml --set clusterIssuer.enabled=true
 ```
 
 ## Install without domain name
