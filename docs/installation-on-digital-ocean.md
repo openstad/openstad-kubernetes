@@ -7,12 +7,7 @@ Prerequisites:
 Main commands are kubectl and helm.
 
 ## 1 Create a Kubernetes Cluster in Digital Ocean
-
-Screenshot offi
-
-
-Select at least 6 nodes for a dev cluster.
-This will take a few minutes.
+Select at least 6 nodes for a dev cluster. This will take a few minutes.
 
 ## 2 Add Config of cluster to your local machine
 Once your cluster installed you can download the config file and set it to your kubectl config
@@ -29,8 +24,6 @@ Most cloud providers come with a load balancer for ingress. For digital ocean th
 ```
 helm install nginx-ingress stable/nginx-ingress --set controller.publishService.enabled=true
 ```
-
-
 
 ## 4 Set your DNS
 Once nginx0ngress is installed DO gives you a public IP. This is Visible in your dashboard.
@@ -52,49 +45,91 @@ nginx-ingress-default-backend   ClusterIP      10.999.223.138   <none>          
 
 Setting records for following domains
 
-- www.openstad.*domainname.com*
-- www.api.openstad.*domainname.com*
-- www.auth.openstad.*domainname.com*
-- www.admin.openstad.*domainname.com*
-- www.img.openstad.*domainname.com*
+- www.*domainname.com*
+- www.api.*domainname.com*
+- www.auth.*domainname.com*
+- www.admin.*domainname.com*
+- www.img.*domainname.com*
 
 Advantage of first setting up domains is that Let's Encrypt configures the SSL certificates immediately.
 
 If you have no domain, an alternative is xip.io which sends certain domain names automatically to your IP. For instance
 
-- www.178.128.136.92.xip.io
-- www.178.128.136.92.xip.io
-- www.api.openstad.*domainname.com*
-- www.auth.openstad.*domainname.com*
-- www.admin.openstad.*domainname.com*
-- www.img.openstad.*domainname.com*
+- www.api.*178.128.136.92.xip.io*
+- www.auth.*178.128.136.92.xip.io*
 
 
+## Configure your custom values
+Go to k8s/openstad directory.
 
-## Confige your custom values
-Copy values.yaml and configure values. Create a custom-values.yaml and set the domains corresponding to
+Copy values.yaml and configure values. Create a custom-values.yaml and set the pr corresponding to
+
+- Set correct base domain
+```
+## Settings for DNS
+host:
+  ### Base URL of the web app
+  ### subdomains will be prefixed with a .
+  ### to this url
+  ### e.g. subdomain.example.com
+  base: openstad.baboom.nl
+```
 
 - update custom mysql password
-- check which containers are set, currently default are  with :test, latest one are development (and devel for application)
+- check which containers are set, latest one currently is development (and devel for application), but be aware these are auto pushed on git updates, so it might break every know and then
 
+## First installation
+On first install keep certissuer to false;
 
-## First install
-helm install --kubeconfig=config.yaml --values c-values.yaml --replace openstad . --namespace=openstad --create-namespace
+```
+## Settings for Cert-Manager/Cluster issuer
+clusterIssuer:
+  enabled: false  # Whether this issuer is created
+
+```
+
+```
+helm install --values custom-values.yaml --replace openstad . --namespace=openstad --create-namespace
+```
 
 ## Upgrade for SSL to work
-Wait a few minutes till all pods are running
+Wait a few minutes till all pods are running then enable certificates.
 
+This way you can you check if the pods are all running
+```
 kubectl get pods -n openstad
+```
 
+If all are running enable clusterIssuer in custom-values.
 
+```
+## Settings for Cert-Manager/Cluster issuer
+clusterIssuer:
+  enabled: true  # Whether this issuer is created
+
+```
+Run upgrade command:
+
+```
+helm upgrade  -f custom-values.yaml openstad . -n openstad
+```
+
+What to expect: Domains configured should now run with standard CMS.
+Currently fixtures are not being set properly.
+Easy way to access the database to set correct config in database
+
+```
+kubectl port-forward -n openstad svc/openstad-adminer 8111:8080
+```
+
+After the command has started stating `Forwarding from 127.0.0.1:8111 -> 8080` you can open your browser to [http://localhost:8111/](http://localhost:8111/).
+
+Password and user are defined in your values.
 
 ## Some other commands
 
 ```
 helm upgrade openstad . --namespace openstad --values c-values.yaml --kubeconfig=config.yaml
-```
-```
-kubectl get pods -n openstad --kubeconfig=config.yaml
 ```
 
 ```
@@ -116,19 +151,17 @@ helm get values openstad -n openstad
 Port forwarding to access in local browser:
 ```
 kubectl port-forward <pod_name> <local_port>:<pod_port>
-
 kubectl port-forward openstad-admin-ccf84f977-r4b5c 9999:7777
 ```
 This way you can acces adminer in local browser
-```
-
-Get namespace config
-```
-kubectl get namespace openstad -o json > openstad.json
-```
-
 
 ## How to add your own container?
-Current config assument a public docker hub
-In config yaml
-yourdockerhubrepo/name:tag
+Current config assumes a public docker hub
+
+In config yaml:
+```
+deploymentContainer:
+  name: api-container
+  # Docker image for this pod
+  image: dockerhub/container:tag
+```

@@ -119,7 +119,7 @@ frontend:
   deploymentContainer:
     name: frontend
     # Docker image for this pod
-    image: openstad/frontend:test
+    image: openstad/frontend:development
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
@@ -243,7 +243,7 @@ auth:
   deploymentContainer:
     name: auth
     # Docker image for this pod
-    image: openstad/auth:test
+    image: openstad/auth:development
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
@@ -366,7 +366,7 @@ api:
   deploymentContainer:
     name: api-container
     # Docker image for this pod
-    image: openstad/api:test
+    image: openstad/api:devel
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
@@ -423,7 +423,7 @@ image:
   deploymentContainer:
     name: image
     # Docker image for this pod
-    image: openstad/image:test
+    image: openstad/image:development
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
