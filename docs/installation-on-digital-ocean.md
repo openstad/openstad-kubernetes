@@ -26,9 +26,9 @@ helm install nginx-ingress stable/nginx-ingress --set controller.publishService.
 ```
 
 ## 4 Set your DNS
-Once nginx0ngress is installed DO gives you a public IP. This is Visible in your dashboard.
+Once nginx-ingress is installed DigitalOcean gives you a public IP. This is visible in your dashboard.
 
-Or with following commands
+You can also find your IP in via your command line.
 
 ```
 kubectl get svc
