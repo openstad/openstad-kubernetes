@@ -66,8 +66,66 @@ After this step the namespace should finally delete itself.
 
 ### Fix for causation 2
 
-TBA
+First we should identify the faulty CRD.
+Assuming we have tried to delete the namespace or CRD's already, 
+start by looking up which CRD's exists.
+
+```
+  $ kubectl get crd | grep cert
+    challenges.acme.cert-manager.io                 2020-06-22T10:01:43Z
+```
  
+Clearly only everything but one of the CRD's are deleted. 
+Let's see what its status is:
+```
+$ kubectl describe crd challenges.acme.cert-manager.io
+---
+...
+Scroll to bottom
+...
+
+Status:
+  Accepted Names:
+    Kind:       Challenge
+    List Kind:  ChallengeList
+    Plural:     challenges
+    Singular:   challenge
+  Conditions:
+    Last Transition Time:  2020-06-22T10:01:43Z
+    Message:               no conflicts found
+    Reason:                NoConflicts
+    Status:                True
+    Type:                  NamesAccepted
+    Last Transition Time:  2020-06-22T10:01:47Z
+    Message:               the initial names have been accepted
+    Reason:                InitialNamesAccepted
+    Status:                True
+    Type:                  Established
+    Last Transition Time:  2020-06-22T10:03:45Z
+    Message:               CustomResource deletion is in progress
+    Reason:                InstanceDeletionInProgress
+    Status:                True
+    Type:                  Terminating
+  Stored Versions:
+    v1alpha2
+Events:  <none>
+```
+ Under the last message we see: `CustomResource deletion is in progress`. 
+ Clearly something froze the CRD, possible a deadlock. (At the time of the
+ command it was 13:34. This is 3 hours and 31 minutes after deletion.)
+ 
+ In this case a quick dirty fix is to remove its finalizers.
+ This can be done with:
+ 
+```
+ kubectl patch crd/challenges.acme.cert-manager.io -p '{"metadata":{"finalizers":[]}}' --type merge 
+```
+
+Notice:
+The example had `challenges.acme.cert-manager.io` as the faulty CRD.
+Replace all references to this with the CRD you after the first command
+from this section.
+
 ### Prevention
 
 Uninstall the chart first with:
