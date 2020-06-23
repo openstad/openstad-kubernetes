@@ -151,6 +151,17 @@ Password and user are defined in your values.
 
 ## Some other commands
 
+For logging these commands are usefull, describe gives info like env values, logs gives the logs of the pod
+
+```
+kubectl logs [podname] -n openstad
+kubectl describe [resourceType] [resourceName] -n openstad
+
+kubectl describe pod openstad-auth-b884b985d-505ph -n openstad
+kubectl logs openstad-auth-b884b985d-505ph -n openstad
+```
+
+
 ```
 helm upgrade openstad . --namespace openstad --values c-values.yaml --kubeconfig=config.yaml
 ```
@@ -163,9 +174,6 @@ kubectl set image deployment/openstad-admin openstad-admin=openstad/admin:700636
 helm upgrade  -f custom-values.yaml openstad . -n openstad
 ```
 
-```
-helm upgrade -f c-values.yaml openstad . -n openstad
-```
 
 ```
 helm get values openstad -n openstad

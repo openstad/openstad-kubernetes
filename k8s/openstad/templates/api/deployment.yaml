@@ -166,6 +166,23 @@ spec:
                 secretKeyRef:
                   key: hostname
                   name: openstad-db-credentials
+            - name: DEV_SITE_DOMAIN
+              value: www.{{ .Values.host.base }}
+            - name: ADMIN_DOMAIN
+              value: https://{{ template "openstad.admin.url" . }}
+            - name: AUTH_URL
+              value: https://{{ template "openstad.auth.url" . }}
+            - name: AUTH_FIRST_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: client_id
+                  name: openstad-auth-credentials
+            - name: AUTH_FIRST_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: client_secret
+                  name: openstad-auth-credentials
+
           image: {{ .Values.api.deploymentContainer.image }}
           imagePullPolicy: Always
           name: init-db-ready

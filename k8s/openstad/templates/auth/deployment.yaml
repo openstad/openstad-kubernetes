@@ -36,6 +36,11 @@ spec:
           # HOSTING
           - name: APP_URL
             value: https://{{ template "openstad.auth.url" . }}
+          - name: COOKIE_SECURE_OFF
+            value: 'yes'
+
+          - name: SESSION_COOKIES_CONFIG_2
+            value: '{"maxAge":5000000,"secure":true,"httpOnly":false,"sameSite":false}'
 
           # HOSTING
           - name: ADMIN_REDIRECT_URL
@@ -77,7 +82,11 @@ spec:
               secretKeyRef:
                 name: openstad-db-credentials
                 key: hostport
-
+          - name: MONGO_DB_HOST
+            valueFrom:
+              secretKeyRef:
+                key: hostname
+                name: openstad-mongo-credentials
           - name: DB_NAME
             valueFrom:
               secretKeyRef:
