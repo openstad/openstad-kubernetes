@@ -76,8 +76,8 @@ In order to install the Helm chart without the need to checkout you can add it a
 
 ```bash
 helm repo add openstad https://amsterdam.github.io/openstad-kubernetes/
-helm3 repo update
-helm3 search openstad
+helm repo update
+helm search openstad
 ```
 
 After that you can do the installation using Helm by name of openstad/openstad.
