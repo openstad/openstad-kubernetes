@@ -9,6 +9,17 @@ dependencies:
   version: "7.14.5"
   repository: "https://charts.bitnami.com/bitnami"
   condition: dependencies.mongodb.enabled
+  image:
+    ## Bitnami MongoDB registry
+    ##
+    registry: docker.io
+    ## Bitnami MongoDB image name
+    ##
+    repository: bitnami/mongodb
+    ## Bitnami MongoDB image tag
+    ## ref: https://hub.docker.com/r/bitnami/mongodb/tags/
+    ##
+    tag: 4.0.14-ol-7-r39
 
 - name: mysql
   version: "6.14.2"

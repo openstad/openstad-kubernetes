@@ -21,6 +21,7 @@ spec:
         - name: certs
           secret:
             secretName: openstad-auth-certificates
+      serviceAccountName: openstad-ingress-sa
       containers:
       - name: {{ template "openstad.admin.fullname" . }}
         image: {{ .Values.admin.deploymentContainer.image }}
@@ -39,9 +40,25 @@ spec:
           - name: BASIC_AUTH_PASSWORD
             value: "pass"
 
+          - name: COOKIE_SECURE_OFF
+            value: "yes"
+
+          # KUBERNETES
+          - name: COOKIE_SECRET
+            value: "1234567890123456"
+
           # KUBERNETES
           - name: SESSION_SECRET
             value: "1234567890123456"
+
+          - name: MONGO_DB_HOST
+            valueFrom:
+              secretKeyRef:
+                key: hostname
+                name: openstad-mongo-credentials
+
+          - name: DEBUG
+            value: "express-session"
 
           - name: SITE_API_KEY
             valueFrom:
@@ -75,6 +92,16 @@ spec:
           - name: USER_API_CLIENT_SECRET
             value: 1f9ffddcfb4569db413126a67edca37a
 
+          - name: MONGO_DB_HOST
+            valueFrom:
+              secretKeyRef:
+                key: hostname
+                name: openstad-mongo-credentials
+          - name: MONGO_DB_PORT
+            valueFrom:
+              secretKeyRef:
+                key: hostport
+                name: openstad-mongo-credentials
 
           - name: MY_POD_IP
             valueFrom:
