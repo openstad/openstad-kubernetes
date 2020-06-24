@@ -48,7 +48,10 @@ spec:
                key: frontend
 
           - name: SESSION_SECRET
-            value: "1234567890123456"
+            valueFrom:
+              secretKeyRef:
+                key: secret
+                name: openstad-session-secret
 
           # MySQL DATABASE
           - name: DB_VENDOR
