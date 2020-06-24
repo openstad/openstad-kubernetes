@@ -432,19 +432,14 @@ secrets:
     rootPassword:
     replicationPassword:
     
-    secretName:
-    
     ### Overwrites for image db
     image:
       dbName: image
-      secretName:
     
     ### Overwrites for auth db 
     auth:
       dbName: auth
-      secretName:
       credentials:
-        secretName:
         clientId:
         clientSecret:
         fixedUserId:
@@ -453,15 +448,9 @@ secrets:
     ### Overwrites for API db
     api:
       dbName: api
-      secretName:
-    frontend:
-      secretName:
-    adminer:
-      secretName:
   
   ### Local references to services:
   hosts:
-    secretName:
     api:
     auth:
     frontend:
@@ -469,7 +458,6 @@ secrets:
 
   ### Cookie secrets
   cookies:
-    secretName:
     cookieName:
     onlySecure:
     jwtSecret:
@@ -477,7 +465,6 @@ secrets:
   ### Mail server secretes
   mail:
     auth:
-      secretName:
       host:
       port:
       emailAssetsUrl:
@@ -485,7 +472,6 @@ secrets:
       password:
     
     api:
-      secretName:
       host:
       port:
       user:
@@ -496,7 +482,6 @@ secrets:
 
   mongodb:
     ### These values are for MongoDB
-    secretName:
     hostname:
     hostport:
     database:
