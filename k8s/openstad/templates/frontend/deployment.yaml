@@ -31,9 +31,9 @@ spec:
             - name: APP_URL
               value: https://www.{{ .Values.host.base }}
             - name: API
-              value: https://{{ template "openstad.api.url" }}
+              value: https://{{ template "openstad.api.url" . }}
             - name: IMAGE_API_URL
-              value: https://{{ template "openstad.image.url" }}
+              value: https://{{ template "openstad.image.url" . }}
             - name: IMAGE_API_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
@@ -101,3 +101,25 @@ spec:
         - name: data-uploads
           persistentVolumeClaim:
             claimName: frontend-uploads-claim
+
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ .Values.frontend.label }}
+            topologyKey: "kubernetes.io/hostname"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 50
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ .Values.image.label }}
+              topologyKey: doks.digitalocean.com/node-id

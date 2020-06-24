@@ -114,7 +114,5 @@ To create multiple replicas of any service, find an appropriate section (fronten
 
 with a desired value.
 
----
-Replication of frontend and image services might not work properly on some hosts. It's caused by persistent volume limitations and depends on supported storage class. Possible way to workaround it in future releases is using ScaleIO plugin.
----
-
+Note that frontend and scalability services can be scaled only within a single node per service. It's caused by persistent volume limitations.
+We also prefer to have these two services on different nodes (if applicable) for better workload balance.

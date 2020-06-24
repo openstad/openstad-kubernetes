@@ -21,7 +21,7 @@ spec:
       containers:
         - env:
           - name: API_URL
-            value: https://www.{{ .Values.host.base }}
+            value: https://{{ template "openstad.api.url" . }}
           - name: API_HOSTNAME
             value: www.{{ .Values.host.base}}
           - name: API_DATABASE_USER
@@ -48,6 +48,8 @@ spec:
             value: {{ .Values.api.emailAddress }}
           - name: API_EXPRESS_PORT
             value: {{ .Values.api.service.httpPort | quote }}
+          - name: AUTH_API_URL
+            value: https://{{ template "openstad.auth.url" . }}
           - name: API_MAIL_FROM
             valueFrom:
               secretKeyRef:

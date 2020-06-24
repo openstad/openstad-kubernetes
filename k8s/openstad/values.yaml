@@ -12,16 +12,16 @@
 ## - To disable a dependency, set the enabled value of the relevant
 ##   dependency to false.
 ##
-## Note: If you use an existing database, please change the 
+## Note: If you use an existing database, please change the
 ##      relevant credentials in secrets.database for MySQL and/or
 ##      secrets.mongodb for MongoDB
 ##
 
 dependencies:
   ## Database
-  mongodb: 
+  mongodb:
     enabled: true
-  mysql: 
+  mysql:
     enabled: true
 
   ## SSL
@@ -39,17 +39,17 @@ clusterIssuer:
   enabled: false   # Whether this issuer is created
   acme:           # Email used for requesting the certificates
     email: info@openstad.org
-  
+
   ### If you want to use a production issuer set the following to true
   useProdIssuer: false
-  
+
   ### Name of the production issuer
   prodIssuerName: openstad-letsencrypt-prod
   ### Name of the staging issuer
   stagingIssuerName: openstad-letsencrypt-staging
 
-cert-manager: 
-  # Whether we want to install CRDs. 
+cert-manager:
+  # Whether we want to install CRDs.
   installCRDs: true
 
 ## Settings for MongoDB
@@ -68,15 +68,15 @@ mysql:
 
     # Name of the initial database
     name: image
-    # The following databases will be created additionally 
+    # The following databases will be created additionally
     # during initialization:
     additionalDbNames:
       - api
       - auth
-  
+
   # DB initialization scripts are put in this config map:
   initdbScriptsConfigMap: extra-db-map
-  
+
   # Secret which can be controlled by us
   existingSecret: mysql-secret
 
@@ -124,13 +124,13 @@ frontend:
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
   # If not filled in the base will be used instead: www.$baseurl
-  subdomain: 
-  
+  subdomain:
+
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
     enabled: true # Whether there is a ingress for this service
-    annotations: 
+    annotations:
       kubernetes.io/ingress.class: nginx
     extraLabels: {}
     hosts: []
@@ -168,7 +168,6 @@ frontend:
         1Gi
 
 ## Settings for Adminer
-
 adminer:
   # Configure how many replicas exists of this service
   replicas: 1
@@ -191,13 +190,13 @@ adminer:
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
   # If not filled in the base will be used instead: www.$baseurl
-  subdomain: 
+  subdomain:
 
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
     enabled: false # Whether there is a ingress for this service
-    annotations: 
+    annotations:
       kubernetes.io/ingress.class: nginx
     extraLabels: {}
     hosts: []
@@ -238,7 +237,7 @@ auth:
   # Primarily port configuration
   service:
     httpPort: 4000
-  
+
   # Deployment container is what is eventually run in the pod
   deploymentContainer:
     name: auth
@@ -249,17 +248,74 @@ auth:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
   # If not filled in the base will be used instead: www.$baseurl
   subdomain: auth
-  
+
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
     enabled: true # Whether there is a ingress for this service
-    annotations: 
+    annotations:
       kubernetes.io/ingress.class: nginx
     extraLabels: {}
     hosts: []
     tls:
       secretName: openstad-tls-auth
+      hosts: []
+
+  # Resources:
+  resources:
+    # Max resources
+    limits:
+      cpu: 100m
+      memory: 1Gi
+    # Min resources
+    requests:
+      cpu: 100m
+      memory: 500M
+
+  # Check whether the service is healthy:
+  # First time after $(initialDelaySeconds) seconds.
+  # After that every $(periodSeconds) seconds
+  probe:
+    liveness:
+      initialDelaySeconds: 30
+      periodSeconds: 60
+
+
+## Settings for the Admin server
+admin:
+  # Configure how many replicas exists of this service
+  replicas: 1
+
+  # Configure how the service is named and labeled
+  name: "admin"
+  label: openstad-admin-service
+
+  # Service settings:
+  # Primarily port configuration
+  service:
+    httpPort: 7777
+
+  # Deployment container is what is eventually run in the pod
+  deploymentContainer:
+    name: admin
+    # Docker image for this pod
+    image: openstad/admin:development
+
+  # Subdomain for the service:
+  # If filled it it will create a default url of: www.$subdomain.$baseurl
+  # If not filled in the base will be used instead: www.$baseurl
+  subdomain: admin
+
+  # Ingress settings:
+  # Configure how the service is accessed
+  ingress:
+    enabled: true # Whether there is a ingress for this service
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    extraLabels: {}
+    hosts: []
+    tls:
+      secretName: openstad-tls-admin
       hosts: []
 
   # Resources:
@@ -310,17 +366,17 @@ api:
     name: api-container
     # Docker image for this pod
     image: openstad/api:test
-  
+
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
   # If not filled in the base will be used instead: www.$baseurl
   subdomain: api
-  
+
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
     enabled: true # Whether there is a ingress for this service
-    annotations: 
+    annotations:
       kubernetes.io/ingress.class: nginx
     extraLabels: {}
     hosts: []
@@ -356,28 +412,28 @@ image:
   # Configure how the service is named and labeled
   name: "image"
   label: openstad-image-service
-  
+
   # Service settings:
   # Primarily port configuration
   service:
     httpPort: 4100
-  
+
   # Deployment container is what is eventually run in the pod
   deploymentContainer:
     name: image
     # Docker image for this pod
     image: openstad/image:test
-  
+
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
   # If not filled in the base will be used instead: www.$baseurl
   subdomain: img
-  
+
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
     enabled: true # Whether there is a ingress for this service
-    annotations: 
+    annotations:
       kubernetes.io/ingress.class: nginx
     extraLabels: {}
     hosts: []
@@ -422,12 +478,12 @@ secrets:
   database:
     ### These values are for the MySQL db
     username:
-    password: 
+    password:
     type:
     dbName:
     hostname:
     hostport:
-    
+
     ### Default db passwords for when you use the dependency
     rootPassword:
     replicationPassword:
@@ -436,7 +492,7 @@ secrets:
     image:
       dbName: image
     
-    ### Overwrites for auth db 
+    ### Overwrites for auth db
     auth:
       dbName: auth
       credentials:
@@ -444,7 +500,7 @@ secrets:
         clientSecret:
         fixedUserId:
         fixedToken:
-          
+
     ### Overwrites for API db
     api:
       dbName: api
@@ -470,7 +526,7 @@ secrets:
       emailAssetsUrl:
       user:
       password:
-    
+
     api:
       host:
       port:
