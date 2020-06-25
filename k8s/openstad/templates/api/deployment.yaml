@@ -24,6 +24,13 @@ spec:
             value: https://{{ template "openstad.api.url" . }}
           - name: API_HOSTNAME
             value: www.{{ .Values.host.base}}
+
+          - name: FRONTEND_URL
+            value: https://www.{{ .Values.host.base }}
+
+          - name: ADMIN_URL
+            value: https://{{ template "openstad.admin.url" . }}
+
           - name: API_DATABASE_USER
             valueFrom:
               secretKeyRef:
@@ -126,7 +133,7 @@ spec:
 
           - name: USER_API_CLIENT_SECRET
             value: 1f9ffddcfb4569db413126a67edca37a
-                        
+
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
@@ -189,6 +196,11 @@ spec:
             - name: ADMIN_DOMAIN
               value: https://{{ template "openstad.admin.url" . }}
             - name: AUTH_URL
+              value: https://{{ template "openstad.auth.url" . }}
+            # auth internal url is used for call internally to localhost or the corresponding service name in a container environment
+            # it can also  go through the public network
+            # but there is a performace cost if this is not done internally due to network latency
+            - name: AUTH_INTERNAL_SERVER_URL
               value: https://{{ template "openstad.auth.url" . }}
             - name: AUTH_FIRST_CLIENT_ID
               valueFrom:

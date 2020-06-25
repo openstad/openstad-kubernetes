@@ -36,11 +36,6 @@ spec:
           # HOSTING
           - name: APP_URL
             value: https://{{ template "openstad.auth.url" . }}
-          - name: COOKIE_SECURE_OFF
-            value: 'no'
-
-          - name: SESSION_COOKIES_CONFIG_2
-            value: '{"maxAge":5000000,"secure":true,"httpOnly":false,"sameSite":false}'
 
           # HOSTING
           - name: ADMIN_REDIRECT_URL
@@ -122,13 +117,30 @@ spec:
                 key: user
 
           - name: EMAIL_ASSETS_URL
-            valueFrom:
-              secretKeyRef:
-                name: openstad-auth-mail
-                key: email_assets_url
+            value: https://{{ template "openstad.auth.url" . }}/email
+
+          - name: FRONTEND_URL
+            value: https://www.{{ .Values.host.base }}
+
+          - name: ADMIN_URL
+            value: https://{{ template "openstad.admin.url" . }}
 
           - name: FROM_NAME
             value: "Openstad api"
+
+          - name: AUTH_FIRST_CLIENT_LOGIN_CODE
+            value: "TESTADMIN"
+
+          - name: AUTH_FIRST_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                key: client_id
+                name: openstad-auth-credentials
+          - name: AUTH_FIRST_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: client_secret
+                name: openstad-auth-credentials
 
           - name: FROM_EMAIL
             valueFrom:
@@ -142,6 +154,7 @@ spec:
               fieldRef:
                 apiVersion: v1
                 fieldPath: metadata.namespace
+
           - name: MY_POD_IP
             valueFrom:
               fieldRef:
