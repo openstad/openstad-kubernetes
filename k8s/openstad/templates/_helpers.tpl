@@ -145,6 +145,13 @@ www.{{ .Values.host.base }}
 {{- end -}}
 
 {{/*
+    Fixed Secrets
+*/}}
+{{- define "openstad.session.fixedSecret" -}}
+    {{ randAlphaNum 12 | quote }}
+{{- end -}}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "openstad.serviceAccountName" -}}

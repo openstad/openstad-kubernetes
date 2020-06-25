@@ -6,8 +6,12 @@
   database: {{ .Values.secrets.database.dbName | default "mysql" | b64enc }}
   hostname: {{ .Values.secrets.database.hostname | default (printf "%s-mysql.%s.svc.cluster.local" .Release.Name .Release.Namespace) | b64enc }}
   hostport: {{ .Values.secrets.database.hostport | default 3306 | toString | b64enc }}
-  password: {{ .Values.secrets.database.password | default .Values.mysql.db.password | b64enc }}
+  password: {{ .Values.mysql.db.password | default ( randAlphaNum 12 | quote ) | b64enc }}
   username: {{ .Values.secrets.database.username | default "openstad" | b64enc }}
+{{- end }}
+
+{{- define "sessionSecret" -}}
+  secret: {{ ( randAlphaNum 12 | quote ) | b64enc }}
 {{- end }}
 
 {{- define "mongodbSecret" -}}
@@ -19,7 +23,7 @@
 {{- define "cookieSecret" -}}
   cookie_name: {{ .Values.secrets.cookies.cookieName | default "openstad.sid" | b64enc }}
   only_secure: {{ .Values.secrets.cookies.onlySecure | default "true" | b64enc }}
-  jwt_secret: {{ .Values.secrets.cookies.jwtSecret | default "QTG6EPehO6NKfJm6bSV9NYVbFj973ezT" | b64enc }}
+  jwt_secret: {{ .Values.secrets.cookies.jwtSecret | default ( randAlphaNum 12 | quote ) | b64enc }}
 {{- end }}
 
 {{- define "imageDbSecret" -}}
@@ -27,9 +31,9 @@
 {{- end }}
   
 {{- define "mysqlSecret" -}}
-  mysql-root-password: {{ .Values.secrets.database.rootPassword | default "fy4P3M31FCzg0@a1L!" | b64enc }}
-  mysql-replication-password: {{ .Values.secrets.database.replicationPassword | default "2B@9bR!pyF6Z3h#bM" | b64enc }}
-  mysql-password: {{ .Values.secrets.database.password | default .Values.mysql.db.password | b64enc }}
+  mysql-root-password: {{ .Values.secrets.database.rootPassword | default ( randAlphaNum 12 | quote ) | b64enc }}
+  mysql-replication-password: {{ .Values.secrets.database.replicationPassword | default ( randAlphaNum 12 | quote ) | b64enc }}
+  mysql-password: {{ .Values.mysql.db.password | default ( randAlphaNum 12 | quote ) | b64enc }}
 {{- end }}
 
 {{- define "apiDbSecret" -}}
@@ -49,9 +53,9 @@
 
 {{- define "authCredSecret" -}}
   client_id: {{ .Values.secrets.database.auth.credentials.clientId | default "clientID" | b64enc }}
-  client_secret: {{ .Values.secrets.database.auth.credentials.clientSecret | default "clientSecret" | b64enc }}
+  client_secret: {{ .Values.secrets.database.auth.credentials.clientSecret | default ( randAlphaNum 12 | quote ) | b64enc }}
   fixed_user_id: {{ .Values.secrets.database.auth.credentials.fixedUserId | default 2 | toString | b64enc }}
-  fixed_token: {{ .Values.secrets.database.auth.credentials.fixedToken | default "fixedToken" | b64enc }}
+  fixed_token: {{ .Values.secrets.database.auth.credentials.fixedToken | default ( randAlphaNum 12 | quote ) | b64enc }}
 {{- end }}
 
 {{- define "apiMailSecret" -}}
@@ -60,7 +64,7 @@
   user: {{ .Values.secrets.mail.api.user | default "user@example.com" | b64enc }}
   email_from: {{ .Values.secrets.mail.api.emailFrom | default "user@example.com" | b64enc }}
   admin_email_from: {{ .Values.secrets.mail.api.adminEmailFrom | default "admin-user@example.com" | b64enc }}
-  password: {{ .Values.secrets.mail.api.password | default "pwd123" | b64enc }}
+  password: {{ .Values.secrets.mail.api.password | default ( randAlphaNum 12 | quote ) | b64enc }}
   require_ssl: {{ .Values.secrets.mail.api.requireSsl | default "true" | b64enc }}
 {{- end}}
 
@@ -69,5 +73,5 @@
   email_assets_url: {{ .Values.secrets.mail.auth.emailAssetsUrl | default "assets.example.com" | b64enc }}
   port: {{ .Values.secrets.mail.auth.port | default 587 | toString | b64enc }}
   user: {{ .Values.secrets.mail.auth.user | default "mail@example.com" | b64enc }}
-  password: {{ .Values.secrets.mail.auth.password | default "pwd123" | b64enc }}
+  password: {{ .Values.secrets.mail.auth.password | default ( randAlphaNum 12 | quote ) | b64enc }}
 {{- end}}

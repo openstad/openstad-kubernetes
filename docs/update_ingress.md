@@ -245,33 +245,50 @@ It can be found at the [Kubernetes Website](https://kubernetes.io/docs/tasks/adm
 Creating a new Ingress would look like this:
 
 ```javascript
-const k8s = require('@kubernetes/client-node')
-const kc = new k8s.KubeConfig()
-kc.loadFromCluster();
+            const k8s = require('@kubernetes/client-node')
+            const kc = new k8s.KubeConfig()
+            kc.loadFromCluster();
 
-const k8sApi = kc.makeApiClient(k8s.NetworkingV1beta1Api)
-const clientIdentifier = 'openstad'
+            const k8sApi = kc.makeApiClient(k8s.NetworkingV1beta1Api)
 
-k8sApi.createNamespacedIngress('default', {
-  apiVersions: 'networking.k8s.io/v1beta1',
-  kind: 'Ingress',
-  metadata: { name: `${clientIdentifier}-custom-domain` },
-  spec: {
-    rules: [{
-      host: `${clientIdentifier}.openstad.org`,
-      http: {
-        paths: [{
-          backend: {
-            serviceName: 'openstad-frontend-service',
-            servicePort: 4444
-          },
-          path: '/'
-        }]
-      }
-    }],
-    tls: [{ hosts: [`${clientIdentifier}.openstad.org`] }]
-  }
-}).catch(e => console.log(e))
+            k8sApi.createNamespacedIngress(process.env.KUBERNETES_NAMESPACE, {
+              apiVersions: 'networking.k8s.io/v1beta1',
+              kind: 'Ingress',
+              metadata: {
+                name: `${unique-identifiers}`,
+                annotations: {
+                   'cert-manager.io/cluster-issuer': 'openstad-letsencrypt-prod',
+                   'kubernetes.io/ingress.class': 'nginx'
+                }
+              },
+              spec: {
+                rules: [{
+                  host: domain,
+                  http: {
+                    paths: [{
+                      backend: {
+                        serviceName: 'openstad-frontend',
+                        servicePort: 4444
+                      },
+                      path: '/'
+                    }]
+                  }
+                }],
+                tls: [{
+                  secretName: dbName,
+                  hosts: [domain]
+                }]
+              }
+            })
+            .then(() => {
+              //@todo: improve succes message, will take a few min to have a lets encrypt
+              console.log('Succesfully added ',domain, ' to ingress files');
+              successAction();
+            })
+            .catch((e) => {
+              console.log('Error while trying to add domain ',domain, ' to ingress files:', e);
+              failureAction();
+            })
 ```
 
 For listing there is a standard function as is [documented in the source](https://github.com/kubernetes-client/javascript/blob/master/src/gen/api/networkingV1beta1Api.ts#L933)

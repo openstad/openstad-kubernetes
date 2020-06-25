@@ -49,7 +49,10 @@ spec:
 
           # KUBERNETES
           - name: SESSION_SECRET
-            value: "1234567890123456"
+            valueFrom:
+              secretKeyRef:
+                key: secret
+                name: openstad-session-secret
 
           - name: MONGO_DB_HOST
             valueFrom:
