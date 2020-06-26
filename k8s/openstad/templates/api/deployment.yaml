@@ -116,18 +116,7 @@ spec:
             value: "{{ .Values.api.fixedUserId }}"
           - name: API_AUTHORIZATION_FIXEDAUTHTOKENS
             value: "[{ \"token\": \"$(AUTH_FIXED_TOKEN)\", \"userId\": \"$(AUTH_FIXED_USER_ID)\" }]"
-
-          - name: USER_API_CLIENT_ID_1
-            valueFrom:
-              secretKeyRef:
-                key: client_id
-                name: openstad-auth-credentials
-
-          - name: USER_API_CLIENT_SECRET_1
-            valueFrom:
-              secretKeyRef:
-                key: client_secret
-                name: openstad-auth-credentials
+            
           - name: USER_API_CLIENT_ID
             value: 2f2c7b3a838dcc33bdfee74137575468
 
