@@ -1,0 +1,12 @@
+
+clusterIssuer:
+  enabled: true
+  acme:
+    email: info@wijik.org
+
+  useProdIssuer: true
+
+host:
+  base: wijikdemo.marviq.net
+  usewww: false
+
