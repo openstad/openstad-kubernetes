@@ -92,6 +92,9 @@ host:
   ### e.g. subdomain.example.com
   base: openstad.softwaredepartment.net
 
+  ### Whether we should append www to the domains
+  usewww: true
+
 
 ## Settings for persistent volumes
 

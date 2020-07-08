@@ -98,49 +98,49 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 
 {{- define "openstad.api.url" -}}
 {{- if .Values.api.subdomain -}}
-www.{{ .Values.api.subdomain }}.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.api.subdomain }}.{{ .Values.host.base }}
 {{- else -}}
-www.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.host.base }}
 {{- end -}}
 {{- end -}}
 
 {{- define "openstad.auth.url" -}}
 {{- if .Values.auth.subdomain -}}
-www.{{ .Values.auth.subdomain }}.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.auth.subdomain }}.{{ .Values.host.base }}
 {{- else -}}
-www.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.host.base }}
 {{- end -}}
 {{- end -}}
 
 {{- define "openstad.admin.url" -}}
 {{- if .Values.admin.subdomain -}}
-www.{{ .Values.admin.subdomain }}.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.admin.subdomain }}.{{ .Values.host.base }}
 {{- else -}}
-www.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.host.base }}
 {{- end -}}
 {{- end -}}
 
 {{- define "openstad.frontend.url" -}}
 {{- if .Values.frontend.subdomain -}}
-www.{{ .Values.frontend.subdomain }}.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.frontend.subdomain }}.{{ .Values.host.base }}
 {{- else -}}
-www.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.host.base }}
 {{- end -}}
 {{- end -}}
 
 {{- define "openstad.image.url" -}}
 {{- if .Values.image.subdomain -}}
-www.{{ .Values.image.subdomain }}.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.image.subdomain }}.{{ .Values.host.base }}
 {{- else -}}
-www.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.host.base }}
 {{- end -}}
 {{- end -}}
 
 {{- define "openstad.adminer.url" -}}
 {{- if .Values.adminer.subdomain -}}
-www.{{ .Values.adminer.subdomain }}.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.adminer.subdomain }}.{{ .Values.host.base }}
 {{- else -}}
-www.{{ .Values.host.base }}
+{{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.host.base }}
 {{- end -}}
 {{- end -}}
 
