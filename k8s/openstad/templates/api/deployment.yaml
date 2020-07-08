@@ -22,6 +22,7 @@ spec:
         - env:
           - name: API_URL
             value: https://{{ template "openstad.api.url" . }}
+            
           - name: API_HOSTNAME
             value: www.{{ .Values.host.base}}
 
@@ -31,11 +32,44 @@ spec:
           - name: ADMIN_URL
             value: https://{{ template "openstad.admin.url" . }}
 
+          - name: MYSQL_ROOT_PASS
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: openstad-db-credentials
+
+          - name: PUBLIC_IP
+            value: "134.209.137.123"
+
+          - name: S3_DBS_TO_BACKUP
+            value: "api,auth,image"
+
+          - name: S3_ENDPOINT
+            value: "ams3.digitaloceanspaces.com"
+
+          - name: S3_KEY
+            value: "UVTTIIQA5Q2B3L2GKS6K"
+
+          - name: S3_SECRET
+            value: "NgS0UHTvi8wntZZlLaD/LI6QCwK63LnwJ2SOoiCHAPM"
+
+          - name: S3_BUCKET
+            value: "openstad-staging"
+
+          - name: S3_MONGO_BACKUPS
+            value: "ON"
+          - name: MONGO_DB_HOST
+            valueFrom:
+              secretKeyRef:
+                key: hostname
+                name: openstad-mongo-credentials
+
           - name: API_DATABASE_USER
             valueFrom:
               secretKeyRef:
                 key: username
                 name: openstad-db-credentials
+
           - name: API_DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -116,7 +150,7 @@ spec:
             value: "{{ .Values.api.fixedUserId }}"
           - name: API_AUTHORIZATION_FIXEDAUTHTOKENS
             value: "[{ \"token\": \"$(AUTH_FIXED_TOKEN)\", \"userId\": \"$(AUTH_FIXED_USER_ID)\" }]"
-            
+
           - name: USER_API_CLIENT_ID
             value: 2f2c7b3a838dcc33bdfee74137575468
 

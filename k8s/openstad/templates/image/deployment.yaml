@@ -47,6 +47,9 @@ spec:
                 key: password
           - name: APP_URL
             value: www.{{ .Values.host.base }}
+          - name: FIRST_IMAGE_API_ACCESS_TOKEN
+            value: 'makemerandom'
+            
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
@@ -94,8 +97,8 @@ spec:
             secretKeyRef:
               name: openstad-db-credentials
               key: password
-        command: ["/bin/sh","-c"]         
-        args: ['knex migrate:latest']    
+        command: ["/bin/sh","-c"]
+        args: ['knex migrate:latest']
       volumes:
         - name: data-vol
           persistentVolumeClaim:

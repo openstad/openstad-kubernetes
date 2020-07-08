@@ -43,10 +43,16 @@ spec:
           - name: COOKIE_SECURE_OFF
             value: "yes"
 
+          - name: FRONTEND_URL
+            value: https://www.{{ .Values.host.base }}
+
           # KUBERNETES
           - name: COOKIE_SECRET
-            value: "1234567890123456"
-
+            valueFrom:
+              secretKeyRef:
+                key: secret
+                name: openstad-session-secret
+                
           # KUBERNETES
           - name: SESSION_SECRET
             valueFrom:
@@ -59,9 +65,6 @@ spec:
               secretKeyRef:
                 key: hostname
                 name: openstad-mongo-credentials
-
-          - name: DEBUG
-            value: "express-session"
 
           - name: SITE_API_KEY
             valueFrom:
@@ -78,17 +81,6 @@ spec:
           - name: USER_API
             value: https://{{ template "openstad.auth.url" . }}
 
-          - name: USER_API_CLIENT_ID_1
-            valueFrom:
-              secretKeyRef:
-                key: client_id
-                name: openstad-auth-credentials
-
-          - name: USER_API_CLIENT_SECRET_1
-            valueFrom:
-              secretKeyRef:
-                key: client_secret
-                name: openstad-auth-credentials
           - name: USER_API_CLIENT_ID
             value: 2f2c7b3a838dcc33bdfee74137575468
 

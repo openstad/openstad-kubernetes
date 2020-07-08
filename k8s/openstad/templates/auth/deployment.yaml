@@ -43,6 +43,9 @@ spec:
              secretKeyRef:
                name: openstad-hosts
                key: frontend
+               
+          - name: API_URL
+            value: https://{{ template "openstad.api.url" . }}
 
           - name: SESSION_SECRET
             valueFrom:
