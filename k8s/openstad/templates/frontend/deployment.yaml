@@ -76,7 +76,7 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: status.podIP
-{{- if and .Values.frontend.ingress.enabled (eq (index .Values.frontend.ingress.annotations "cert-manager.io/cluster-issuer") "letsencrypt-staging") }}
+{{- if and .Values.frontend.ingress.enabled ((.Values.clusterIssuer.useProdIssuer | not) or (eq (index .Values.frontend.ingress.annotations "cert-manager.io/cluster-issuer") "letsencrypt-staging")) }}
             - name: NODE_TLS_REJECT_UNAUTHORIZED
               value: "0"
 {{- end }}
