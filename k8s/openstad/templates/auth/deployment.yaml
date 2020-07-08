@@ -35,17 +35,11 @@ spec:
         env:
           # HOSTING
           - name: APP_URL
-            valueFrom:
-              secretKeyRef:
-                name: openstad-hosts
-                key: auth
+            value: {{ template  "openstad.auth.url" . }}
 
           # HOSTING
           - name: ADMIN_REDIRECT_URL
-            valueFrom:
-             secretKeyRef:
-               name: openstad-hosts
-               key: frontend
+            value: {{ template  "openstad.admin.url" . }}
 
           - name: SESSION_SECRET
             valueFrom:

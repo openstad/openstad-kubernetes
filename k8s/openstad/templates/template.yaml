@@ -45,14 +45,14 @@
 {{- end }}
 
 {{- define "hostsSecret" -}}
-  api: {{ .Values.secrets.hosts.api | default (printf "%s.%s.svc.cluster.local" .Values.api.service.name .Release.Namespace) | b64enc }}
-  auth: {{ .Values.secrets.hosts.auth | default (printf "%s.%s.svc.cluster.local" .Values.auth.service.name .Release.Namespace) | b64enc }}
-  frontend: {{ .Values.secrets.hosts.frontend | default (printf "%s.%s.svc.cluster.local" .Values.frontend.service.name .Release.Namespace) | b64enc }}
-  image: {{ .Values.secrets.hosts.image | default (printf "%s.%s.svc.cluster.local" .Values.image.service.name .Release.Namespace) | b64enc }}
+  api: {{ .Values.secrets.hosts.api | default (printf "%s.%s.svc.cluster.local" .Values.api.name .Release.Namespace) | b64enc }}
+  auth: {{ .Values.secrets.hosts.auth | default (printf "%s.%s.svc.cluster.local" .Values.auth.name .Release.Namespace) | b64enc }}
+  frontend: {{ .Values.secrets.hosts.frontend | default (printf "%s.%s.svc.cluster.local" .Values.frontend.name .Release.Namespace) | b64enc }}
+  image: {{ .Values.secrets.hosts.image | default (printf "%s.%s.svc.cluster.local" .Values.image.name .Release.Namespace) | b64enc }}
 {{- end }}
 
 {{- define "authCredSecret" -}}
-  client_id: {{ .Values.secrets.database.auth.credentials.clientId | default "clientID" | b64enc }}
+  client_id: {{ .Values.secrets.database.auth.credentials.clientId | default 2 | toString | b64enc }}
   client_secret: {{ .Values.secrets.database.auth.credentials.clientSecret | default ( randAlphaNum 12 | quote ) | b64enc }}
   fixed_user_id: {{ .Values.secrets.database.auth.credentials.fixedUserId | default 2 | toString | b64enc }}
   fixed_token: {{ .Values.secrets.database.auth.credentials.fixedToken | default ( randAlphaNum 12 | quote ) | b64enc }}

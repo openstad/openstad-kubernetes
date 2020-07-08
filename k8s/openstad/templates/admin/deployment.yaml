@@ -31,7 +31,7 @@ spec:
         env:
           # HOSTING
           - name: SITE_ID
-            value: "0"
+            value: "1"
 
           - name: BASIC_AUTH_USER
             value: "user"
@@ -65,7 +65,7 @@ spec:
             value: https://{{ template "openstad.api.url" . }}
 
           - name: APP_URL
-            value: https://www.{{ .Values.host.base }}
+            value: {{ template "openstad.admin.url" . }}
 
           - name: USER_API
             value: https://{{ template "openstad.auth.url" . }}
