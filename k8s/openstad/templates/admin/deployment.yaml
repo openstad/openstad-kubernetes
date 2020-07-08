@@ -31,13 +31,22 @@ spec:
         env:
           # HOSTING
           - name: SITE_ID
-            value: "1"
+            value: "0"
 
           - name: BASIC_AUTH_USER
             value: "user"
 
           - name: BASIC_AUTH_PASSWORD
-            value: "pass"
+            valueFrom:
+              secretKeyRef:
+                key: "PASSWORD"
+                name: {{ template "openstad.admin.secret.fullname" . }}
+
+          - name: MONGO_DB_HOST
+            valueFrom:
+                secretKeyRef:
+                  key: "hostname"
+                  name: openstad-mongo-credentials
 
           # KUBERNETES
           - name: SESSION_SECRET
@@ -54,6 +63,9 @@ spec:
 
           - name: API_URL
             value: https://{{ template "openstad.api.url" . }}
+
+          - name: APP_URL
+            value: https://www.{{ .Values.host.base }}
 
           - name: USER_API
             value: https://{{ template "openstad.auth.url" . }}

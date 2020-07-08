@@ -4,7 +4,7 @@ clusterIssuer:
   acme:
     email: info@wijik.org
 
-  useProdIssuer: true
+  useProdIssuer: false
 
 host:
   base: wijikdemo.marviq.net
