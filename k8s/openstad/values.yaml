@@ -91,7 +91,8 @@ host:
   ### to this url
   ### e.g. subdomain.example.com
   base: openstad.softwaredepartment.net
-
+  ### publicIp is used to check if DNS is set properly
+  publicIp:
 
 ## Settings for persistent volumes
 
@@ -100,7 +101,12 @@ persistence:
   storageClassName:
   annotations: "{}"
 
-## Settings for the Frontend
+
+## use one of latest images of mongodb that still supports copydb
+mongodb:
+  usePassword: false
+  image:
+    tag: 4.0.14-ol-7-r39
 
 frontend:
   # Configure how many replicas exists of this service
@@ -166,6 +172,20 @@ frontend:
     uploads:
       size:
         1Gi
+
+## S3 settings, backups,
+## dbsToBackup would be nice to automatically get from the other values, but for now this is simpler.
+S3:
+  mongoBackups: "on"
+  dbsToBackup: "api,auth,image"
+  endpoint:
+  key:
+  secret:
+  bucket:
+
+basicAuth:
+  user:
+  password:
 
 ## Settings for Adminer
 adminer:
@@ -285,6 +305,7 @@ auth:
 admin:
   # Configure how many replicas exists of this service
   replicas: 1
+  siteId: 1
 
   # Configure how the service is named and labeled
   name: "admin"
@@ -487,11 +508,11 @@ secrets:
     ### Default db passwords for when you use the dependency
     rootPassword:
     replicationPassword:
-    
+
     ### Overwrites for image db
     image:
       dbName: image
-    
+
     ### Overwrites for auth db
     auth:
       dbName: auth
@@ -500,11 +521,14 @@ secrets:
         clientSecret:
         fixedUserId:
         fixedToken:
+        firstLoginToken:
+        adminClientId:
+        adminClientSecret:
 
     ### Overwrites for API db
     api:
       dbName: api
-  
+
   ### Local references to services:
   hosts:
     api:

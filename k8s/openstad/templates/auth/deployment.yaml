@@ -43,7 +43,7 @@ spec:
              secretKeyRef:
                name: openstad-hosts
                key: frontend
-               
+
           - name: API_URL
             value: https://{{ template "openstad.api.url" . }}
 
@@ -135,17 +135,33 @@ spec:
             value: "Openstad api"
 
           - name: AUTH_FIRST_CLIENT_LOGIN_CODE
-            value: "TESTADMIN"
+            valueFrom:
+              secretKeyRef:
+                key: first_login_token
+                name: openstad-auth-credentials
 
           - name: AUTH_FIRST_CLIENT_ID
             valueFrom:
               secretKeyRef:
                 key: client_id
                 name: openstad-auth-credentials
+
           - name: AUTH_FIRST_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
                 key: client_secret
+                name: openstad-auth-credentials
+
+          - name: AUTH_ADMIN_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                key: admin_client_id
+                name: openstad-auth-credentials
+
+          - name: AUTH_ADMIN_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: admin_client_secret
                 name: openstad-auth-credentials
 
           - name: FROM_EMAIL

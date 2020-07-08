@@ -22,7 +22,7 @@ spec:
         - env:
           - name: API_URL
             value: https://{{ template "openstad.api.url" . }}
-            
+
           - name: API_HOSTNAME
             value: www.{{ .Values.host.base}}
 
@@ -38,26 +38,50 @@ spec:
                 key: username
                 name: openstad-db-credentials
 
+          - name: AUTH_ADMIN_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                key: admin_client_id
+                name: openstad-auth-credentials
+
+          - name: AUTH_ADMIN_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: admin_client_secret
+                name: openstad-auth-credentials
+
           - name: PUBLIC_IP
-            value: "134.209.137.123"
+            value: https://www.{{ .Values.host.publicIp }}
 
           - name: S3_DBS_TO_BACKUP
-            value: "api,auth,image"
+            value: {{ .Values.S3.dbsToBackup }}
 
           - name: S3_ENDPOINT
-            value: "ams3.digitaloceanspaces.com"
-
+            valueFrom:
+              secretKeyRef:
+                key: endpoint
+                name: openstad-s3-credentials
           - name: S3_KEY
-            value: "UVTTIIQA5Q2B3L2GKS6K"
+            valueFrom:
+              secretKeyRef:
+                key: key
+                name: openstad-s3-credentials
 
           - name: S3_SECRET
-            value: "NgS0UHTvi8wntZZlLaD/LI6QCwK63LnwJ2SOoiCHAPM"
+            valueFrom:
+              secretKeyRef:
+                key: secret
+                name: openstad-s3-credentials
 
           - name: S3_BUCKET
-            value: "openstad-staging"
+            valueFrom:
+              secretKeyRef:
+                key: bucket
+                name: openstad-s3-credentials
 
           - name: S3_MONGO_BACKUPS
-            value: "ON"
+            value: {{ .Values.S3.mongoBackups }}
+
           - name: MONGO_DB_HOST
             valueFrom:
               secretKeyRef:

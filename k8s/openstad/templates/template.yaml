@@ -29,7 +29,7 @@
 {{- define "imageDbSecret" -}}
   database: {{ .Values.secrets.database.image.dbName | default "image" | b64enc }}
 {{- end }}
-  
+
 {{- define "mysqlSecret" -}}
   mysql-root-password: {{ .Values.secrets.database.rootPassword | default ( randAlphaNum 12 | quote ) | b64enc }}
   mysql-replication-password: {{ .Values.secrets.database.replicationPassword | default ( randAlphaNum 12 | quote ) | b64enc }}
@@ -51,11 +51,26 @@
   image: {{ .Values.secrets.hosts.image | default (printf "%s.%s.svc.cluster.local" .Values.image.service.name .Release.Namespace) | b64enc }}
 {{- end }}
 
+{{- define "basicAuthSecret" -}}
+  user: {{ .Values.secrets.basicAuth.user | default "userDefault" | b64enc }}
+  password: {{ .Values.secrets.basicAuth.password | default "passwordDefault" | b64enc }}
+{{- end }}
+
+{{- define "S3Secret" -}}
+  endpoint: {{ .Values.S3.endpoint | default "" | b64enc }}
+  key: {{ .Values.S3.key | default "" | b64enc }}
+  secret:  {{ .Values.S3.secret | default "" | b64enc }}
+  bucket:  {{ .Values.S3.bucket | default "" | b64enc }}
+{{- end }}
+
 {{- define "authCredSecret" -}}
   client_id: {{ .Values.secrets.database.auth.credentials.clientId | default "clientID" | b64enc }}
   client_secret: {{ .Values.secrets.database.auth.credentials.clientSecret | default ( randAlphaNum 12 | quote ) | b64enc }}
+  first_login_token: {{ .Values.secrets.database.auth.credentials.firstLoginToken | default "OPENSTAD_ADMIN" | b64enc }}
   fixed_user_id: {{ .Values.secrets.database.auth.credentials.fixedUserId | default 2 | toString | b64enc }}
   fixed_token: {{ .Values.secrets.database.auth.credentials.fixedToken | default ( randAlphaNum 12 | quote ) | b64enc }}
+  admin_client_id: {{ .Values.secrets.database.auth.credentials.adminClientId | default "clientID" | b64enc }}
+  admin_client_secret: {{ .Values.secrets.database.auth.credentials.adminClientSecret | default ( randAlphaNum 12 | quote ) | b64enc }}
 {{- end }}
 
 {{- define "apiMailSecret" -}}

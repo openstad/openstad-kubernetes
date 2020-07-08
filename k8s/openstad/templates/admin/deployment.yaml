@@ -32,16 +32,22 @@ spec:
         env:
           # HOSTING
           - name: SITE_ID
-            value: "1"
+            value: {{ .Values.admin.siteId }}
 
           - name: BASIC_AUTH_USER
-            value: "user"
+            valueFrom:
+              secretKeyRef:
+                key: user
+                name: openstad-basic-auth
 
           - name: BASIC_AUTH_PASSWORD
-            value: "pass"
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: openstad-basic-auth
 
           - name: COOKIE_SECURE_OFF
-            value: "yes"
+            value: "no"
 
           - name: FRONTEND_URL
             value: https://www.{{ .Values.host.base }}
@@ -52,7 +58,7 @@ spec:
               secretKeyRef:
                 key: secret
                 name: openstad-session-secret
-                
+
           # KUBERNETES
           - name: SESSION_SECRET
             valueFrom:
@@ -82,10 +88,17 @@ spec:
             value: https://{{ template "openstad.auth.url" . }}
 
           - name: USER_API_CLIENT_ID
-            value: 2f2c7b3a838dcc33bdfee74137575468
+            valueFrom:
+              secretKeyRef:
+                key: admin_client_id
+                name: openstad-auth-credentials
 
           - name: USER_API_CLIENT_SECRET
-            value: 1f9ffddcfb4569db413126a67edca37a
+            valueFrom:
+              secretKeyRef:
+                key: admin_client_secret
+                name: openstad-auth-credentials
+
 
           - name: MONGO_DB_HOST
             valueFrom:
