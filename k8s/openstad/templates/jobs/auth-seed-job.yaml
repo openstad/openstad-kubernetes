@@ -4,6 +4,8 @@ kind: Job
 metadata:
   name: "{{ .Release.Name }}-auth-seed-hook"
   namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "openstad.labels" . | nindent 4 }}
 
   annotations:
     "helm.sh/hook": post-install
