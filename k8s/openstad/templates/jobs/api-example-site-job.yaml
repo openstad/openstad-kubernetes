@@ -11,7 +11,7 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded
 
 spec:
-  ttlSecondsAfterFinished: 10
+  ttlSecondsAfterFinished: 0
   template:
     metadata:
       name: "{{ .Release.Name }}-api-create-site-hook"
