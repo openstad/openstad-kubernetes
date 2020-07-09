@@ -13,3 +13,10 @@ host:
   base: wijikdemo.marviq.net
   usewww: false
 
+  mail:
+    auth:
+      host: mailcather.mailcatcher.svc.cluster.local
+      port: 1025
+      emailAssetsUrl:
+      user: ""
+      password: ""
