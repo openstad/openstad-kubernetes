@@ -42,8 +42,8 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: openstad-db-credentials
-                  key: password
+                  name: mysql-secret
+                  key: mysql-password
 
             - name: DB_HOST
               valueFrom:

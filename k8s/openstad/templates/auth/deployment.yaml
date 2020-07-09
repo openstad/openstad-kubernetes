@@ -63,8 +63,8 @@ spec:
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
-                key: password
+                name: mysql-secret
+                key: mysql-password
 
           - name: DB_HOST
             valueFrom:
@@ -103,8 +103,8 @@ spec:
           - name: MAIL_SERVER_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: openstad-auth-mail
-                key: password
+                name: mysql-secret
+                key: mysql-password
 
           - name: MAIL_SERVER_USER_NAME
             valueFrom:
@@ -175,8 +175,8 @@ spec:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: openstad-db-credentials
-              key: password
+              name: mysql-secret
+              key: mysql-password
         - name: DB_NAME
           value: auth
         command: ["/bin/sh","-c"]

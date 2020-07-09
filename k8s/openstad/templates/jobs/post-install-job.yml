@@ -38,8 +38,8 @@ spec:
             - name: API_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: password
-                  name: openstad-db-credentials
+                  key: mysql-password
+                  name: mysql-secret
             - name: API_DATABASE_DATABASE
               valueFrom:
                 secretKeyRef:

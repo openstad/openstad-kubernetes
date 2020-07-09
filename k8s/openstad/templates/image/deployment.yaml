@@ -43,8 +43,8 @@ spec:
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
-                key: password
+                name: mysql-secret
+                key: mysql-password
           - name: APP_URL
             value: www.{{ .Values.host.base }}
           - name: KUBERNETES_NAMESPACE
@@ -92,8 +92,8 @@ spec:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: openstad-db-credentials
-              key: password
+              name: mysql-secret
+              key: mysql-password
         command: ["/bin/sh","-c"]         
         args: ['knex migrate:latest']    
       volumes:
