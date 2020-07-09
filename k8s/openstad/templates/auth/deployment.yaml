@@ -180,4 +180,4 @@ spec:
         - name: DB_NAME
           value: auth
         command: ["/bin/sh","-c"]
-        args: ['knex migrate:latest']
+        args: ['knex migrate:latest && knex seed:run']
