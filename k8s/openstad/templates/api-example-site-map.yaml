@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-example-site
+  namespace: {{ .Release.Namespace }}
+data:
+  wijik.sql: |-
+    SET NAMES utf8mb4;
+
+    INSERT INTO `sites`
+    (
+        `name`,
+        `title`,
+        `domain`,
+        `config`,
+        `createdAt`,
+        `updatedAt`,
+        `deletedAt`
+    )
+    VALUES
+    (
+        '{{ .Values.public.name }}',
+        '{{ .Values.public.name }} Development Site',
+        '{{ .Values.host.base }}',
+        '{  "allowedDomains": [    "{{ .Values.host.base }}"  ],  "basicAuth": {    "active": false,    "user": "openstad",    "password": "LqKNcKC7"  },  "cms": {    "dbName": "openstad_mongodb",    "url": "https://{{ .Values.host.base }}",    "hostname": "{{ .Values.host.base }}",    "after-login-redirect-uri": "/oauth/login?jwt=[[jwt]]"  },  "notifications": {    "from": "EMAIL@NOT.DEFINED",    "to": "EMAIL@NOT.DEFINED"  },  "email": {    "siteaddress": "EMAIL@NOT.DEFINED",    "thankyoumail": {      "from": "EMAIL@NOT.DEFINED"    }  },  "ideas": {    "canAddNewIdeas": true,    "titleMinLength": 10,    "titleMaxLength": 50,    "summaryMinLength": 20,    "summaryMaxLength": 140,    "descriptionMinLength": 140,    "descriptionMaxLength": 5000,    "minimumYesVotes": 100,    "canEditAfterFirstLikeOrArg": false,    "extraDataMustBeDefined": false  },  "arguments": {    "new": {      "anonymous": {        "redirect": null,        "notAllowedMessage": null      },      "showFields": [        "zipCode",        "nickName"      ]    }  },  "votes": {    "isViewable": false,    "isActive": null,    "requiredUserRole": "member",    "mustConfirm": false,    "withExisting": "error",    "voteType": "likes",    "voteValues": [      {        "label": "voor",        "value": "yes"      },      {        "label": "tegen",        "value": "no"      }    ]  },  "articles": {    "canAddNewArticles": true,    "titleMinLength": 10,    "titleMaxLength": 50,    "summaryMinLength": 20,    "summaryMaxLength": 140,    "descriptionMinLength": 140,    "descriptionMaxLength": 5000,    "minimumYesVotes": 100,    "canEditAfterFirstLikeOrArg": false,    "extraDataMustBeDefined": false  },  "newslettersignup": {    "isActive": false,    "autoConfirm": false,    "confirmationEmail": {      "from": "EMAIL@NOT.DEFINED",      "url": "/PATH/TO/CONFIRMATION/[[token]]"    }  },  "ignoreBruteForce": []}',
+        '2020-01-01 01:00:00',
+        '2020-01-01 01:00:00',
+        NULL
+    );

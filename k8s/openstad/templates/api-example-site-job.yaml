@@ -1,0 +1,67 @@
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-api-create-site-hook"
+  namespace: {{ .Release.Namespace }}
+
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": hook-succeeded
+
+spec:
+  ttlSecondsAfterFinished: 10
+  template:
+    metadata:
+      name: "{{ .Release.Name }}-api-create-site-hook"
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: "{{ .Release.Name }}-add-site"
+          image: dukewebservices/mysql-cli
+          command:
+            - "bin/bash"
+            - "-c"
+            - "mysql --host=$DB_HOST --user=$DB_USER --password=$DB_PASS \"$DB_NAME\" -e \"$(cat /app/create_site.sql)\""
+
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: openstad-db-credentials
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: openstad-db-credentials
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  key: database
+                  name: openstad-api-db
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: hostname
+                  name: openstad-db-credentials
+
+          volumeMounts:
+            - mountPath: /app/
+              name: create-db-script
+
+      initContainers:
+        - name: await-api-db-creation
+          image: gophernet/netcat
+          command: ["/bin/sh", "-c"]
+          args:
+            - nc {{ printf "%s-mysql.%s.svc.cluster.local" .Release.Name .Release.Namespace }} 3306 -z -w1
+
+      volumes:
+        - name: create-db-script
+          configMap:
+              name: api-example-site
+              items:
+                - key: wijik.sql
+                  path: create_site.sql

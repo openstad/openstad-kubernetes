@@ -1,4 +1,7 @@
 
+public:
+  name: Wijik
+
 clusterIssuer:
   enabled: true
   acme:

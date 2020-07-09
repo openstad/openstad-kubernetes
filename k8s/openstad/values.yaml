@@ -28,6 +28,10 @@ dependencies:
   cert-manager:
     enabled: true
 
+# Internal config
+public:
+  name: openstad
+
 # Settings
 
 ##
