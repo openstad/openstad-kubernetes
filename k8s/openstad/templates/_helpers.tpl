@@ -152,7 +152,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
     Fixed Secrets
 */}}
 {{- define "openstad.session.fixedSecret" -}}
-    {{ randAlphaNum 12 | quote }}
+    {{ randAlphaNum 12 }}
 {{- end -}}
 
 {{/*
