@@ -5,9 +5,7 @@ There are two options of rollout, using a Helm chart which will install every ne
 
 ## Helm chart
 
-For quick setup we have a Helm chart defined that can be used to setup a full environment in a Kubernetes environment.
-
-TEST
+For quick setup we have a Helm chart defined that can be used to setup a full environment in Kubernetes. 
 
 ### Helm Preparation
 
