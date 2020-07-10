@@ -58,6 +58,8 @@ cert-manager:
 
 ## Settings for MongoDB
 mongodb:
+  image:
+    tag: 4.0.14-ol-7-r39
   usePassword: false
 
 ## Settings for MySQL
