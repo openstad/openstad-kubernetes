@@ -443,13 +443,13 @@ image:
   # Service settings:
   # Primarily port configuration
   service:
-    httpPort: 4100
+    httpPort: 9999
 
   # Deployment container is what is eventually run in the pod
   deploymentContainer:
     name: image
     # Docker image for this pod
-    image: openstad/image:development
+    image: openstad/image:latest
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
