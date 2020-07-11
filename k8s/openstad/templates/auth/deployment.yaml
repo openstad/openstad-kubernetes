@@ -39,10 +39,7 @@ spec:
 
           # HOSTING
           - name: ADMIN_REDIRECT_URL
-            valueFrom:
-             secretKeyRef:
-               name: openstad-hosts
-               key: frontend
+            value: https://{{ template  "openstad.admin.url" . }}
 
           - name: API_URL
             value: https://{{ template "openstad.api.url" . }}
@@ -69,8 +66,8 @@ spec:
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
-                key: password
+                name: mysql-secret
+                key: mysql-password
 
           - name: DB_HOST
             valueFrom:
@@ -113,8 +110,8 @@ spec:
           - name: MAIL_SERVER_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: openstad-auth-mail
-                key: password
+                name: mysql-secret
+                key: mysql-password
 
           - name: MAIL_SERVER_USER_NAME
             valueFrom:
@@ -219,8 +216,8 @@ spec:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: openstad-db-credentials
-              key: password
+              name: mysql-secret
+              key: mysql-password
         - name: DB_NAME
           value: auth
         command: ["/bin/sh","-c"]

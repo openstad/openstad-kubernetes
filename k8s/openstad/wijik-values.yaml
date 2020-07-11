@@ -1,0 +1,22 @@
+
+public:
+  name: Wijik
+
+clusterIssuer:
+  enabled: true
+  acme:
+    email: info@wijik.org
+
+  useProdIssuer: false
+
+host:
+  base: wijikdemo.marviq.net
+  usewww: false
+
+  mail:
+    auth:
+      host: mailcather.mailcatcher.svc.cluster.local
+      port: 1025
+      emailAssetsUrl:
+      user: ""
+      password: ""

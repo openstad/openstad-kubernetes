@@ -94,8 +94,8 @@ spec:
           - name: API_DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
-                key: password
-                name: openstad-db-credentials
+                key: mysql-password
+                name: mysql-secret
           - name: API_DATABASE_DATABASE
             valueFrom:
               secretKeyRef:
@@ -140,8 +140,8 @@ spec:
           - name: API_MAIL_TRANSPORT_SMTP_AUTH_PASS
             valueFrom:
               secretKeyRef:
-                key: password
-                name: openstad-api-mail
+                key: mysql-password
+                name: mysql-secret
           - name: API_NOTIFICATIONS_ADMIN_EMAILADDRESS
             valueFrom:
               secretKeyRef:
@@ -223,8 +223,8 @@ spec:
             - name: API_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: password
-                  name: openstad-db-credentials
+                  key: mysql-password
+                  name: mysql-secret
             - name: API_DATABASE_DATABASE
               valueFrom:
                 secretKeyRef:

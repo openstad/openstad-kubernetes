@@ -59,6 +59,12 @@ spec:
                 key: secret
                 name: openstad-session-secret
 
+          - name: MONGO_DB_HOST
+            valueFrom:
+                secretKeyRef:
+                  key: "hostname"
+                  name: openstad-mongo-credentials
+
           # KUBERNETES
           - name: SESSION_SECRET
             valueFrom:

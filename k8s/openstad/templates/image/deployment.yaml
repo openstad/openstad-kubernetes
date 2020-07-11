@@ -43,8 +43,8 @@ spec:
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: openstad-db-credentials
-                key: password
+                name: mysql-secret
+                key: mysql-password
           - name: APP_URL
             value: www.{{ .Values.host.base }}
           - name: FIRST_IMAGE_API_ACCESS_TOKEN
@@ -95,10 +95,17 @@ spec:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
+<<<<<<< HEAD
               name: openstad-db-credentials
               key: password
         command: ["/bin/sh","-c"]
         args: ['knex migrate:latest']
+=======
+              name: mysql-secret
+              key: mysql-password
+        command: ["/bin/sh","-c"]         
+        args: ['knex migrate:latest']    
+>>>>>>> master
       volumes:
         - name: data-vol
           persistentVolumeClaim:

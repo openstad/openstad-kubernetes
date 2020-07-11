@@ -28,6 +28,10 @@ dependencies:
   cert-manager:
     enabled: true
 
+# Internal config
+public:
+  name: openstad
+
 # Settings
 
 ##
@@ -54,6 +58,8 @@ cert-manager:
 
 ## Settings for MongoDB
 mongodb:
+  image:
+    tag: 4.0.14-ol-7-r39
   usePassword: false
 
 ## Settings for MySQL
@@ -93,6 +99,10 @@ host:
   base: openstad.softwaredepartment.net
   ### publicIp is used to check if DNS is set properly
   publicIp:
+
+  ### Whether we should append www to the domains
+  usewww: true
+
 
 ## Settings for persistent volumes
 
