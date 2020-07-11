@@ -32,7 +32,7 @@ spec:
         env:
           # HOSTING
           - name: SITE_ID
-            value: "{{ .Values.admin.siteId }}"
+            value: {{ .Values.admin.siteId }}
 
           - name: BASIC_AUTH_USER
             valueFrom:

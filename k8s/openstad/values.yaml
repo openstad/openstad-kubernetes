@@ -176,16 +176,12 @@ frontend:
 ## S3 settings, backups,
 ## dbsToBackup would be nice to automatically get from the other values, but for now this is simpler.
 S3:
-  mongoBackups: "on"
-  dbsToBackup: "api,auth,image"
+  mongoBackups: on
+  dbsToBackup: api,auth,image
   endpoint:
   key:
   secret:
   bucket:
-
-basicAuth:
-  user:
-  password:
 
 ## Settings for Adminer
 adminer:
@@ -305,7 +301,7 @@ auth:
 admin:
   # Configure how many replicas exists of this service
   replicas: 1
-  siteId: 1
+  siteId: "1"
 
   # Configure how the service is named and labeled
   name: "admin"
@@ -565,3 +561,6 @@ secrets:
     hostname:
     hostport:
     database:
+  basicAuth:
+    user:
+    password:
