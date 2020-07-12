@@ -13,8 +13,6 @@ metadata:
     "helm.sh/hook-weight": "-5"
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
-  ttlSecondsAfterFinished: 0
-
   template:
     metadata:
       labels:
@@ -23,7 +21,7 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name | quote }}
         helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     spec:
-      restartPolicy: OnFailure
+      restartPolicy: Never
       containers:
         - name: post-install-job-reset-database
           image: {{ .Values.api.deploymentContainer.image }}
@@ -52,6 +50,53 @@ spec:
                 secretKeyRef:
                   key: hostname
                   name: openstad-db-credentials
+
+            - name: API_URL
+              value: https://{{ template "openstad.api.url" . }}
+
+            - name: API_HOSTNAME
+              value: www.{{ .Values.host.base}}
+
+            - name: FRONTEND_URL
+              value: https://www.{{ .Values.host.base }}
+
+            - name: ADMIN_URL
+              value: https://{{ template "openstad.admin.url" . }}
+
+            - name: AUTH_ADMIN_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: admin_client_id
+                  name: openstad-auth-credentials
+
+            - name: AUTH_ADMIN_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: admin_client_secret
+                  name: openstad-auth-credentials
+            - name: AUTH_FIXED_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: fixed_token
+                  name: openstad-auth-credentials
+            - name: AUTH_FIXED_USER_ID
+              value: "{{ .Values.api.fixedUserId }}"
+
+            - name: API_AUTHORIZATION_FIXEDAUTHTOKENS
+              value: "[{ \"token\": \"$(AUTH_FIXED_TOKEN)\", \"userId\": \"$(AUTH_FIXED_USER_ID)\" }]"
+
+            - name: USER_API_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: client_id
+                  name: openstad-auth-credentials
+
+            - name: USER_API_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: client_secret
+                  name: openstad-auth-credentials
+
       initContainers:
         - name: post-install-check-database-up
           image: {{ .Values.api.deploymentContainer.image }}

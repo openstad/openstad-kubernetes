@@ -184,6 +184,8 @@ spec:
         readinessProbe:
           tcpSocket:
             port: {{ .Values.auth.service.httpPort }}
+          initialDelaySeconds: 5
+          periodSeconds: 5
         livenessProbe:
           tcpSocket:
             port: {{ .Values.auth.service.httpPort }}

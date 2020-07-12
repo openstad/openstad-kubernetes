@@ -169,14 +169,21 @@ spec:
                 name: openstad-auth-credentials
           - name: AUTH_FIXED_USER_ID
             value: "{{ .Values.api.fixedUserId }}"
+
           - name: API_AUTHORIZATION_FIXEDAUTHTOKENS
             value: "[{ \"token\": \"$(AUTH_FIXED_TOKEN)\", \"userId\": \"$(AUTH_FIXED_USER_ID)\" }]"
 
           - name: USER_API_CLIENT_ID
-            value: 2f2c7b3a838dcc33bdfee74137575468
+            valueFrom:
+              secretKeyRef:
+                key: client_id
+                name: openstad-auth-credentials
 
           - name: USER_API_CLIENT_SECRET
-            value: 1f9ffddcfb4569db413126a67edca37a
+            valueFrom:
+              secretKeyRef:
+                key: client_secret
+                name: openstad-auth-credentials
 
           - name: KUBERNETES_NAMESPACE
             valueFrom:
@@ -200,6 +207,8 @@ spec:
           readinessProbe:
             tcpSocket:
               port: {{ .Values.api.service.httpPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
           livenessProbe:
             tcpSocket:
               port: {{ .Values.api.service.httpPort }}
