@@ -24,7 +24,7 @@ metadata:
 
   name: {{ template "openstad.frontend.fullname" . }}
   namespace: {{ .Release.Namespace }}
-  
+
 spec:
   rules:
 {{- range $host := .Values.frontend.ingress.hosts }}
@@ -41,11 +41,13 @@ spec:
           - backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
-              
+
   tls:
     - secretName: {{ .Values.frontend.ingress.tls.secretName }}
       hosts:
-        - {{ template "openstad.frontend.url" . }}
+        - {{ template "openstad.frontend.urlwithWww" . }}
+        - {{ template "openstad.frontend.urlwithoutWww" . }}
+        
   {{- range $value := .Values.frontend.ingress.tls.hosts -}}
         - {{ $value }}
   {{- end -}}

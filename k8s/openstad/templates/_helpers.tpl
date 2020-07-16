@@ -108,6 +108,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 {{- end -}}
 
+
 {{- define "openstad.auth.url" -}}
 {{- if .Values.auth.subdomain -}}
 {{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.auth.subdomain }}.{{ .Values.host.base }}
@@ -131,6 +132,15 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Values.host.usewww -}}www.{{- end -}}{{ .Values.host.base }}
 {{- end -}}
 {{- end -}}
+
+{{- define "openstad.frontend.urlwithWww" -}}
+www.{{ .Values.host.base }}
+{{- end -}}
+
+{{- define "openstad.frontend.urlwithoutWww" -}}
+{{ .Values.host.base }}
+{{- end -}}
+
 
 {{- define "openstad.image.url" -}}
 {{- if .Values.image.subdomain -}}
