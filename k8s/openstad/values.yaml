@@ -40,7 +40,7 @@ public:
 
 ## Settings for Cert-Manager/Cluster issuer
 clusterIssuer:
-  enabled: false   # Whether this issuer is created
+  enabled: true   # Whether this issuer is created
   acme:           # Email used for requesting the certificates
     email: info@openstad.org
 
@@ -110,13 +110,6 @@ persistence:
   #configure the cloud-specific storageClassName, will use the clouds default if not specified
   storageClassName:
   annotations: "{}"
-
-
-## use one of latest images of mongodb that still supports copydb
-mongodb:
-  usePassword: false
-  image:
-    tag: 4.0.14-ol-7-r39
 
 frontend:
   # Configure how many replicas exists of this service
