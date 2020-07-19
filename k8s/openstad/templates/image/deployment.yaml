@@ -48,7 +48,11 @@ spec:
           - name: APP_URL
             value: www.{{ .Values.host.base }}
           - name: FIRST_IMAGE_API_ACCESS_TOKEN
-            value: 'makemerandom'
+            valueFrom:
+              secretKeyRef:
+                key: image_api_token
+                name: openstad-auth-credentials
+
 
           - name: KUBERNETES_NAMESPACE
             valueFrom:

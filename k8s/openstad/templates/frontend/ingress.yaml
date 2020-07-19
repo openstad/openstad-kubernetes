@@ -35,7 +35,13 @@ spec:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
 {{- end }}
-    - host: {{ template "openstad.frontend.url" . }}
+    - host: {{ template "openstad.frontend.urlwithWww" . }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+    - host: {{ template "openstad.frontend.urlwithoutWww" . }}
       http:
         paths:
           - backend:
@@ -47,7 +53,7 @@ spec:
       hosts:
         - {{ template "openstad.frontend.urlwithWww" . }}
         - {{ template "openstad.frontend.urlwithoutWww" . }}
-        
+
   {{- range $value := .Values.frontend.ingress.tls.hosts -}}
         - {{ $value }}
   {{- end -}}

@@ -1,0 +1,292 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "openstad.api.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openstad.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ template "openstad.api.fullname" . }}-deployment
+spec:
+  replicas: {{ .Values.api.replicas }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: {{ .Values.api.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.api.label }}
+    spec:
+      containers:
+        - env:
+          - name: API_URL
+            value: https://{{ template "openstad.api.url" . }}
+
+          - name: API_HOSTNAME
+            value: www.{{ .Values.host.base}}
+
+          - name: FRONTEND_URL
+            value: https://www.{{ .Values.host.base }}
+
+          - name: ADMIN_URL
+            value: https://{{ template "openstad.admin.url" . }}
+
+
+          - name: AUTH_ADMIN_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                key: admin_client_id
+                name: openstad-auth-credentials
+
+          - name: AUTH_ADMIN_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: admin_client_secret
+                name: openstad-auth-credentials
+
+          - name: PUBLIC_IP
+            value: {{ .Values.host.publicIp }}
+
+          - name: S3_DBS_TO_BACKUP
+            value: "{{ .Values.S3.dbsToBackup }}"
+
+          - name: S3_MONGO_BACKUPS
+            value: "{{ .Values.S3.mongoBackups }}"
+
+          - name: S3_ENDPOINT
+            valueFrom:
+              secretKeyRef:
+                key: endpoint
+                name: openstad-s3
+          - name: S3_KEY
+            valueFrom:
+              secretKeyRef:
+                key: key
+                name: openstad-s3
+
+          - name: S3_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: secret
+                name: openstad-s3
+
+          - name: S3_BUCKET
+            valueFrom:
+              secretKeyRef:
+                key: bucket
+                name: openstad-s3
+
+
+
+          - name: MONGO_DB_HOST
+            valueFrom:
+              secretKeyRef:
+                key: hostname
+                name: openstad-mongo-credentials
+
+          - name: DEFAULT_DB
+            valueFrom:
+              secretKeyRef:
+                key: database
+                name: openstad-mongo-credentials
+
+          - name: API_DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: openstad-db-credentials
+
+          - name: API_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: mysql-password
+                name: mysql-secret
+          - name: API_DATABASE_DATABASE
+            valueFrom:
+              secretKeyRef:
+                key: database
+                name: openstad-api-db
+          - name: API_DATABASE_HOST
+            valueFrom:
+              secretKeyRef:
+                key: hostname
+                name: openstad-db-credentials
+          - name: API_EMAILADDRESS
+            value: {{ .Values.api.emailAddress }}
+          - name: API_EXPRESS_PORT
+            value: {{ .Values.api.service.httpPort | quote }}
+          - name: AUTH_API_URL
+            value: https://{{ template "openstad.auth.url" . }}
+          - name: API_MAIL_FROM
+            valueFrom:
+              secretKeyRef:
+                key: email_from
+                name: openstad-api-mail
+          - name: API_MAIL_TRANSPORT_SMTP_PORT
+            valueFrom:
+              secretKeyRef:
+                key: port
+                name: openstad-api-mail
+          - name: API_MAIL_TRANSPORT_SMTP_HOST
+            valueFrom:
+              secretKeyRef:
+                key: host
+                name: openstad-api-mail
+          - name: API_MAIL_TRANSPORT_SMTP_REQUIRESSL
+            valueFrom:
+              secretKeyRef:
+                key: require_ssl
+                name: openstad-api-mail
+          - name: API_MAIL_TRANSPORT_SMTP_AUTH_USER
+            valueFrom:
+              secretKeyRef:
+                key: user
+                name: openstad-api-mail
+          - name: API_MAIL_TRANSPORT_SMTP_AUTH_PASS
+            valueFrom:
+              secretKeyRef:
+                key: mysql-password
+                name: mysql-secret
+          - name: API_NOTIFICATIONS_ADMIN_EMAILADDRESS
+            valueFrom:
+              secretKeyRef:
+                key: admin_email_from
+                name: openstad-api-mail
+          - name: API_SECURITY_SESSIONS_COOKIENAME
+            valueFrom:
+              secretKeyRef:
+                key: cookie_name
+                name: openstad-cookies
+          - name: API_SECURITY_SESSIONS_ONLYSECURE
+            valueFrom:
+              secretKeyRef:
+                key: only_secure
+                name: openstad-cookies
+          - name: API_AUTHORIZATION_JWTSECRET
+            valueFrom:
+              secretKeyRef:
+                key: jwt_secret
+                name: openstad-cookies
+          - name: AUTH_FIXED_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: fixed_token
+                name: openstad-auth-credentials
+          - name: AUTH_FIXED_USER_ID
+            value: "{{ .Values.api.fixedUserId }}"
+
+          - name: API_AUTHORIZATION_FIXEDAUTHTOKENS
+            value: "[{ \"token\": \"$(AUTH_FIXED_TOKEN)\", \"userId\": \"$(AUTH_FIXED_USER_ID)\" }]"
+
+
+          - name: AUTH_FIRST_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                key: client_id
+                name: openstad-auth-credentials
+
+          - name: AUTH_FIRST_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: client_secret
+                name: openstad-auth-credentials
+
+          - name: AUTH_URL
+            value: https://{{ template "openstad.auth.url" . }}
+          # auth internal url is used for call internally to localhost or the corresponding service name in a container environment
+          # it can also  go through the public network
+          # but there is a performace cost if this is not done internally due to network latency
+          #
+          - name: AUTH_INTERNAL_SERVER_URL
+            value: https://{{ template "openstad.auth.url" . }}
+
+          - name: KUBERNETES_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          image: {{ .Values.api.deploymentContainer.image }}
+          imagePullPolicy: Always
+          name: {{ template "openstad.api.fullname" . }}
+          ports:
+            - containerPort: {{ .Values.api.service.httpPort }}
+              name: http
+              protocol: TCP
+          resources:
+{{ toYaml .Values.api.resources | indent 12 }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.api.service.httpPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.api.service.httpPort }}
+            initialDelaySeconds: {{ .Values.api.probe.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.api.probe.liveness.periodSeconds }}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      initContainers:
+        - command: ["/bin/sh", "-c"]
+          args:
+            - nc {{.Release.Name}}-mysql 3306 -z -w1 && node migrate.js;
+          env:
+            - name: DB_TYPE
+              value: mysql
+            - name: API_DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: openstad-db-credentials
+            - name: API_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: mysql-password
+                  name: mysql-secret
+            - name: API_DATABASE_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database
+                  name: openstad-api-db
+            - name: API_DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: hostname
+                  name: openstad-db-credentials
+            - name: DEV_SITE_DOMAIN
+              value: www.{{ .Values.host.base }}
+            - name: ADMIN_DOMAIN
+              value: https://{{ template "openstad.admin.url" . }}
+            - name: AUTH_URL
+              value: https://{{ template "openstad.auth.url" . }}
+            # auth internal url is used for call internally to localhost or the corresponding service name in a container environment
+            # it can also  go through the public network
+            # but there is a performace cost if this is not done internally due to network latency
+            - name: AUTH_INTERNAL_SERVER_URL
+              value: https://{{ template "openstad.auth.url" . }}
+            - name: AUTH_FIRST_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: client_id
+                  name: openstad-auth-credentials
+            - name: AUTH_FIRST_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: client_secret
+                  name: openstad-auth-credentials
+
+          image: {{ .Values.api.deploymentContainer.image }}
+          imagePullPolicy: Always
+          name: init-db-ready
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30

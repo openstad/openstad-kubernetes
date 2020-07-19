@@ -41,8 +41,9 @@ spec:
             - name: IMAGE_API_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
-                  key: fixed_token
+                  key: image_api_token
                   name: openstad-auth-credentials
+
             - name: HOST_DOMAIN
               valueFrom:
                 secretKeyRef:

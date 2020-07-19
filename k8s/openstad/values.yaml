@@ -40,7 +40,7 @@ public:
 
 ## Settings for Cert-Manager/Cluster issuer
 clusterIssuer:
-  enabled: true   # Whether this issuer is created
+  enabled: false   # Whether this issuer is created
   acme:           # Email used for requesting the certificates
     email: info@openstad.org
 
@@ -151,12 +151,12 @@ frontend:
   resources:
     # Max resources
     limits:
-      cpu: 100m
-      memory: 1Gi
+      cpu: 2
+      memory: 2Gi
     # Min resources
     requests:
-      cpu: 100m
-      memory: 500M
+      cpu: 1
+      memory: 1Gi
 
   # Probe checks whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
@@ -523,6 +523,7 @@ secrets:
         firstLoginToken:
         adminClientId:
         adminClientSecret:
+        imageApiToken:
 
     ### Overwrites for API db
     api:
