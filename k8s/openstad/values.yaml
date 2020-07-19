@@ -442,7 +442,7 @@ image:
   deploymentContainer:
     name: image
     # Docker image for this pod
-    image: openstad/image:latest
+    image: openstad/image:development
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl

@@ -85,6 +85,12 @@ spec:
                 key: hostname
                 name: openstad-mongo-credentials
 
+          - name: DEFAULT_DB
+            valueFrom:
+              secretKeyRef:
+                key: database
+                name: openstad-mongo-credentials
+
           - name: API_DATABASE_USER
             valueFrom:
               secretKeyRef:
@@ -173,17 +179,27 @@ spec:
           - name: API_AUTHORIZATION_FIXEDAUTHTOKENS
             value: "[{ \"token\": \"$(AUTH_FIXED_TOKEN)\", \"userId\": \"$(AUTH_FIXED_USER_ID)\" }]"
 
-          - name: USER_API_CLIENT_ID
+
+          - name: AUTH_FIRST_CLIENT_ID
             valueFrom:
               secretKeyRef:
                 key: client_id
                 name: openstad-auth-credentials
 
-          - name: USER_API_CLIENT_SECRET
+          - name: AUTH_FIRST_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
                 key: client_secret
                 name: openstad-auth-credentials
+
+          - name: AUTH_URL
+            value: https://{{ template "openstad.auth.url" . }}
+          # auth internal url is used for call internally to localhost or the corresponding service name in a container environment
+          # it can also  go through the public network
+          # but there is a performace cost if this is not done internally due to network latency
+          #
+          - name: AUTH_INTERNAL_SERVER_URL
+            value: https://{{ template "openstad.auth.url" . }}
 
           - name: KUBERNETES_NAMESPACE
             valueFrom:
