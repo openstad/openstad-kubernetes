@@ -218,6 +218,7 @@ adminer:
     enabled: false # Whether there is a ingress for this service
     annotations:
       kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: 128m
     extraLabels: {}
     hosts: []
     tls:
@@ -306,10 +307,12 @@ admin:
   # Configure how many replicas exists of this service
   replicas: 1
   siteId: "1"
+  externalSiteRepo: https://api2.openstad.amsterdam
 
   # Configure how the service is named and labeled
   name: "admin"
   label: openstad-admin-service
+  externalSiteRepo: https://api2.staging.openstadsdeel.nl/api/repo
 
   # Service settings:
   # Primarily port configuration
@@ -333,6 +336,7 @@ admin:
     enabled: true # Whether there is a ingress for this service
     annotations:
       kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: 128m
     extraLabels: {}
     hosts: []
     tls:
@@ -399,6 +403,7 @@ api:
     enabled: true # Whether there is a ingress for this service
     annotations:
       kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: 128m
     extraLabels: {}
     hosts: []
     tls:
@@ -456,6 +461,7 @@ image:
     enabled: true # Whether there is a ingress for this service
     annotations:
       kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: 128m
     extraLabels: {}
     hosts: []
     tls:

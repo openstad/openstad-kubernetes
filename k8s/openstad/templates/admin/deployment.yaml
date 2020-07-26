@@ -34,6 +34,9 @@ spec:
           - name: SITE_ID
             value: "{{ .Values.admin.siteId }}"
 
+          - name: EXTERNAL_SITE_REPO
+            value: "{{ .Values.admin.externalSiteRepo }}"
+
           - name: BASIC_AUTH_USER
             valueFrom:
               secretKeyRef:
@@ -50,7 +53,7 @@ spec:
             value: "no"
 
           - name: FRONTEND_URL
-            value: https://www.{{ .Values.host.base }}
+            value: https://{{ .Values.host.base }}
 
           # KUBERNETES
           - name: COOKIE_SECRET

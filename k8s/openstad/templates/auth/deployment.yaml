@@ -93,31 +93,19 @@ spec:
 
           # SMTP MAIL
           - name: MAIL_SERVER_URL
-            valueFrom:
-              secretKeyRef:
-                name: openstad-auth-mail
-                key: host
+            value: "{{ .Values.secrets.mail.auth.host }}"
 
           - name: MAIL_SERVER_PORT
-            valueFrom:
-              secretKeyRef:
-                name: openstad-auth-mail
-                key: port
+            value: "{{ .Values.secrets.mail.auth.port }}"
 
           - name: MAIL_SERVER_SECURE
             value: "yes"
 
           - name: MAIL_SERVER_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mysql-secret
-                key: mysql-password
+            value: "{{ .Values.secrets.mail.auth.password }}"
 
           - name: MAIL_SERVER_USER_NAME
-            valueFrom:
-              secretKeyRef:
-                name: openstad-auth-mail
-                key: user
+            value: "{{ .Values.secrets.mail.auth.user }}"
 
           - name: EMAIL_ASSETS_URL
             value: https://{{ template "openstad.auth.url" . }}/email
@@ -162,10 +150,7 @@ spec:
                 name: openstad-auth-credentials
 
           - name: FROM_EMAIL
-            valueFrom:
-              secretKeyRef:
-                name: openstad-auth-mail
-                key: user
+            value: {{ .Values.secrets.mail.auth.user }}
 
           # KUBERNETES
           - name: KUBERNETES_NAMESPACE

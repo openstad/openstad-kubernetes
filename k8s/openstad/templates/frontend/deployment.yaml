@@ -38,6 +38,8 @@ spec:
               value: https://{{ template "openstad.image.url" . }}
             - name: MINIFY_JS
               value: 'ON'
+            - name: APOS_WORKFLOW
+              value: 'ON'
             - name: IMAGE_API_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
