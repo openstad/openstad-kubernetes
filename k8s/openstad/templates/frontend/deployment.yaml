@@ -40,6 +40,8 @@ spec:
               value: 'ON'
             - name: APOS_WORKFLOW
               value: 'ON'
+            - name: GOOGLE_MAPS_API_KEY
+              value: "{{ .Values.frontend.googleMapsApiKey }}"
             - name: IMAGE_API_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
