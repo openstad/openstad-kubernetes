@@ -13,6 +13,8 @@ spec:
       labels:
         app: openstad-frontend
     spec:
+      imagePullSecrets:
+        - name: myregistrykey
       containers:
         - name: frontend
           image: openstad/frontend:debug

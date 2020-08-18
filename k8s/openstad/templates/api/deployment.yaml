@@ -19,6 +19,8 @@ spec:
         app: {{ .Values.api.label }}
     spec:
       serviceAccountName: openstad-ingress-sa
+      imagePullSecrets:
+        - name: myregistrykey
       containers:
         - env:
           - name: API_URL
@@ -203,6 +205,7 @@ spec:
                 fieldPath: status.podIP
           image: {{ .Values.api.deploymentContainer.image }}
           imagePullPolicy: Always
+
           name: {{ template "openstad.api.fullname" . }}
           ports:
             - containerPort: {{ .Values.api.service.httpPort }}

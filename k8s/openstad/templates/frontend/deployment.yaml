@@ -19,6 +19,8 @@ spec:
       labels:
         app: {{ .Values.frontend.label }}
     spec:
+      imagePullSecrets:
+        - name: myregistrykey
       containers:
         - name: {{ template "openstad.frontend.fullname" . }}
           image: {{ .Values.frontend.deploymentContainer.image }}
