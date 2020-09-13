@@ -315,12 +315,12 @@ admin:
   # Configure how many replicas exists of this service
   replicas: 1
   siteId: "1"
-  externalSiteRepo: https://api2.openstad.amsterdam
+  externalSiteRepo: https://api2.openstad.amsterdam/api/repo
 
   # Configure how the service is named and labeled
   name: "admin"
   label: openstad-admin-service
-  externalSiteRepo: https://api2.staging.openstadsdeel.nl/api/repo
+  wildcardHost: 
 
   # Service settings:
   # Primarily port configuration

@@ -37,6 +37,9 @@ spec:
           - name: EXTERNAL_SITE_REPO
             value: "{{ .Values.admin.externalSiteRepo }}"
 
+          - name: WILDCARD_HOST
+            value: "{{ .Values.admin.wildcardHost }}"
+
           - name: BASIC_AUTH_USER
             valueFrom:
               secretKeyRef:
