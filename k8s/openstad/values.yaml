@@ -129,7 +129,7 @@ frontend:
   deploymentContainer:
     name: frontend
     # Docker image for this pod
-    image: openstad/frontend:development
+    image: openstad/frontend:v0.7.0
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
@@ -271,7 +271,7 @@ auth:
   deploymentContainer:
     name: auth
     # Docker image for this pod
-    image: openstad/auth:development
+    image: openstad/auth:v0.7.0
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
@@ -320,7 +320,7 @@ admin:
   # Configure how the service is named and labeled
   name: "admin"
   label: openstad-admin-service
-  wildcardHost: 
+  wildcardHost:
 
   # Service settings:
   # Primarily port configuration
@@ -331,7 +331,7 @@ admin:
   deploymentContainer:
     name: admin
     # Docker image for this pod
-    image: openstad/admin:development
+    image: openstad/admin:v0.7.0
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
@@ -398,7 +398,7 @@ api:
   deploymentContainer:
     name: api-container
     # Docker image for this pod
-    image: openstad/api:devel
+    image: openstad/api:v0.7.0
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
@@ -456,7 +456,7 @@ image:
   deploymentContainer:
     name: image
     # Docker image for this pod
-    image: openstad/image:development
+    image: openstad/image:v0.7.0
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
