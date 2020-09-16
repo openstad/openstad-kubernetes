@@ -145,6 +145,12 @@ frontend:
     annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: 128m
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        more_set_headers "X-Content-Type-Options: nosniff";
+        more_set_headers "X-Frame-Options: SAMEORIGIN";
+        more_set_headers "X-Xss-Protection: 1";
+        more_set_headers "Referrer-Policy: same-origin";
     extraLabels: {}
     hosts: []
     tls:
@@ -284,6 +290,11 @@ auth:
     enabled: true # Whether there is a ingress for this service
     annotations:
       kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        more_set_headers "X-Content-Type-Options: nosniff";
+        more_set_headers "X-Frame-Options: SAMEORIGIN";
+        more_set_headers "X-Xss-Protection: 1";
+        more_set_headers "Referrer-Policy: same-origin";
     extraLabels: {}
     hosts: []
     tls:
@@ -294,7 +305,7 @@ auth:
   resources:
     # Max resources
     limits:
-      cpu: 100m
+      cpu: 300m
       memory: 1Gi
     # Min resources
     requests:
@@ -345,6 +356,11 @@ admin:
     annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/proxy-body-size: 128m
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        more_set_headers "X-Content-Type-Options: nosniff";
+        more_set_headers "X-Frame-Options: SAMEORIGIN";
+        more_set_headers "X-Xss-Protection: 1";
+        more_set_headers "Referrer-Policy: same-origin";
     extraLabels: {}
     hosts: []
     tls:
@@ -355,7 +371,7 @@ admin:
   resources:
     # Max resources
     limits:
-      cpu: 100m
+      cpu: 500m
       memory: 1Gi
     # Min resources
     requests:
@@ -412,6 +428,11 @@ api:
     annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/proxy-body-size: 128m
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        more_set_headers "X-Content-Type-Options: nosniff";
+        more_set_headers "X-Frame-Options: SAMEORIGIN";
+        more_set_headers "X-Xss-Protection: 1";
+        more_set_headers "Referrer-Policy: same-origin";
     extraLabels: {}
     hosts: []
     tls:
@@ -422,12 +443,13 @@ api:
   resources:
     # Max resources
     limits:
-      cpu: 100m
+      cpu: 500m
       memory: 1Gi
     # Min resources
     requests:
-      cpu: 100m
+      cpu: 250m
       memory: 500M
+
 
   # Check whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
@@ -470,6 +492,11 @@ image:
     annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/proxy-body-size: 128m
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        more_set_headers "X-Content-Type-Options: nosniff";
+        more_set_headers "X-Frame-Options: SAMEORIGIN";
+        more_set_headers "X-Xss-Protection: 1";
+        more_set_headers "Referrer-Policy: same-origin";
     extraLabels: {}
     hosts: []
     tls:
