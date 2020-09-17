@@ -342,7 +342,7 @@ admin:
   deploymentContainer:
     name: admin
     # Docker image for this pod
-    image: openstad/admin:v0.7.0
+    image: openstad/admin:v0.7.1
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
