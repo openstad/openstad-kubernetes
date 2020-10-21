@@ -110,8 +110,6 @@ clusterIssuer:
   enabled: false  # Whether this issuer is created
 
 ```
-
-```
 helm install --values custom-values.yaml --replace openstad . --namespace=openstad --create-namespace
 ```
 
