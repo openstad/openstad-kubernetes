@@ -138,6 +138,8 @@ frontend:
 
   googleMapsApiKey:
 
+  cookieMaxAge:
+
   # Ingress settings:
   # Configure how the service is accessed
   ingress:
