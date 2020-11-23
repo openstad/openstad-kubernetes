@@ -152,6 +152,9 @@ spec:
           - name: FROM_EMAIL
             value: {{ .Values.secrets.mail.auth.user }}
 
+          - name: DEFAULT_FAVICON
+            value: {{ .Values.auth.defaultFavicon }}
+
           # KUBERNETES
           - name: KUBERNETES_NAMESPACE
             valueFrom:
