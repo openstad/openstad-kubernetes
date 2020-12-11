@@ -58,6 +58,12 @@ spec:
           - name: FRONTEND_URL
             value: https://{{ .Values.host.base }}
 
+          - name: PUBLIC_IP
+            value: {{ .Values.host.publicIp }}
+
+          - name: WILDCARD_HOST
+            value: {{ .Values.host.base }}
+
           # KUBERNETES
           - name: COOKIE_SECRET
             valueFrom:
