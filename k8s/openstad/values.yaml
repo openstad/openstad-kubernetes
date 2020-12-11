@@ -163,12 +163,12 @@ frontend:
   resources:
     # Max resources
     limits:
-      cpu: 4
-      memory: 3Gi
+      cpu: 1
+      memory: 1Gi
     # Min resources
     requests:
-      cpu: 2
-      memory: 1Gi
+      cpu: 500m
+      memory: 500M
 
   # Probe checks whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
@@ -511,7 +511,7 @@ image:
   resources:
     # Max resources
     limits:
-      cpu: 100m
+      cpu: 500m
       memory: 1Gi
     # Min resources
     requests:
