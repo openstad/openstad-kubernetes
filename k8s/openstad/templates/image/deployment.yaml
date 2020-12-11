@@ -46,7 +46,7 @@ spec:
                 name: mysql-secret
                 key: mysql-password
           - name: APP_URL
-            value: www.{{ .Values.host.base }}
+            value: https://img.{{ .Values.host.base }}
           - name: FIRST_IMAGE_API_ACCESS_TOKEN
             valueFrom:
               secretKeyRef:
