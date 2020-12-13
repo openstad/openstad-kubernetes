@@ -95,8 +95,6 @@ spec:
           resources:
 {{ toYaml .Values.frontend.resources | indent 12 }}
           volumeMounts:
-            - mountPath: /home/app/data
-              name: data-vol
             - mountPath: /home/app/public/uploads
               name: data-uploads
       dnsPolicy: ClusterFirst
@@ -106,13 +104,9 @@ spec:
         runAsGroup: 1000
         runAsUser: 1000
       volumes:
-        - name: data-vol
-          persistentVolumeClaim:
-            claimName: frontend-data-claim
         - name: data-uploads
           persistentVolumeClaim:
             claimName: frontend-uploads-claim
-
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
