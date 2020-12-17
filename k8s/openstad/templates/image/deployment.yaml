@@ -46,14 +46,12 @@ spec:
                 name: mysql-secret
                 key: mysql-password
           - name: APP_URL
-            value: www.{{ .Values.host.base }}
+            value: https://{{ template "openstad.image.url" . }}
           - name: FIRST_IMAGE_API_ACCESS_TOKEN
             valueFrom:
               secretKeyRef:
                 key: image_api_token
                 name: openstad-auth-credentials
-
-
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
