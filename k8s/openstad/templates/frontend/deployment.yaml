@@ -40,6 +40,10 @@ spec:
               value: 'ON'
             - name: APOS_WORKFLOW
               value: 'ON'
+            - name: NODE_ENV
+              value: 'production'
+            - name: APOS_BUNDLE
+              value: 1
             - name: GOOGLE_MAPS_API_KEY
               value: "{{ .Values.frontend.googleMapsApiKey }}"
             - name: COOKIE_MAX_AGE
