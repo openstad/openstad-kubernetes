@@ -43,7 +43,7 @@ spec:
             - name: NODE_ENV
               value: 'production'
             - name: APOS_BUNDLE
-              value: 1
+              value: 'assets'
             - name: GOOGLE_MAPS_API_KEY
               value: "{{ .Values.frontend.googleMapsApiKey }}"
             - name: COOKIE_MAX_AGE
