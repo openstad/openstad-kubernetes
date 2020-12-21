@@ -72,7 +72,7 @@ spec:
           initialDelaySeconds: {{ .Values.image.probe.liveness.initialDelaySeconds }}
           periodSeconds: {{ .Values.image.probe.liveness.periodSeconds }}
         volumeMounts:
-          - mountPath: /home/app/data
+          - mountPath: /app/images
             name: data-vol
       initContainers:
       - name: create-db-ready

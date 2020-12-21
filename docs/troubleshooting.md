@@ -137,3 +137,38 @@ Then delete the namespace:
 ```
 kubectl delete ns openstad
 ```
+
+## A directory on a persistent volume has the wrong owner
+
+When a persistent volume has the wrong ownership, it might not be possible for the application to write to this folder.
+
+Example of this problem on the image server:
+
+```
+  $ kubectl exec openstad-image-yyyyyyyyy-zzzzz -- ls -la /app/images
+    drwxrwxrwx 2 root root  1234 Dec 31 08:00 .
+    drwxr-xr-x 1 root root  4096 Dec 31 08:00 ..
+```
+
+In this case, the `/app/images` folder is owned by `root:root`. 
+To solve this problem we can use an initContainer in our `k8s/openstad/templates/image/deployment.yaml` using `busybox` to set the correct group and user (in this case: `node:node`):
+
+```
+initContainers:
+- name: volume-mount-fix
+  image: busybox
+  command: ["sh", "-c", "chown -R node:node /app/images"]
+  volumeMounts:
+  - name: data-vol
+    mountPath: /app/images
+```
+
+After running `helm upgrade`, the volume has the correct owner and can be written to:
+
+```
+  $ kubectl exec openstad-image-yyyyyyyyy-zzzzz -- ls -la /app/images
+    drwxrwxrwx 2 node node  1234 Dec 31 08:00 .
+    drwxr-xr-x 1 node node  4096 Dec 31 08:00 ..
+```
+
+The initContainer can now be removed from the deployment.yaml file.
