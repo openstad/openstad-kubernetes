@@ -65,13 +65,13 @@ spec:
             value: {{ .Values.host.base }}
 
           - name: KUBERNETES_CLUSTER_ISSUER
-            value: {{ template "openstad.clusterIssuer.name" . }}
+            value: '{{ template "openstad.clusterIssuer.name" . }}'
 
           - name: KUBERNETES_FRONTEND_SERVICE_NAME
-            value: {{ template "openstad.frontend.fullname" . }}
+            value: '{{ template "openstad.frontend.fullname" . }}'
 
           - name: KUBERNETES_FRONTEND_SERVICE_PORT
-            value: {{ .Values.frontend.service.httpPort }}
+            value: '{{ .Values.frontend.service.httpPort }}'
 
           # KUBERNETES
           - name: COOKIE_SECRET
