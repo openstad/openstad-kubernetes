@@ -17,6 +17,7 @@
 ##      secrets.mongodb for MongoDB
 ##
 
+
 dependencies:
   ## Database
   mongodb:
@@ -26,7 +27,7 @@ dependencies:
 
   ## SSL
   cert-manager:
-    enabled: true
+    enabled: false
 
 # Internal config
 public:
@@ -482,7 +483,7 @@ image:
   deploymentContainer:
     name: image
     # Docker image for this pod
-    image: openstad/image:v0.10.0
+    image: openstad/image:v0.7.0
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
