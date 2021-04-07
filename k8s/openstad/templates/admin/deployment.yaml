@@ -68,7 +68,7 @@ spec:
             value: '{{ template "openstad.clusterIssuer.name" . }}'
 
           - name: KUBERNETES_CLUSTER_ISSUER_ENABLED
-            value: '{{ template "openstad.clusterIssuer.enabled" . }}'
+            value: '{{ .Values.clusterIssuer.enabled }}'
 
           - name: KUBERNETES_FRONTEND_SERVICE_NAME
             value: '{{ template "openstad.frontend.fullname" . }}'
