@@ -18,6 +18,7 @@ spec:
       labels:
         app: openstad-api
     spec:
+
       containers:
       - env:
         - name: APP_HOST
@@ -122,6 +123,8 @@ spec:
               fieldPath: status.podIP
         image: openstad/api:test
         imagePullPolicy: Always
+        imagePullSecrets:
+          - name: repositorySecretKey
         name: api-container
         ports:
         - containerPort: 8111
@@ -171,3 +174,5 @@ spec:
         imagePullPolicy: Always
         name: init-db-ready
       restartPolicy: Always
+              imagePullSecrets:
+                - name: myregistrykey

@@ -19,6 +19,8 @@ spec:
         app: {{ .Values.api.label }}
     spec:
       serviceAccountName: openstad-ingress-sa
+      imagePullSecrets:
+        - name: regcred2
       containers:
         - env:
           - name: API_URL
@@ -57,6 +59,9 @@ spec:
           - name: S3_MONGO_BACKUPS
             value: "{{ .Values.S3.mongoBackups }}"
 
+          - name: S3_MONGO_BACKUPS_KEY
+            value: "{{ .Values.S3.mongoBackups }}"
+
           - name: S3_ENDPOINT
             valueFrom:
               secretKeyRef:
@@ -79,8 +84,6 @@ spec:
               secretKeyRef:
                 key: bucket
                 name: openstad-s3
-
-
 
           - name: MONGO_DB_HOST
             valueFrom:
@@ -203,6 +206,7 @@ spec:
                 fieldPath: status.podIP
           image: {{ .Values.api.deploymentContainer.image }}
           imagePullPolicy: Always
+
           name: {{ template "openstad.api.fullname" . }}
           ports:
             - containerPort: {{ .Values.api.service.httpPort }}

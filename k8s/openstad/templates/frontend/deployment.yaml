@@ -19,6 +19,8 @@ spec:
       labels:
         app: {{ .Values.frontend.label }}
     spec:
+      imagePullSecrets:
+        - name: regcred2
       containers:
         - name: {{ template "openstad.frontend.fullname" . }}
           image: {{ .Values.frontend.deploymentContainer.image }}
@@ -62,6 +64,7 @@ spec:
                 secretKeyRef:
                   key: fixed_token
                   name: openstad-auth-credentials
+
             - name: MONGO_DB_HOST
               valueFrom:
                 secretKeyRef:
