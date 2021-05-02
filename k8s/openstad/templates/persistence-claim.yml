@@ -35,6 +35,24 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: frontend-uploads-claim2
+  namespace: {{ .Release.Namespace }}
+  annotations: {{ .Values.persistence.annotations }}
+spec:
+  {{- if (and .Values.persistence .Values.persistence.storageClassName) }}
+storageClassName: {{ .Values.persistence.storageClassName }}
+  {{- end }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.frontend.volumes.uploads.size }}
+
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
   name: image-data-claim
   namespace: {{ .Release.Namespace }}
   annotations: {{ .Values.persistence.annotations }}

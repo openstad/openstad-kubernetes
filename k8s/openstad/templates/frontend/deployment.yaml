@@ -95,6 +95,8 @@ spec:
               value: "0"
 {{- end }}
 
+
+
           resources:
 {{ toYaml .Values.frontend.resources | indent 12 }}
           volumeMounts:
@@ -109,7 +111,7 @@ spec:
       volumes:
         - name: data-uploads
           persistentVolumeClaim:
-            claimName: frontend-uploads-claim
+            claimName: frontend-uploads-claim2
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
