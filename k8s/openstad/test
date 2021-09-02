@@ -1,0 +1,183 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2020-07-27T10:49:12Z"
+  generateName: openstad-mysql-master-
+  labels:
+    app: mysql
+    chart: mysql-6.14.2
+    component: master
+    controller-revision-hash: openstad-mysql-master-ddd49cb68
+    heritage: Helm
+    release: openstad
+    statefulset.kubernetes.io/pod-name: openstad-mysql-master-0
+  name: openstad-mysql-master-0
+  namespace: openstad
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: StatefulSet
+    name: openstad-mysql-master
+    uid: a3537c2a-05ee-479f-b7c8-890de195c121
+  resourceVersion: "78658646"
+  selfLink: /api/v1/namespaces/openstad/pods/openstad-mysql-master-0
+  uid: 2f605d69-72bd-499e-abd3-91a4f051a30e
+spec:
+  containers:
+  - env:
+    - name: BITNAMI_DEBUG
+      value: "false"
+    - name: MYSQL_ROOT_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: mysql-root-password
+          name: mysql-secret
+    - name: MYSQL_USER
+      value: openstad
+    - name: MYSQL_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: mysql-password
+          name: mysql-secret
+    - name: MYSQL_DATABASE
+      value: image
+    - name: MYSQL_REPLICATION_MODE
+      value: master
+    - name: MYSQL_REPLICATION_USER
+      value: replicator
+    - name: MYSQL_REPLICATION_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: mysql-replication-password
+          name: mysql-secret
+    image: docker.io/bitnami/mysql:5.7.30
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      exec:
+        command:
+        - sh
+        - -c
+        - |
+          password_aux="${MYSQL_ROOT_PASSWORD:-}"
+          if [ -f "${MYSQL_ROOT_PASSWORD_FILE:-}" ]; then
+              password_aux=$(cat $MYSQL_ROOT_PASSWORD_FILE)
+          fi
+          mysqladmin status -uroot -p$password_aux
+      failureThreshold: 3
+      initialDelaySeconds: 120
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    name: mysql
+    ports:
+    - containerPort: 3306
+      name: mysql
+      protocol: TCP
+    readinessProbe:
+      exec:
+        command:
+        - sh
+        - -c
+        - |
+          password_aux="${MYSQL_ROOT_PASSWORD:-}"
+          if [ -f "${MYSQL_ROOT_PASSWORD_FILE:-}" ]; then
+              password_aux=$(cat $MYSQL_ROOT_PASSWORD_FILE)
+          fi
+          mysqladmin status -uroot -p$password_aux
+      failureThreshold: 3
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /bitnami/mysql
+      name: data
+    - mountPath: /docker-entrypoint-initdb.d
+      name: custom-init-scripts
+    - mountPath: /opt/bitnami/mysql/conf/my.cnf
+      name: config
+      subPath: my.cnf
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: openstad-mysql-token-5q2nq
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostname: openstad-mysql-master-0
+  nodeName: pool-18115ft9h-3o2km
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    fsGroup: 1001
+    runAsUser: 1001
+  serviceAccount: openstad-mysql
+  serviceAccountName: openstad-mysql
+  subdomain: openstad-mysql-master
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: data-openstad-mysql-master-0
+  - configMap:
+      defaultMode: 420
+      name: openstad-mysql-master
+    name: config
+  - configMap:
+      defaultMode: 420
+      name: extra-db-map
+    name: custom-init-scripts
+  - name: openstad-mysql-token-5q2nq
+    secret:
+      defaultMode: 420
+      secretName: openstad-mysql-token-5q2nq
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2020-07-27T10:49:12Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2020-07-27T10:50:04Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2020-07-27T10:50:04Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2020-07-27T10:49:12Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://9b7286478dfa915e4c3caa03be9425351e4870deb7559508b95f4ca1c8674317
+    image: bitnami/mysql:5.7.30
+    imageID: docker-pullable://bitnami/mysql@sha256:eecfb7bb565a32e66eb3d0803912e8c5b7980d421cb4bd9685fe9f15a8d72039
+    lastState: {}
+    name: mysql
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2020-07-27T10:49:29Z"
+  hostIP: 10.110.0.20
+  phase: Running
+  podIP: 10.244.0.244
+  podIPs:
+  - ip: 10.244.0.244
+  qosClass: BestEffort
+  startTime: "2020-07-27T10:49:12Z"
+~

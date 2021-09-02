@@ -36,8 +36,10 @@ spec:
               value: https://www.{{ .Values.host.base }}
             - name: API
               value: https://{{ template "openstad.api.url" . }}
-            - name: IMAGE_API_URL
+            - name: OLD_IMAGE_API_URL
               value: https://{{ template "openstad.image.url" . }}
+            - name: IMAGE_API_URL
+              value: "https://image-server2.openstadsdeel.nl"
             - name: MINIFY_JS
               value: 'ON'
             - name: APOS_WORKFLOW
@@ -46,7 +48,15 @@ spec:
               value: "{{ .Values.frontend.googleMapsApiKey }}"
             - name: COOKIE_MAX_AGE
               value: "{{ .Values.frontend.cookieMaxAge }}"
+            - name: VIDEO_API_KEY
+              value: "79287de14026563c6be87240ff58f170b025f"
+            - name: VIDEO_API_EMAIL
+              value: "tosh.koevoets@ymove.app"
+            - name: VIDEO_API_URL
+              value: "https://api.cloudflare.com/client/v4/accounts/09157f80735764e831c779e509cb1252/stream"
             - name: IMAGE_API_ACCESS_TOKEN
+              value: "VkajDDVm0KnDaajsjA23AdS"
+            - name: OLD_IMAGE_API_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
                   key: image_api_token
@@ -90,10 +100,7 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: status.podIP
-{{- if and .Values.frontend.ingress.enabled ((.Values.clusterIssuer.useProdIssuer | not) or (eq (index .Values.frontend.ingress.annotations "cert-manager.io/cluster-issuer") "letsencrypt-staging")) }}
-            - name: NODE_TLS_REJECT_UNAUTHORIZED
-              value: "0"
-{{- end }}
+
 
 
 

@@ -57,39 +57,33 @@ spec:
                 name: openstad-db-credentials
                 key: type
 
-          - name: DB_USER
-            valueFrom:
-              secretKeyRef:
-                name: openstad-db-credentials
-                key: username
 
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mysql-secret
-                key: mysql-password
+          - name: COOKIE_SECURE_OFF
+            value: "yes"
 
-          - name: DB_HOST
-            valueFrom:
-              secretKeyRef:
-                name: openstad-db-credentials
-                key: hostname
+          - name: CSRF_SAME_SITE_OFF
+            value: "yes"
 
           - name: DB_PORT
-            valueFrom:
-              secretKeyRef:
-                name: openstad-db-credentials
-                key: hostport
+            value: "25060"
+
+          - name: DB_USER
+            value: "doadmin"
+
+          - name: DB_PASSWORD
+            value: "pelr3oq1w4dt8gpe"
+
+          - name: DB_NAME
+            value: "auth"
+
+          - name: DB_HOST
+            value: "db-ymove-do-user-404835-0.b.db.ondigitalocean.com"
+
           - name: MONGO_DB_HOST
             valueFrom:
               secretKeyRef:
                 key: hostname
                 name: openstad-mongo-credentials
-          - name: DB_NAME
-            valueFrom:
-              secretKeyRef:
-                name: openstad-auth-db
-                key: database
 
           # SMTP MAIL
           - name: MAIL_SERVER_URL
@@ -179,36 +173,4 @@ spec:
             port: {{ .Values.auth.service.httpPort }}
           initialDelaySeconds: {{ .Values.auth.probe.liveness.initialDelaySeconds }}
           periodSeconds: {{ .Values.auth.probe.liveness.periodSeconds }}
-      initContainers:
-      - name: init-db-ready
-        image: {{ .Values.auth.deploymentContainer.image }}
-        env:
-        - name: DB_ADDR
-          valueFrom:
-            secretKeyRef:
-              name: openstad-db-credentials
-              key: hostname
-        - name: DB_PORT
-          valueFrom:
-            secretKeyRef:
-              name: openstad-db-credentials
-              key: hostport
-        - name: DB_HOST
-          valueFrom:
-              secretKeyRef:
-                name: openstad-db-credentials
-                key: hostname
-        - name: DB_USER
-          valueFrom:
-              secretKeyRef:
-                name: openstad-db-credentials
-                key: username
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-password
-        - name: DB_NAME
-          value: auth
-        command: ["/bin/sh","-c"]
-        args: ['knex migrate:latest']
+

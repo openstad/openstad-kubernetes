@@ -124,7 +124,7 @@ spec:
         image: openstad/api:test
         imagePullPolicy: Always
         imagePullSecrets:
-          - name: repositorySecretKey
+          - name: repositorysecretkey
         name: api-container
         ports:
         - containerPort: 8111
