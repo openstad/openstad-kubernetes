@@ -92,6 +92,6 @@ entries:
     digest: 4a66a0e0173365328738729bb4534776ae05ada3827ff1873af35a94828f8dfb
     name: openstad
     urls:
-    - https://amsterdam.github.io/openstad-kubernetes/k8s/helmrepo/openstad-0.2.0.tgz
-    version: 0.2.0
+    - https://amsterdam.github.io/openstad-kubernetes/k8s/helmrepo/openstad-0.2.1.tgz
+    version: 0.2.1
 generated: "2020-06-13T22:27:59.4990971Z"
