@@ -1,20 +1,4 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: frontend-data-claim
-  namespace: {{ .Release.Namespace }}
-  annotations: {{ .Values.persistence.annotations }}
-spec:
-{{- if ( and .Values.persistence .Values.persistence.storageClassName) }}
-  storageClassName: {{ .Values.persistence.storageClassName }}
-{{- end }}
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: {{ .Values.frontend.volumes.data.size }}
-
----
+{{- if (not .Values.frontend.S3.bucket) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -30,7 +14,7 @@ spec:
   resources:
     requests:
       storage: {{ .Values.frontend.volumes.uploads.size }}
-
+{{- end }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
