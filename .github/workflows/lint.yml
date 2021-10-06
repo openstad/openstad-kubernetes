@@ -1,0 +1,14 @@
+name: helm lint
+on: push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    services:
+      helm:
+        image: alpine/helm
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v1
+      - name: Helm lint
+        run: helm lint k8s/openstad

@@ -1,0 +1,45 @@
+name: helm release package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      helm:
+        image: alpine/helm
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v1
+      - name: Helm lint
+        run: helm lint k8s/openstad
+  release:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.4.0
+
+      - name: Run chart-releaser
+        run: |
+          chmod a+x ./helm-release.sh
+          ./helm-release.sh
+        env:
+          CR_TOKEN: "${{ secrets.CR_TOKEN }}"
+          REPO_URL: "${{ secrets.REPO_URL }}"
+          PAGES_BRANCH: master
+          OWNER: "${{ secrets.OWNER }}"
