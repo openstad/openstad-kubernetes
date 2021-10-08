@@ -63,6 +63,13 @@
   bucket:  {{ .Values.S3.bucket | default "openstad" | b64enc }}
 {{- end }}
 
+{{- define "ImageS3Secret" -}}
+  endpoint: {{ .Values.image.S3.endpoint | default "" | b64enc }}
+  key: {{ .Values.image.S3.key | default "" | b64enc }}
+  secret: {{ .Values.image.S3.secret | default "" | b64enc }}
+  bucket: {{ .Values.image.S3.bucket | default "" | b64enc }}
+{{- end }}
+
 {{- define "authCredSecret" -}}
   client_id: {{ .Values.secrets.database.auth.credentials.clientId | default "clientID" | b64enc }}
   client_secret: {{ .Values.secrets.database.auth.credentials.clientSecret | default ( randAlphaNum 12 | quote ) | b64enc }}
