@@ -62,10 +62,10 @@ spec:
               fieldRef:
                 fieldPath: status.podIP
           - name: S3_BUCKET
-              valueFrom:
-                secretKeyRef:
-                  key: bucket
-                  name: openstad-image-s3
+            valueFrom:
+              secretKeyRef:
+                key: bucket
+                name: openstad-image-s3
           - name: S3_ENDPOINT
             valueFrom:
               secretKeyRef:
