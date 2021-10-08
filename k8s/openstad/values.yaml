@@ -479,6 +479,14 @@ image:
   service:
     httpPort: 9999
 
+  # Optional S3 settings to use s3 instead of local file system in combination with pvc
+  # If S3 is set the image pvc will not created
+  S3:
+    key:
+    secret:
+    endpoint:
+    bucket:
+
   # Deployment container is what is eventually run in the pod
   deploymentContainer:
     name: image

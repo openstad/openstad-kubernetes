@@ -61,6 +61,26 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
+          - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  key: bucket
+                  name: openstad-image-s3
+          - name: S3_ENDPOINT
+            valueFrom:
+              secretKeyRef:
+                key: endpoint
+                name: openstad-image-s3
+          - name: S3_KEY
+            valueFrom:
+              secretKeyRef:
+                key: key
+                name: openstad-image-s3
+          - name: S3_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: secret
+                name: openstad-image-s3
         resources:
 {{ toYaml .Values.image.resources | indent 12 }}
         readinessProbe:
@@ -71,9 +91,11 @@ spec:
             port: {{ .Values.image.service.httpPort }}
           initialDelaySeconds: {{ .Values.image.probe.liveness.initialDelaySeconds }}
           periodSeconds: {{ .Values.image.probe.liveness.periodSeconds }}
+{{- if (not .Values.image.S3.bucket) }}
         volumeMounts:
           - mountPath: /app/images
             name: data-vol
+{{- end }}
       initContainers:
       - name: create-db-ready
         image: {{ .Values.image.deploymentContainer.image }}
@@ -101,11 +123,12 @@ spec:
               key: mysql-password
         command: ["/bin/sh","-c"]
         args: ['knex migrate:latest']
+{{- if (not .Values.image.S3.bucket) }}
       volumes:
         - name: data-vol
           persistentVolumeClaim:
             claimName: image-data-claim
-
+{{- end }}
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
