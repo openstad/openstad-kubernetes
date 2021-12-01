@@ -148,5 +148,14 @@ spec:
               fieldRef:
                 apiVersion: v1
                 fieldPath: metadata.namespace
+
+          - name: IMAGE_API_URL
+            value: https://{{ template "openstad.image.url" . }}
+
+          - name: IMAGE_API_ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: image_api_token
+                name: openstad-auth-credentials
         resources:
 {{ toYaml .Values.admin.resources | indent 12 }}
