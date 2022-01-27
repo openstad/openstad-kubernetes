@@ -1,0 +1,85 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ template "openstad.api.fullname" . }}-cronjob-mysql
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openstad.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ template "openstad.api.fullname" . }}-deployment
+spec:
+  schedule: "0 1 * * *"
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          {{- include "openstad.imagePullSecret" . | nindent 10 }}
+          restartPolicy: OnFailure
+          containers:
+          - name: {{ template "openstad.api.fullname" . }}-mysql-backup-job
+            image: {{ .Values.api.deploymentContainer.image }}
+            command: ["node", "backup.js"]
+            args: []
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: TZ
+              value: {{ template "openstad.timezone" . }}
+            - name: S3_DBS_TO_BACKUP
+              value: "{{ .Values.S3.dbsToBackup }}"
+            - name: S3_FORCE_PATH_STYLE
+              value: "{{ .Values.S3.forcePathStyle }}"
+            - name: S3_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  key: endpoint
+                  name: openstad-s3
+            - name: S3_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: key
+                  name: openstad-s3
+            - name: S3_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: secret
+                  name: openstad-s3
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  key: bucket
+                  name: openstad-s3
+            - name: DEFAULT_DB
+              valueFrom:
+                secretKeyRef:
+                  key: database
+                  name: openstad-mongo-credentials
+            - name: API_DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: openstad-db-credentials
+            - name: API_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: mysql-password
+                  name: mysql-secret
+            - name: API_DATABASE_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database
+                  name: openstad-api-db
+            - name: API_DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: hostname
+                  name: openstad-db-credentials
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: BACKUP_TYPE
+              value: mysql
