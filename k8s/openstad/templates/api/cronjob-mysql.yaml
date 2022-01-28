@@ -24,6 +24,13 @@ spec:
             command: ["node", "backup.js"]
             args: []
             imagePullPolicy: IfNotPresent
+            resources:
+              limits:
+                cpu: "250m"
+                memory: "350M"
+              requests:
+                cpu: "250m"
+                memory: "250M"
             env:
             - name: TZ
               value: {{ template "openstad.timezone" . }}
