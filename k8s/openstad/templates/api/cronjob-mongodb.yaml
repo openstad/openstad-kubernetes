@@ -9,10 +9,10 @@ metadata:
     {{- include "openstad.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ template "openstad.api.fullname" . }}-deployment
 spec:
-  schedule: {{- default "10 1 * * *" .Values.k8sCronjobs.mongodb.schedule }}
+  schedule: {{ .Values.k8sCronjobs.mongodb.schedule | default "10 1 * * *"  }}
   concurrencyPolicy: "Forbid"
-  successfulJobsHistoryLimit: {{- default "3" .Values.k8sCronjobs.mongodb.successfulJobsHistoryLimit }}
-  failedJobsHistoryLimit: {{- default "3" .Values.k8sCronjobs.mongodb.failedJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{ .Values.k8sCronjobs.mongodb.successfulJobsHistoryLimit | default "3" }}
+  failedJobsHistoryLimit: {{ .Values.k8sCronjobs.mongodb.failedJobsHistoryLimit | default "3"}}
   jobTemplate:
     spec:
       template:
@@ -26,7 +26,7 @@ spec:
             args: []
             imagePullPolicy: IfNotPresent
             resources:
-              {{ toYaml .Values.k8sCronjobs.mongodb.resources | indent 14 }}
+              {{ toYaml .Values.k8sCronjobs.mongodb.resources | nindent 14 }}
             env:
             - name: TZ
               value: {{ template "openstad.timezone" . }}
