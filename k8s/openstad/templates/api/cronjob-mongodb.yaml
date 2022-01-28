@@ -1,4 +1,5 @@
 ---
+{{- if .Values.k8sCronjobs.mongodb.enabled -}}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -72,3 +73,4 @@ spec:
                   fieldPath: metadata.namespace
             - name: BACKUP_TYPE
               value: mongo
+{{- end -}}
