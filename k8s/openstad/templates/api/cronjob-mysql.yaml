@@ -11,8 +11,8 @@ metadata:
 spec:
   schedule: {{- default "0 1 * * *" .Values.k8sCronjobs.mysql.schedule }}
   concurrencyPolicy: "Forbid"
-  successfulJobsHistoryLimit: {{- default 3 .Values.k8sCronjobs.mongodb.successfulJobsHistoryLimit }}
-  failedJobsHistoryLimit: {{- default 3 .Values.k8sCronjobs.mongodb.failedJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{- default "3" .Values.k8sCronjobs.mongodb.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{- default "3" .Values.k8sCronjobs.mongodb.failedJobsHistoryLimit }}
   jobTemplate:
     spec:
       template:
