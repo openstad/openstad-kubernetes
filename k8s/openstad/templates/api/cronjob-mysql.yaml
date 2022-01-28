@@ -17,7 +17,7 @@ spec:
     spec:
       template:
         spec:
-          {{- include "openstad.imagePullSecret" . | nindent 10 }}
+          {{- include "openstad.imagePullSecret" . | indent 10 }}
           restartPolicy: OnFailure
           containers:
           - name: {{ template "openstad.api.fullname" . }}-mysql-backup-job
@@ -25,8 +25,7 @@ spec:
             command: ["node", "backup.js"]
             args: []
             imagePullPolicy: IfNotPresent
-            resources:
-              {{ toYaml .Values.k8sCronjobs.mysql.resources | nindent 14 }}
+            resources: {{ toYaml .Values.k8sCronjobs.mysql.resources | nindent 14 }}
             env:
             - name: TZ
               value: {{ template "openstad.timezone" . }}
