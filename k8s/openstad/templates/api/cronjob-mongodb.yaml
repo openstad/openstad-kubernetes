@@ -1,5 +1,5 @@
----
 {{- if .Values.k8sCronjobs.mongodb.enabled -}}
+---
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
