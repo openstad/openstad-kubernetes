@@ -86,6 +86,37 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.namespace
+
+            - name: APOS_S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  key: bucket
+                  name: openstad-frontend-s3
+
+            - name: APOS_S3_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  key: endpoint
+                  name: openstad-frontend-s3
+
+            - name: APOS_S3_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: key
+                  name: openstad-frontend-s3
+
+            - name: APOS_S3_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: secret
+                  name: openstad-frontend-s3
+
+            - name: APOS_S3_REGION
+              valueFrom:
+                secretKeyRef:
+                  key: region
+                  name: openstad-frontend-s3
+
             - name: MY_POD_IP
               valueFrom:
                 fieldRef:
@@ -98,19 +129,23 @@ spec:
 
           resources:
 {{ toYaml .Values.frontend.resources | indent 12 }}
+{{- if (not .Values.frontend.S3.bucket) }}
           volumeMounts:
             - mountPath: /home/app/public/uploads
               name: data-uploads
+{{- end }}
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
         runAsUser: 1000
+{{- if (not .Values.frontend.S3.bucket) }}
       volumes:
         - name: data-uploads
           persistentVolumeClaim:
             claimName: frontend-uploads-claim
+{{- end }}
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
