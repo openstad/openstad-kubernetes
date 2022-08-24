@@ -614,6 +614,8 @@ secrets:
     database:
     user:
     password:
+    # The authSource allows us to specify which database is associated with the given credentials.
+    # Reference: https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource
     authSource:
   basicAuth:
     user:
