@@ -62,6 +62,11 @@ spec:
                 secretKeyRef:
                   key: fixed_token
                   name: openstad-auth-credentials
+            - name: MONGO_DB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  key: frontend-connection-string
+                  name: openstad-secret
             - name: MONGO_DB_HOST
               valueFrom:
                 secretKeyRef:
