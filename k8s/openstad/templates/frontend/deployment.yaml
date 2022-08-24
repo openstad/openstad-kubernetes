@@ -72,6 +72,11 @@ spec:
                 secretKeyRef:
                   key: hostname
                   name: openstad-mongo-credentials
+            - name: MONGO_DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: hostport
+                  name: openstad-mongo-credentials
             - name: MONGO_DB_USER
               valueFrom:
                 secretKeyRef:
