@@ -612,6 +612,9 @@ secrets:
     hostname:
     hostport:
     database:
+    user:
+    password:
+    authSource:
   basicAuth:
     user:
     password:
