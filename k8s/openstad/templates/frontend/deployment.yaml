@@ -66,7 +66,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: frontend-connection-string
-                  name: openstad-secret
+                  name: mongo-secret
             - name: MONGO_DB_HOST
               valueFrom:
                 secretKeyRef:

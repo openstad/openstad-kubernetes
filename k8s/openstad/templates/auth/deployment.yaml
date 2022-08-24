@@ -84,7 +84,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 key: auth-connection-string
-                name: openstad-secret
+                name: mongo-secret
           - name: MONGO_DB_HOST
             valueFrom:
               secretKeyRef:
