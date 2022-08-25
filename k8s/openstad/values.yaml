@@ -130,7 +130,7 @@ frontend:
   deploymentContainer:
     name: frontend
     # Docker image for this pod
-    image: openstad/frontend:v0.14.1
+    image: openstad/frontend:v0.41.0
 
   # Optional to use an S3 for ApostropheCMS attachments.
   S3:
@@ -288,7 +288,7 @@ auth:
   deploymentContainer:
     name: auth
     # Docker image for this pod
-    image: openstad/auth:v0.13.0
+    image: openstad/auth:v0.41.0
 
   # Subdomain for the service:
   # If filled it it will create a default url of: www.$subdomain.$baseurl
