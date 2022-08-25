@@ -612,6 +612,26 @@ secrets:
     hostname:
     hostport:
     database:
+    user:
+    password:
+
+    # The authSource allows us to specify which database is associated with the given credentials.
+    # Reference: https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource
+    authSource:
+
+    # The frontendConnectionString will take priority over the above MongoDB configuration for the frontend service
+    # Use {database} in this string to allow the application to specify the correct database
+    # Reference: https://www.mongodb.com/docs/manual/reference/connection-string/
+    # Example: "mongodb://mongoadmin:mongoadmin@localhost:27017/{database}?authSource=admin"
+    frontendConnectionString:
+
+    # The authConnectionString will take priority over the above MongoDB configuration for the auth service
+    # Keep in mind that the default database for the auth environment is `sessions`
+    # If this contains the `{database}` string, this will be replaced with `sessions` before being passed into the auth service
+    # Reference: https://www.mongodb.com/docs/manual/reference/connection-string/
+    # Example: "mongodb://mongoadmin:mongoadmin@localhost:27017/sessions?authSource=admin"
+    authConnectionString:
+
   basicAuth:
     user:
     password:

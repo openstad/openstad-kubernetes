@@ -80,10 +80,35 @@ spec:
               secretKeyRef:
                 name: openstad-db-credentials
                 key: hostport
+          - name: MONGO_DB_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                key: auth-connection-string
+                name: mongo-secret
           - name: MONGO_DB_HOST
             valueFrom:
               secretKeyRef:
                 key: hostname
+                name: openstad-mongo-credentials
+          - name: MONGO_DB_PORT
+            valueFrom:
+              secretKeyRef:
+                key: hostport
+                name: openstad-mongo-credentials
+          - name: MONGO_DB_USER
+            valueFrom:
+              secretKeyRef:
+                key: user
+                name: openstad-mongo-credentials
+          - name: MONGO_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: mongo-secret
+          - name: MONGO_DB_AUTHSOURCE
+            valueFrom:
+              secretKeyRef:
+                key: auth-source
                 name: openstad-mongo-credentials
           - name: DB_NAME
             valueFrom:
