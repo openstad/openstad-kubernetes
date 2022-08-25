@@ -108,7 +108,7 @@ This can be done use a GET command on the namespace for the type Ingress.
 Using example below where we assume the application to be deployed in the openstad namespace:
 
 ```bash
-curl -H "Authorization: Bearer $TOKEN" -k https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/networking.k8s.io/v1beta1/namespaces/openstad/ingresses
+curl -H "Authorization: Bearer $TOKEN" -k https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/networking.k8s.io/v1/namespaces/openstad/ingresses
 ```
 
 This will return the following response starting with:
@@ -116,9 +116,9 @@ This will return the following response starting with:
 ```json
 {
   "kind": "IngressList",
-  "apiVersion": "networking.k8s.io/v1beta1",
+  "apiVersion": "networking.k8s.io/v1",
   "metadata": {
-    "selfLink": "/apis/networking.k8s.io/v1beta1/namespaces/openstad/ingresses",
+    "selfLink": "/apis/networking.k8s.io/v1/namespaces/openstad/ingresses",
     "resourceVersion": "1473825"
   },
   "items": [
@@ -126,7 +126,7 @@ This will return the following response starting with:
       "metadata": {
         "name": "openstad-api",
         "namespace": "openstad",
-        "selfLink": "/apis/networking.k8s.io/v1beta1/namespaces/openstad/ingresses/openstad-api",
+        "selfLink": "/apis/networking.k8s.io/v1/namespaces/openstad/ingresses/openstad-api",
         "uid": "7bc97ac8-fcb2-461d-9cab-d03dfc1d2fd7",
         "resourceVersion": "1375170",
         "generation": 1,
@@ -201,7 +201,7 @@ If you want to change for instance the hostname in the response about you do the
 ```bash
 curl -H "Authorization: Bearer $TOKEN" -XPOST -k \
      -d $INGRESS_OBJECT_FILE
-     https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/networking.k8s.io/v1beta1/namespaces/openstad/ingresses/$INGRESS_OBJECT_NAME
+     https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/networking.k8s.io/v1/namespaces/openstad/ingresses/$INGRESS_OBJECT_NAME
 ```
 
 #### 4.2 Patch
@@ -224,7 +224,7 @@ spec:
 ```bash
 curl -H "Authorization: Bearer $TOKEN" -XPATCH -k \
      -d $CHANGED_VALUES
-     https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/networking.k8s.io/v1beta1/namespaces/openstad/ingresses/$INGRESS_OBJECT_NAME
+     https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/networking.k8s.io/v1/namespaces/openstad/ingresses/$INGRESS_OBJECT_NAME
 ```
 
 ## Other usage
@@ -252,7 +252,7 @@ Creating a new Ingress would look like this:
             const k8sApi = kc.makeApiClient(k8s.NetworkingV1beta1Api)
 
             k8sApi.createNamespacedIngress(process.env.KUBERNETES_NAMESPACE, {
-              apiVersions: 'networking.k8s.io/v1beta1',
+              apiVersions: 'networking.k8s.io/v',
               kind: 'Ingress',
               metadata: {
                 name: `${unique-identifiers}`,
