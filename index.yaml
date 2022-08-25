@@ -82,11 +82,11 @@ entries:
       version: 0.15.1
     - condition: dependencies.mongodb.enabled
       name: mongodb
-      repository: https://charts.bitnami.com/bitnami
+      repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
       version: 7.14.5
     - condition: dependencies.mysql.enabled
       name: mysql
-      repository: https://charts.bitnami.com/bitnami
+      repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
       version: 6.14.2
     description: This chart deploys the OpenStad  project with optional databases.
     digest: 4a66a0e0173365328738729bb4534776ae05ada3827ff1873af35a94828f8dfb
