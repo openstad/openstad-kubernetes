@@ -66,6 +66,11 @@ spec:
                 secretKeyRef:
                   key: fixed_token
                   name: openstad-auth-credentials
+            - name: MONGO_DB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  key: frontend-connection-string
+                  name: mongo-secret
             - name: MONGO_DB_HOST
               valueFrom:
                 secretKeyRef:
@@ -75,6 +80,26 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: hostname
+                  name: openstad-mongo-credentials
+            - name: MONGO_DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: hostport
+                  name: openstad-mongo-credentials
+            - name: MONGO_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: user
+                  name: openstad-mongo-credentials
+            - name: MONGO_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: mongo-secret
+            - name: MONGO_DB_AUTHSOURCE
+              valueFrom:
+                secretKeyRef:
+                  key: auth-source
                   name: openstad-mongo-credentials
             - name: DEFAULT_DB
               valueFrom:
@@ -122,7 +147,7 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: status.podIP
-{{- if and .Values.frontend.ingress.enabled ((.Values.clusterIssuer.useProdIssuer | not) or (eq (index .Values.frontend.ingress.annotations "cert-manager.io/cluster-issuer") "letsencrypt-staging")) }}
+{{- if and .Values.frontend.ingress.enabled (or (not .Values.clusterIssuer.useProdIssuer) (eq (index .Values.frontend.ingress.annotations "cert-manager.io/cluster-issuer" | default "") "letsencrypt-staging")) }}
             - name: NODE_TLS_REJECT_UNAUTHORIZED
               value: "0"
 {{- end }}
