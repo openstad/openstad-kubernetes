@@ -550,6 +550,13 @@ secrets:
     dbName:
     hostname:
     hostport:
+
+    # If you want to force an SSL connection to MySQL, provide a CA cert here
+    # This should be the content of the CA cert, including `-----BEGIN CERTIFICATE-----`
+    # Most cloud providers will provide this CA cert in their documentation;
+    # Amazon: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html
+    # Azure: https://docs.microsoft.com/en-us/azure/mysql/single-server/how-to-configure-ssl
+    # Google Cloud Platform: https://cloud.google.com/sql/docs/mysql/configure-ssl-instance
     caCert:
 
     ### Default db passwords for when you use the dependency

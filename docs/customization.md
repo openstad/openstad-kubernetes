@@ -31,6 +31,21 @@ secrets:
     hostname: abcd
 ```
 
+## Using an SSL connection to your MySQL server
+
+By default the connection to the MySQL server does not use SSL. If you want to enforce this, you will have to provide a CA (Certificate Authority) certificate in the values:
+
+```yaml
+secrets:
+  database:
+    caCert: |-
+            -----BEGIN CERTIFICATE-----
+            .....
+            -----END CERTIFICATE-----
+```
+
+This certificate will be stored in the `openstad-db-credentials` secret, and used in the auth and api services to connect to the MySQL server through SSL.
+
 ## Existing LetsEncrypt
 
 In some cases LetsEncrypt is already available and configured on your cluster.
