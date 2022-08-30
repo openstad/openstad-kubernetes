@@ -44,7 +44,7 @@ secrets:
             -----END CERTIFICATE-----
 ```
 
-This certificate will be stored in the `openstad-db-credentials` secret, and used in the auth and api services to connect to the MySQL server through SSL.
+This certificate will be stored in the `openstad-db-credentials` secret, and used in the auth, api and image services to connect to the MySQL server through SSL.
 
 ## Existing LetsEncrypt
 

@@ -45,6 +45,11 @@ spec:
               secretKeyRef:
                 name: mysql-secret
                 key: mysql-password
+          - name: MYSQL_CA_CERT
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: ca-cert
           - name: APP_URL
             value: https://{{ template "openstad.image.url" . }}
           - name: FIRST_IMAGE_API_ACCESS_TOKEN
