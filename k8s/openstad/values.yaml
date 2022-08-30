@@ -550,6 +550,7 @@ secrets:
     dbName:
     hostname:
     hostport:
+    caCert:
 
     ### Default db passwords for when you use the dependency
     rootPassword:

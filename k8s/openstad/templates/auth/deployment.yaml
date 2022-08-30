@@ -80,6 +80,11 @@ spec:
               secretKeyRef:
                 name: openstad-db-credentials
                 key: hostport
+          - name: MYSQL_CA_CERT
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: ca-cert
           - name: MONGO_DB_CONNECTION_STRING
             valueFrom:
               secretKeyRef:
