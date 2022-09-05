@@ -1,4 +1,3 @@
----
 {{- if .Values.adminer.ingress.enabled -}}
 ---
 {{ $serviceName := include "openstad.adminer.fullname" . }}

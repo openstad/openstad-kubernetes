@@ -115,6 +115,11 @@ spec:
               secretKeyRef:
                 key: hostname
                 name: openstad-db-credentials
+          - name: MYSQL_CA_CERT
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: ca-cert
           - name: API_EMAILADDRESS
             value: {{ .Values.api.emailAddress }}
           - name: API_EXPRESS_PORT

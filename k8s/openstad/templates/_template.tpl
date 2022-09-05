@@ -8,6 +8,7 @@
   hostport: {{ .Values.secrets.database.hostport | default 3306 | toString | b64enc }}
   password: {{ .Values.mysql.db.password | default ( randAlphaNum 12 | quote ) | b64enc }}
   username: {{ .Values.secrets.database.username | default "openstad" | b64enc }}
+  ca-cert: {{ .Values.secrets.database.caCert | default "" | b64enc }}
 {{- end }}
 
 {{- define "sessionSecret" -}}
