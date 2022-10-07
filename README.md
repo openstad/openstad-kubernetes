@@ -75,7 +75,7 @@ helm install --values custom-values.yaml --replace openstad . --namespace=openst
 In order to install the Helm chart without the need to checkout you can add it as repository.
 
 ```bash
-helm repo add openstad https://amsterdam.github.io/openstad-kubernetes/
+helm repo add openstad https://openstad.github.io/openstad-kubernetes/
 helm repo update
 helm search openstad
 ```

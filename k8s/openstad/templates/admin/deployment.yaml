@@ -67,6 +67,9 @@ spec:
           - name: KUBERNETES_CLUSTER_ISSUER
             value: '{{ template "openstad.clusterIssuer.name" . }}'
 
+          - name: KUBERNETES_CLUSTER_ISSUER_ENABLED
+            value: '{{ .Values.clusterIssuer.enabled }}'
+
           - name: KUBERNETES_FRONTEND_SERVICE_NAME
             value: '{{ template "openstad.frontend.fullname" . }}'
 
@@ -148,5 +151,14 @@ spec:
               fieldRef:
                 apiVersion: v1
                 fieldPath: metadata.namespace
+
+          - name: IMAGE_API_URL
+            value: https://{{ template "openstad.image.url" . }}
+
+          - name: IMAGE_API_ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: image_api_token
+                name: openstad-auth-credentials
         resources:
 {{ toYaml .Values.admin.resources | indent 12 }}

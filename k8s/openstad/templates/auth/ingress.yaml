@@ -12,7 +12,9 @@ metadata:
 {{- if .Values.auth.ingress.annotations }}
   annotations:
     nginx.ingress.kubernetes.io/x-forwarded-proto: https
+    {{- if .Values.clusterIssuer.enabled }}
     cert-manager.io/cluster-issuer: {{ template "openstad.clusterIssuer.name" . }}
+    {{- end }}
 {{ toYaml .Values.auth.ingress.annotations | indent 4 }}
 {{- end }}
 
