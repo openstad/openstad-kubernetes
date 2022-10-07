@@ -243,6 +243,9 @@ spec:
               name: mysql-secret
               key: mysql-password
         - name: DB_NAME
-          value: auth
+          valueFrom:
+              secretKeyRef:
+                name: openstad-auth-db
+                key: database
         command: ["/bin/sh","-c"]
         args: ['knex migrate:latest']
