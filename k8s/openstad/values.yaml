@@ -168,6 +168,9 @@ frontend:
       secretName: openstad-tls-frontend
       hosts: []
 
+  # Inject extra environment variables
+  extraEnvVars: []
+
   # Resources:
   resources:
     # Max resources
@@ -312,6 +315,9 @@ auth:
       secretName: openstad-tls-auth
       hosts: []
 
+  # Inject extra environment variables
+  extraEnvVars: []
+
   # Resources:
   resources:
     # Max resources
@@ -379,6 +385,9 @@ admin:
     tls:
       secretName: openstad-tls-admin
       hosts: []
+
+  # Inject extra environment variables
+  extraEnvVars: []
 
   # Resources:
   resources:
@@ -452,6 +461,9 @@ api:
       secretName: openstad-tls-api
       hosts: []
 
+  # Inject extra environment variables
+  extraEnvVars: []
+
   # Resources:
   resources:
     # Max resources
@@ -515,6 +527,9 @@ image:
     tls:
         secretName: openstad-tls-image
         hosts: []
+
+  # Inject extra environment variables
+  extraEnvVars: []
 
   # Resources:
   resources:
@@ -647,6 +662,12 @@ secrets:
     # Reference: https://www.mongodb.com/docs/manual/reference/connection-string/
     # Example: "mongodb://mongoadmin:mongoadmin@localhost:27017/sessions?authSource=admin"
     authConnectionString:
+
+    # The adminConnectionString will take priority over the above MongoDB configuration for the admin service
+    # Use {database} in this string to allow the application to specify the correct database
+    # Reference: https://www.mongodb.com/docs/manual/reference/connection-string/
+    # Example: "mongodb://mongoadmin:mongoadmin@localhost:27017/{database}?authSource=admin"
+    adminConnectionString:
 
   basicAuth:
     user:

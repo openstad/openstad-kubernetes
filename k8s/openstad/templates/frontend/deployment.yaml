@@ -112,6 +112,7 @@ spec:
                   apiVersion: v1
                   fieldPath: metadata.namespace
 
+            {{- if (.Values.frontend.S3.bucket) }}
             - name: APOS_S3_BUCKET
               valueFrom:
                 secretKeyRef:
@@ -141,6 +142,7 @@ spec:
                 secretKeyRef:
                   key: region
                   name: openstad-frontend-s3
+            {{- end }}
 
             - name: MY_POD_IP
               valueFrom:
@@ -151,6 +153,10 @@ spec:
             - name: NODE_TLS_REJECT_UNAUTHORIZED
               value: "0"
 {{- end }}
+
+            {{- if .Values.frontend.extraEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.frontend.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
 
           resources:
 {{ toYaml .Values.frontend.resources | indent 12 }}
