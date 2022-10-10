@@ -39,7 +39,7 @@ jobs:
           chmod a+x ./helm-release.sh
           ./helm-release.sh
         env:
-          CR_TOKEN: "${{ secrets.CR_TOKEN }}"
-          REPO_URL: "${{ secrets.REPO_URL }}"
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          REPO_URL: "${{ github.repositoryUrl }}"
           PAGES_BRANCH: master
-          OWNER: "${{ secrets.OWNER }}"
+          OWNER: "${{ github.repository_owner }}"

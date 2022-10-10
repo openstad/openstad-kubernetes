@@ -172,3 +172,9 @@ After running `helm upgrade`, the volume has the correct owner and can be writte
 ```
 
 The initContainer can now be removed from the deployment.yaml file.
+
+## Upgrading old/deprecated Kubernetes API's (UPGRADE FAILED issues)
+
+When trying to upgrade to a newer version of OpenStad you can run into issues where existing resources still use older and/or deprecated Kubernetes APIs. To migrate your Helm release you can use the [`mapkubeapis`](https://github.com/helm/helm-mapkubeapis) plugin. 
+
+More info about this issue can be found here: [Updating API Versions of a Release Manifest](https://helm.sh/docs/topics/kubernetes_apis/#updating-api-versions-of-a-release-manifest)

@@ -83,24 +83,12 @@ spec:
                 key: secret
                 name: openstad-session-secret
 
-          - name: MONGO_DB_HOST
-            valueFrom:
-                secretKeyRef:
-                  key: "hostname"
-                  name: openstad-mongo-credentials
-
           # KUBERNETES
           - name: SESSION_SECRET
             valueFrom:
               secretKeyRef:
                 key: secret
                 name: openstad-session-secret
-
-          - name: MONGO_DB_HOST
-            valueFrom:
-              secretKeyRef:
-                key: hostname
-                name: openstad-mongo-credentials
 
           - name: SITE_API_KEY
             valueFrom:
@@ -129,7 +117,11 @@ spec:
                 key: admin_client_secret
                 name: openstad-auth-credentials
 
-
+          - name: MONGO_DB_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                key: admin-connection-string
+                name: mongo-secret
           - name: MONGO_DB_HOST
             valueFrom:
               secretKeyRef:
@@ -160,5 +152,9 @@ spec:
               secretKeyRef:
                 key: image_api_token
                 name: openstad-auth-credentials
+
+          {{- if .Values.admin.extraEnvVars }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.admin.extraEnvVars "context" $) | nindent 10 }}
+          {{- end }}
         resources:
 {{ toYaml .Values.admin.resources | indent 12 }}
