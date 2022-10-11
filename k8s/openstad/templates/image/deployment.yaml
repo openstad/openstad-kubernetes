@@ -45,6 +45,11 @@ spec:
               secretKeyRef:
                 name: mysql-secret
                 key: mysql-password
+          - name: MYSQL_CA_CERT
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: ca-cert
           - name: APP_URL
             value: https://{{ template "openstad.image.url" . }}
           - name: FIRST_IMAGE_API_ACCESS_TOKEN
@@ -61,6 +66,11 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
+
+          {{- if .Values.image.extraEnvVars }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.image.extraEnvVars "context" $) | nindent 10 }}
+          {{- end }}
+
         resources:
 {{ toYaml .Values.image.resources | indent 12 }}
         readinessProbe:

@@ -115,6 +115,11 @@ spec:
               secretKeyRef:
                 key: hostname
                 name: openstad-db-credentials
+          - name: MYSQL_CA_CERT
+            valueFrom:
+              secretKeyRef:
+                name: openstad-db-credentials
+                key: ca-cert
           - name: API_EMAILADDRESS
             value: {{ .Values.api.emailAddress }}
           - name: API_EXPRESS_PORT
@@ -201,6 +206,9 @@ spec:
               fieldRef:
                 apiVersion: v1
                 fieldPath: status.podIP
+          {{- if .Values.api.extraEnvVars }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.api.extraEnvVars "context" $) | nindent 10 }}
+          {{- end }}
           image: {{ .Values.api.deploymentContainer.image }}
           imagePullPolicy: Always
           name: {{ template "openstad.api.fullname" . }}
@@ -271,7 +279,6 @@ spec:
                 secretKeyRef:
                   key: client_secret
                   name: openstad-auth-credentials
-
           image: {{ .Values.api.deploymentContainer.image }}
           imagePullPolicy: Always
           name: init-db-ready

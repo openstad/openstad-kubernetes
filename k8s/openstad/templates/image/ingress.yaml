@@ -4,7 +4,7 @@
 {{ $servicePort := .Values.image.service.httpPort }}
 {{ $tls := .Values.image.ingress.tls }}
 
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 
 metadata:
@@ -33,16 +33,24 @@ spec:
     - host: {{ 1 }}
       http:
         paths:
-          - backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $servicePort }}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number: {{ $servicePort }}
 {{- end }}
     - host: {{ template "openstad.image.url" . }}
       http:
         paths:
-          - backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $servicePort }}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number: {{ $servicePort }}
 
   tls:
     - secretName: {{ .Values.image.ingress.tls.secretName }}
