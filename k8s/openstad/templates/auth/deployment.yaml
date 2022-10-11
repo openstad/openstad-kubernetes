@@ -147,7 +147,10 @@ spec:
             value: https://{{ template "openstad.admin.url" . }}
 
           - name: FROM_NAME
-            value: "Openstad api"
+            value: {{ default .Values.auth.fromName "Openstad api" }}
+
+          - name: FROM_EMAIL
+            value: {{ or .Values.auth.fromEmail .Values.secrets.mail.auth.user }}
 
           - name: AUTH_FIRST_CLIENT_LOGIN_CODE
             valueFrom:
@@ -178,9 +181,6 @@ spec:
               secretKeyRef:
                 key: admin_client_secret
                 name: openstad-auth-credentials
-
-          - name: FROM_EMAIL
-            value: {{ .Values.secrets.mail.auth.user }}
 
           - name: DEFAULT_FAVICON
             value: {{ .Values.auth.defaultFavicon }}
