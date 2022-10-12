@@ -339,6 +339,8 @@ auth:
 
   defaultFavicon:
 
+  fromName:
+  fromEmail:
 
 ## Settings for the Admin server
 admin:
