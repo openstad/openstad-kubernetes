@@ -1,4 +1,3 @@
-
 # Optional Dependencies
 
 ##
@@ -16,8 +15,6 @@
 ##      relevant credentials in secrets.database for MySQL and/or
 ##      secrets.mongodb for MongoDB
 ##
-
-
 dependencies:
   ## Database
   mongodb:
@@ -28,6 +25,47 @@ dependencies:
   ## SSL
   cert-manager:
     enabled: false
+
+cert-manager:
+  # Whether we want to install CRDs.
+  installCRDs: true
+
+## Settings for MongoDB
+mongodb:
+  image:
+    tag: 5.0.13-debian-11-r5
+  auth:
+    enabled: false
+
+## Settings for MySQL
+mysql:
+  db:
+    # Credentials for both MongoDB and MySQL
+    # NOTE: Also change this in secrets
+    user: openstad
+    password: examplePass2146
+
+    name: image
+
+    # The following databases will be created additionally
+    # during initialization:
+    additionalDbNames:
+      - api
+      - auth
+
+  # DB initialization scripts are put in this config map:
+  initdbScriptsConfigMap: extra-db-map
+
+  # Secret which can be controlled by us
+  auth:
+    database: image
+    existingSecret: mysql-secret
+  
+  primary:
+    extraEnvVars:
+      # Use the older authentication plugin
+      - name: MYSQL_AUTHENTICATION_PLUGIN
+        value: mysql_native_password
 
 # Internal config
 public:
@@ -52,40 +90,6 @@ clusterIssuer:
   prodIssuerName: openstad-letsencrypt-prod
   ### Name of the staging issuer
   stagingIssuerName: openstad-letsencrypt-staging
-
-cert-manager:
-  # Whether we want to install CRDs.
-  installCRDs: true
-
-## Settings for MongoDB
-mongodb:
-  image:
-    tag: 4.0.14-ol-7-r39
-  usePassword: false
-
-## Settings for MySQL
-mysql:
-  image: # Docker Image
-    tag: 5.7.30 # Docker Tag: 5.7.30 for compatibility
-  db:
-    # Credentials for both MongoDB and MySQL
-    # NOTE: Also change this in secrets
-    user: openstad
-    password: examplePass2146
-
-    # Name of the initial database
-    name: image
-    # The following databases will be created additionally
-    # during initialization:
-    additionalDbNames:
-      - api
-      - auth
-
-  # DB initialization scripts are put in this config map:
-  initdbScriptsConfigMap: extra-db-map
-
-  # Secret which can be controlled by us
-  existingSecret: mysql-secret
 
 ##
 ## All base settings can be changed in this block.
