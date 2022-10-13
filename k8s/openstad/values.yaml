@@ -58,6 +58,7 @@ mysql:
 
   # Secret which can be controlled by us
   auth:
+    username: openstad
     database: image
     existingSecret: mysql-secret
   
