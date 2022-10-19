@@ -56,13 +56,10 @@ spec:
             value: "no"
 
           - name: FRONTEND_URL
-            value: https://{{ .Values.host.base }}
+            value: https://{{ template "openstad.frontend.url" . }}
 
           - name: PUBLIC_IP
             value: {{ .Values.host.publicIp }}
-
-          - name: WILDCARD_HOST
-            value: {{ .Values.host.base }}
 
           - name: KUBERNETES_CLUSTER_ISSUER
             value: '{{ template "openstad.clusterIssuer.name" . }}'
