@@ -580,6 +580,8 @@ secrets:
     dbName:
     hostname:
     hostport:
+    # Max connections used in connection pool
+    maxPoolSize: 5
 
     # If you want to force an SSL connection to MySQL, provide a CA cert here
     # This should be the content of the CA cert, including `-----BEGIN CERTIFICATE-----`

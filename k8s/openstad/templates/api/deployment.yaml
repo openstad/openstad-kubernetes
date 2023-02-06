@@ -115,6 +115,11 @@ spec:
               secretKeyRef:
                 key: hostname
                 name: openstad-db-credentials
+          - name: MAX_POOL_SIZE
+            valueFrom:
+              secretKeyRef:
+                key: maxPoolSize
+                name: openstad-db-credentials
           - name: MYSQL_CA_CERT
             valueFrom:
               secretKeyRef:
