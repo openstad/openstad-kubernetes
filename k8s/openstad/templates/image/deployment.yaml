@@ -111,7 +111,7 @@ spec:
               key: mysql-password
         command: ["/bin/sh","-c"]
         args:
-            - nc $API_DATABASE_HOST 3306 -z -w1 && node migrate.js;
+            - nc $DB_HOST 3306 -z -w1 && node migrate.js;
       volumes:
         - name: data-vol
           persistentVolumeClaim:
