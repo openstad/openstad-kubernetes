@@ -51,6 +51,9 @@ spec:
           - name: PUBLIC_IP
             value: {{ .Values.host.publicIp }}
 
+          - name: PREVENT_BACKUP_CRONJOBS
+            value: "{{ .Values.api.preventBackupCronjobs }}"
+
           - name: S3_DBS_TO_BACKUP
             value: "{{ .Values.S3.dbsToBackup }}"
 

@@ -559,6 +559,33 @@ image:
       size:
         1Gi
 
+# Kubernetes cronjobs
+k8sCronjobs:
+  mongodb:
+    enabled: false
+    schedule:
+    successfulJobsHistoryLimit:
+    failedJobsHistoryLimit:
+    resources:
+      limits:
+        cpu: "250m"
+        memory: "350M"
+      requests:
+        cpu: "250m"
+        memory: "250M"
+  mysql:
+    enabled: false
+    schedule:
+    successfulJobsHistoryLimit:
+    failedJobsHistoryLimit:
+    resources:
+      limits:
+        cpu: "250m"
+        memory: "350M"
+      requests:
+        cpu: "250m"
+        memory: "250M"
+
 # Overwrite Secrets
 
 ##
