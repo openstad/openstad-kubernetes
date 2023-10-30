@@ -129,7 +129,7 @@ spec:
             value: "{{ .Values.secrets.mail.auth.port }}"
 
           - name: MAIL_SERVER_SECURE
-            value: "yes"
+            value: "{{ .Values.secrets.mail.auth.secure | default 'yes' }}"
 
           - name: MAIL_SERVER_PASSWORD
             value: "{{ .Values.secrets.mail.auth.password }}"
