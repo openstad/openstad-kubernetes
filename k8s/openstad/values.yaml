@@ -61,7 +61,7 @@ mysql:
     username: openstad
     database: image
     existingSecret: mysql-secret
-  
+
   primary:
     extraEnvVars:
       # Use the older authentication plugin
@@ -80,8 +80,8 @@ public:
 
 ## Settings for Cert-Manager/Cluster issuer
 clusterIssuer:
-  enabled: false   # Whether this issuer is created
-  acme:           # Email used for requesting the certificates
+  enabled: false # Whether this issuer is created
+  acme: # Email used for requesting the certificates
     email: info@openstad.org
 
   ### If you want to use a production issuer set the following to true
@@ -109,7 +109,6 @@ host:
   ### Whether we should append www to the domains
   usewww: false
 
-
 ## Settings for persistent volumes
 
 persistence:
@@ -123,7 +122,6 @@ frontend:
   # Configure how the service is named and labeled
   name: "frontend"
   label: openstad-frontend-service
-
 
   # Service settings:
   # Primarily port configuration
@@ -199,11 +197,9 @@ frontend:
   # Configure the persistent volumes for this service
   volumes:
     data:
-      size:
-        1Gi
+      size: 1Gi
     uploads:
-      size:
-        1Gi
+      size: 1Gi
 
 ## S3 settings, backups,
 ## dbsToBackup would be nice to automatically get from the other values, but for now this is simpler.
@@ -415,7 +411,6 @@ admin:
       initialDelaySeconds: 30
       periodSeconds: 60
 
-
 ## Settings for the API server
 
 api:
@@ -482,7 +477,6 @@ api:
       cpu: 250m
       memory: 500M
 
-
   # Check whether the service is healthy:
   # First time after $(initialDelaySeconds) seconds.
   # After that every $(periodSeconds) seconds
@@ -532,8 +526,8 @@ image:
     extraLabels: {}
     hosts: []
     tls:
-        secretName: openstad-tls-image
-        hosts: []
+      secretName: openstad-tls-image
+      hosts: []
 
   # Inject extra environment variables
   extraEnvVars: []
@@ -561,8 +555,7 @@ image:
   # Configure the persistent volumes for this service
   volumes:
     data:
-      size:
-        1Gi
+      size: 1Gi
 
 # Overwrite Secrets
 
@@ -637,6 +630,7 @@ secrets:
       emailAssetsUrl:
       user:
       password:
+      secure: "yes"
 
     api:
       host:
